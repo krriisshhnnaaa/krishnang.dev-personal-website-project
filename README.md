@@ -2,41 +2,6 @@
 hi everyone ! this is my personal website i will be using for all proffesional purposes, i aim to highlight all my strong points as a devloper as well as connect with employers, clients, seniors and fellow devlopers
 
 
-2. Domain Name : krishnang.dev
-
-3. Pages
- Home
-About
-Projects
-Contact
-Blog
-Resume
-Achievements
-a page that shows all posts and comments made by me on different social media
-
-
-4. Content to Gather
-
-Profile photo
-Resume PDF
-GitHub link
-LinkedIn link
-Email
-Project screenshots
-Certificates
-Skills list
-Introduction Video
-
-
-6. Tech Stack
-
-HTML
-CSS
-JavaScript
-Python
-Git/github actions
-Linux
-
 
 
 7. Website Style
