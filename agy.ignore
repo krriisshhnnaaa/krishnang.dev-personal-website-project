@@ -1,0 +1,31 @@
+let's first decide the structure 
+i was thinking : 
+no generic "home, posts" etc buttons at top bottom or anywhere
+the website can roughly look like this  : 
+
+(middle, top) KRISHNANG.dev 
+
+LHS : #hero ( Hi, myself Krishnang Pandey.
+                        Student, Chitkara Univeristy
+                        B.E. - Computer Sience Engineering 0 AI/ML)
+
+RHS : #TERMINAL [terminal-style interface. displayed on top of shell : ASCII art that says krishnang.dev. and beneath it, instructions in bold : type hello to know about me (prints a response where i introduce myself as krishnang pandey) type freelance to know about my freelancing charges and packages and services i offer (redirects to the section of page about my freelancing and prints sending you to freelancing packages...) type projects to know about my projects (prints information about my different projects , then prints type project name to learn more and typing project name redirects to github of that project) 
+
+
+
+next section  : 
+activity center : shows my activity on github and my blog post-headlines 
+
+next section : blogs
+shows a horizontally scrollable section where it displays different tabs each of which contain one of my blog posts 
+each tab contains : link to blog post, headline/topic of blog post, img of the blog , date it was published
+
+next section : EDUCATION 
+
+animation : you scroll down, as you scroll down, a book opens , where each page has info on my education, say : page 1 : class 10th , page 2 : class 12th , page 3 : college , page 4 : course 1 , and so on 
+
+next section : connect with me : 
+
+shows all different social media that i am on 
+ 
+

@@ -1,0 +1,537 @@
+terminal.js — Functional Specification
+1. Purpose
+
+terminal.js controls ONLY the interactive terminal in the hero section.
+
+It is responsible for:
+
+Reading user input.
+Recognizing terminal commands.
+Printing terminal output.
+Maintaining terminal history during the current page session.
+Triggering navigation/scrolling when a command requires it.
+Redirecting to GitHub when a specific project is requested.
+
+It must NOT control:
+
+GitHub API fetching.
+Blog API fetching.
+Background animations.
+Logo animation.
+Education/book animation.
+Blog carousel behavior.
+General page initialization.
+
+Those belong to their respective modules.
+
+2. Terminal behavior
+
+The terminal should behave like a small interactive CLI, not like a fake static terminal.
+
+User types:
+
+> hello
+
+and presses Enter.
+
+The command is processed and the output is appended below it.
+
+The terminal should retain previous commands and their output, so the interaction feels like an actual shell.
+
+Example:
+
+> hello
+
+Hello! I'm Krishnang Pandey...
+...
+
+> projects
+
+Available projects:
+...
+
+>
+
+The exact visual styling belongs to terminal.css, NOT terminal.js.
+
+3. Supported commands
+
+There are four primary command categories.
+
+hello
+
+Purpose: introduce Krishnang.
+
+Input:
+
+hello
+
+Output should contain a concise introduction about:
+
+Name: Krishnang Pandey
+Student status
+University
+Degree / specialization
+
+Do NOT make hello dump the entire portfolio.
+
+It should be an introduction, not a résumé.
+
+After printing the introduction, the terminal remains active.
+
+It does NOT navigate anywhere.
+
+freelance
+
+Purpose: introduce the freelancing section.
+
+Input:
+
+freelance
+
+The terminal should:
+
+Print a concise summary of available freelancing services/packages.
+Tell the user that they can view the full freelancing section.
+Navigate/scroll to the freelancing section.
+
+Example conceptual output:
+
+> freelance
+
+Freelancing services:
+- ...
+- ...
+- ...
+
+Opening freelancing...
+
+Then the page scrolls to the freelancing section.
+
+The actual prices/services should be stored in a configuration/data structure rather than scattered throughout command logic.
+
+Important: terminal.js should not become the source of truth for the entire freelancing section.
+
+Ideally:
+
+const freelanceData = ...
+
+or imported/shared data can contain the information.
+
+The terminal merely displays a concise version.
+
+projects
+
+Purpose: show the available projects and enter project-selection mode.
+
+Input:
+
+projects
+
+Output:
+
+> projects
+
+Available projects:
+
+1. project-name
+2. project-name
+3. project-name
+
+Type:
+project <project-name>
+
+to open a project.
+
+The terminal should NOT immediately open a project.
+
+projects is a discovery command.
+
+The user then enters something such as:
+
+> project my-project
+project <project-name>
+
+Purpose: open a specific project.
+
+Example:
+
+> project my-project
+
+The terminal:
+
+Extracts the project name.
+Checks whether that project exists.
+If it exists, prints a short confirmation.
+Redirects the user to that project's GitHub repository.
+
+Example:
+
+> project my-project
+
+Opening my-project...
+
+Then redirect.
+
+The project mapping should be explicit.
+
+Conceptually:
+
+{
+    "my-project": "https://github.com/...",
+    "another-project": "https://github.com/..."
+}
+
+Do NOT construct GitHub URLs dynamically from arbitrary user input.
+
+That would make typos and nonexistent repositories problematic.
+
+4. Unknown commands
+
+The terminal MUST handle invalid commands gracefully.
+
+For example:
+
+> banana
+
+Command not found: banana
+
+Available commands:
+hello
+freelance
+projects
+
+Do not throw a JavaScript exception.
+
+Do not break the terminal.
+
+Do not reload the page.
+
+Do not silently ignore the input.
+
+5. Empty input
+
+If the user presses Enter without typing anything:
+
+>
+
+Nothing should happen.
+
+Do NOT print:
+
+Command not found:
+
+Do NOT add an unnecessary error message.
+
+The terminal should simply create the next prompt.
+
+6. Command parsing
+
+Commands should be treated sensibly with whitespace.
+
+These should all resolve to the same command:
+
+hello
+HELLO
+ Hello
+hello
+
+At minimum:
+
+trim leading/trailing whitespace
+normalize command names to lowercase
+
+For example:
+
+HELLO
+
+should behave like:
+
+hello
+
+For project names, be deliberate about case sensitivity.
+
+I'd recommend project identifiers being case-insensitive too:
+
+project AFT
+project aft
+PROJECT aft
+
+can resolve to the same project.
+
+But the displayed project name should preserve its proper capitalization.
+
+7. Help command
+
+I strongly recommend adding:
+
+help
+
+even though it wasn't part of the original four.
+
+It should print:
+
+Available commands:
+
+hello       Learn about me
+freelance   View freelancing information
+projects    List projects
+project     Open a specific project
+help        Show available commands
+clear       Clear terminal
+
+This makes the terminal discoverable instead of forcing the user to know the commands beforehand.
+
+8. clear
+
+Also add:
+
+clear
+
+It should clear the visible terminal history.
+
+It must NOT:
+
+reload the webpage
+reset other sections
+reset GitHub/blog data
+reset animations
+
+It only clears the terminal's displayed history.
+
+9. Command history
+
+The terminal should maintain command history during the current session.
+
+If practical, support:
+
+ArrowUp
+ArrowDown
+
+to navigate previously entered commands.
+
+For example:
+
+> hello
+> projects
+> freelance
+
+Pressing ↑ should cycle backward through:
+
+freelance
+projects
+hello
+
+This is optional functionality, but it would make the terminal feel significantly more authentic.
+
+10. Prevent normal form submission
+
+If the terminal input is inside a <form>, pressing Enter must NOT cause a normal browser form submission.
+
+The JavaScript should intercept it and process the command itself.
+
+There should be no:
+
+page refresh
+URL modification
+accidental form submission
+11. Navigation behavior
+
+terminal.js may trigger navigation to sections, but it should NOT implement the sections themselves.
+
+For example:
+
+freelance
+
+can tell the browser:
+
+scroll to #freelancing
+
+but it should NOT contain the freelancing section's DOM construction, styling, or animations.
+
+Same principle applies to future commands.
+
+Think:
+
+terminal.js
+     ↓
+"Go to freelancing"
+     ↓
+page navigation
+
+NOT:
+
+terminal.js
+     ↓
+build entire freelancing section
+     ↓
+style it
+     ↓
+animate it
+12. GitHub redirects
+
+For:
+
+project <name>
+
+the GitHub URL should come from a predefined project registry.
+
+Bad:
+
+window.location.href =
+    `https://github.com/krriisshhnnaaa/${projectName}`;
+
+Better:
+
+const projects = {
+    project1: "https://github.com/...",
+    project2: "https://github.com/..."
+};
+
+Then look up the requested project.
+
+This prevents arbitrary input from determining the destination.
+
+13. What terminal.js should NOT contain
+
+This is important because otherwise terminal.js will slowly become a 900-line monster. 💀
+
+Do NOT put:
+
+GitHub API calls
+Hygraph API calls
+Blog rendering
+Blog card generation
+Freelancing section generation
+Education/book animation
+Particle systems
+Background animations
+Logo animation
+Global page initialization
+CSS
+Huge amounts of static HTML
+
+inside it.
+
+terminal.js should essentially be:
+
+INPUT
+  ↓
+PARSE COMMAND
+  ↓
+VALIDATE
+  ↓
+EXECUTE COMMAND
+  ↓
+OUTPUT / NAVIGATE
+
+That's it.
+
+14. Error handling
+
+Every command should fail gracefully.
+
+Possible errors:
+
+Unknown command
+Unknown project
+Malformed project command
+Missing project name
+
+Example:
+
+> project
+
+Usage:
+project <project-name>
+
+Type "projects" to see available projects.
+
+And:
+
+> project imaginary-project
+
+Project not found: imaginary-project
+
+Type "projects" to see available projects.
+
+No JavaScript errors should reach the user.
+
+15. Security / robustness
+
+Even though this is a personal portfolio, don't blindly inject user input into HTML.
+
+Avoid doing something equivalent to:
+
+output.innerHTML += userInput;
+
+Instead, create DOM nodes and assign user-controlled text using textContent.
+
+This prevents the terminal from accidentally becoming an HTML/JS injection point.
+
+Also don't execute arbitrary commands.
+
+The terminal is a portfolio CLI simulation, not an actual shell.
+
+So:
+
+rm -rf /
+sudo ...
+python ...
+npm ...
+curl ...
+
+should simply result in:
+
+Command not found: ...
+
+There is no reason for this terminal to execute operating-system commands.
+
+16. Initialization
+
+terminal.js should expose an initialization function that main.js can call.
+
+Conceptually:
+
+initTerminal();
+
+main.js owns initialization.
+
+Therefore terminal.js should not assume that it is the application's entry point.
+
+17. The mental model
+
+If you're implementing this yourself, I'd keep the architecture roughly:
+
+terminal.js
+
+┌─────────────────────┐
+│ Terminal Input      │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ Command Parser      │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ Command Registry    │
+├─────────────────────┤
+│ hello               │
+│ freelance           │
+│ projects            │
+│ project <name>      │
+│ help                │
+│ clear               │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ Command Handler     │
+└──────────┬──────────┘
+           ↓
+     ┌─────┴─────┐
+     ↓           ↓
+  Output      Navigation
+
+The big rule:
+
+terminal.js controls the terminal. It does not control the rest of the website.
