@@ -1,537 +1,773 @@
-terminal.js — Functional Specification
-1. Purpose
+for activity-blogs.js, the goal is not to build the blog system. It is only the bridge between your Markdown blog files and the Activity Center.
 
-terminal.js controls ONLY the interactive terminal in the hero section.
+1. What the module does
 
-It is responsible for:
+The module's job is:
 
-Reading user input.
-Recognizing terminal commands.
-Printing terminal output.
-Maintaining terminal history during the current page session.
-Triggering navigation/scrolling when a command requires it.
-Redirecting to GitHub when a specific project is requested.
+blog Markdown files
+        ↓
+discover their locations
+        ↓
+fetch each Markdown file
+        ↓
+extract front matter
+        ↓
+create normalized blog objects
+        ↓
+sort by publication date
+        ↓
+take recent posts
+        ↓
+render them in Activity Center
 
-It must NOT control:
+For example, suppose you have:
 
-GitHub API fetching.
-Blog API fetching.
-Background animations.
-Logo animation.
-Education/book animation.
-Blog carousel behavior.
-General page initialization.
+blog/
+├── zombie-internet/
+│   ├── post.md
+│   └── cover.webp
+│
+├── ai-agents/
+│   ├── post.md
+│   └── cover.webp
+│
+└── rust-cli/
+    ├── post.md
+    └── cover.webp
 
-Those belong to their respective modules.
+And zombie-internet/post.md contains:
 
-2. Terminal behavior
+---
+title: "Zombie Internet"
+date: "2026-09-02"
+description: "How mass AI-generated content is changing the internet."
+cover: "cover.webp"
+---
 
-The terminal should behave like a small interactive CLI, not like a fake static terminal.
+# Zombie Internet
 
-User types:
+Article content...
 
-> hello
+The activity module should ultimately turn that into something conceptually like:
 
-and presses Enter.
+{
+    title: "Zombie Internet",
+    date: "2026-09-02",
+    description: "How mass AI-generated content is changing the internet.",
+    cover: "blog/zombie-internet/cover.webp",
+    url: "blog/zombie-internet/"
+}
 
-The command is processed and the output is appended below it.
+The Activity Center then decides how that object looks visually.
 
-The terminal should retain previous commands and their output, so the interaction feels like an actual shell.
+2. The important browser limitation
 
-Example:
+This is the one thing you need to account for before coding.
 
-> hello
+A browser cannot generally say:
 
-Hello! I'm Krishnang Pandey...
-...
+const files = getEverythingInside("./blog/");
 
-> projects
+A static website doesn't expose directory contents to JavaScript.
 
-Available projects:
-...
+So activity-blogs.js needs some source that tells it which Markdown files exist.
 
->
+For the architecture we're building, I'd use a generated manifest:
 
-The exact visual styling belongs to terminal.css, NOT terminal.js.
+blog/
+├── zombie-internet/
+│   └── post.md
+├── ai-agents/
+│   └── post.md
+└── rust-cli/
+    └── post.md
 
-3. Supported commands
+blog-index.json
 
-There are four primary command categories.
+The generated blog-index.json could contain:
 
-hello
+[
+    "blog/zombie-internet/post.md",
+    "blog/ai-agents/post.md",
+    "blog/rust-cli/post.md"
+]
 
-Purpose: introduce Krishnang.
+Then the browser can fetch that JSON.
 
-Input:
+This is not a second source of truth.
 
-hello
+The Markdown files remain the source of truth.
 
-Output should contain a concise introduction about:
+The index is merely:
 
-Name: Krishnang Pandey
-Student status
-University
-Degree / specialization
+“Here are the Markdown files that currently exist.”
 
-Do NOT make hello dump the entire portfolio.
+3. Initialization
 
-It should be an introduction, not a résumé.
+Expose one function:
 
-After printing the introduction, the terminal remains active.
+initBlogActivity()
 
-It does NOT navigate anywhere.
+main.js calls it when the website starts.
 
-freelance
+Something conceptually like:
 
-Purpose: introduce the freelancing section.
+main.js
+   ↓
+initBlogActivity()
+   ↓
+find #blog-activity
+   ↓
+load posts
 
-Input:
+If the Activity Center doesn't exist on the page, the module should simply return without exploding.
 
-freelance
+4. Configuration
 
-The terminal should:
+Keep the configuration tiny.
 
-Print a concise summary of available freelancing services/packages.
-Tell the user that they can view the full freelancing section.
-Navigate/scroll to the freelancing section.
+Something along the lines of:
 
-Example conceptual output:
+const BLOG_INDEX = '/blog-index.json';
+const MAX_POSTS = 3;
+const BLOG_ACTIVITY_CONTAINER = '#blog-activity';
 
-> freelance
+You don't need twenty configuration constants.
 
-Freelancing services:
-- ...
-- ...
-- ...
+The module isn't a framework. 😂
 
-Opening freelancing...
+5. Fetch the blog index
 
-Then the page scrolls to the freelancing section.
+First:
 
-The actual prices/services should be stored in a configuration/data structure rather than scattered throughout command logic.
+GET /blog-index.json
 
-Important: terminal.js should not become the source of truth for the entire freelancing section.
+You expect:
 
-Ideally:
+[
+    "blog/zombie-internet/post.md",
+    "blog/ai-agents/post.md",
+    "blog/rust-cli/post.md"
+]
 
-const freelanceData = ...
+Validate that the response is actually an array.
 
-or imported/shared data can contain the information.
+If it isn't:
 
-The terminal merely displays a concise version.
+ERROR
 
-projects
+If it's an empty array:
 
-Purpose: show the available projects and enter project-selection mode.
+EMPTY
 
-Input:
+Otherwise continue.
 
-projects
+6. Fetch every Markdown file
 
-Output:
+For every path in the index:
 
-> projects
+blog/zombie-internet/post.md
+blog/ai-agents/post.md
+blog/rust-cli/post.md
 
-Available projects:
+perform:
 
-1. project-name
-2. project-name
-3. project-name
+GET /blog/zombie-internet/post.md
+GET /blog/ai-agents/post.md
+GET /blog/rust-cli/post.md
 
-Type:
-project <project-name>
-
-to open a project.
-
-The terminal should NOT immediately open a project.
-
-projects is a discovery command.
-
-The user then enters something such as:
-
-> project my-project
-project <project-name>
-
-Purpose: open a specific project.
-
-Example:
-
-> project my-project
-
-The terminal:
-
-Extracts the project name.
-Checks whether that project exists.
-If it exists, prints a short confirmation.
-Redirects the user to that project's GitHub repository.
-
-Example:
-
-> project my-project
-
-Opening my-project...
-
-Then redirect.
-
-The project mapping should be explicit.
+You can fetch them concurrently with Promise.all().
 
 Conceptually:
 
+index
+ ├── post.md ──→ fetch
+ ├── post.md ──→ fetch
+ └── post.md ──→ fetch
+                    ↓
+               Markdown strings
+7. Parse the front matter
+
+You don't need to parse the actual Markdown body for the Activity Center.
+
+You only care about the metadata at the top.
+
+Given:
+
+---
+title: "Zombie Internet"
+date: "2026-09-02"
+description: "How mass AI-generated content is changing the internet."
+cover: "cover.webp"
+---
+
+# Zombie Internet
+
+A bunch of article content...
+
+you extract:
+
+title
+date
+description
+cover
+
+The front matter is the section between:
+
+---
+
+and:
+
+---
+
+So conceptually:
+
+Markdown
+│
+├── front matter
+│   ├── title
+│   ├── date
+│   ├── description
+│   └── cover
+│
+└── article body
+
+The article body can be ignored by this module.
+
+8. Don't build a giant Markdown parser
+
+For this module, you don't need to interpret arbitrary Markdown.
+
+You're only reading a very controlled front-matter format that you define.
+
+You can parse it yourself.
+
+For example:
+
+---
+title: "Zombie Internet"
+date: "2026-09-02"
+description: "Something..."
+cover: "cover.webp"
+---
+
+Split the front matter into lines.
+
+For each line:
+
+key: value
+
+extract:
+
+key
+value
+
+Then remove surrounding quotes where appropriate.
+
+That's enough for your current system.
+
+If eventually you want full YAML support, that's when you can introduce a YAML parser.
+
+9. Resolve the cover image path
+
+This is an easy thing to accidentally screw up.
+
+Suppose:
+
+Markdown:
+blog/zombie-internet/post.md
+
+cover:
+cover.webp
+
+The actual image is:
+
+blog/zombie-internet/cover.webp
+
+So don't interpret:
+
+cover.webp
+
+as:
+
+/cover.webp
+
+Instead, resolve it relative to the Markdown file's directory.
+
+Conceptually:
+
+post.md
+│
+├── directory = blog/zombie-internet/
+│
+└── cover = cover.webp
+             ↓
+       blog/zombie-internet/cover.webp
+10. Generate the blog URL
+
+You also need a URL for clicking the activity item.
+
+If your blog structure is:
+
+blog/
+└── zombie-internet/
+    └── post.md
+
+then you need to decide what the actual article URL is.
+
+For example:
+
+/blog/zombie-internet/
+
+or:
+
+/blog/zombie-internet.html
+
+or perhaps:
+
+/blog.html?post=zombie-internet
+
+This part needs to match whatever blog-page architecture you eventually implement.
+
+The Activity module shouldn't invent a routing system.
+
+I'd recommend deciding this before you code the renderer.
+
+11. Normalize the data
+
+This is important because it keeps rendering independent from Markdown structure.
+
+Every successful post should become:
+
 {
-    "my-project": "https://github.com/...",
-    "another-project": "https://github.com/..."
+    title,
+    date,
+    description,
+    cover,
+    url
 }
 
-Do NOT construct GitHub URLs dynamically from arbitrary user input.
-
-That would make typos and nonexistent repositories problematic.
-
-4. Unknown commands
-
-The terminal MUST handle invalid commands gracefully.
+So regardless of how the Markdown file looks internally, the Activity Center receives a predictable object.
 
 For example:
 
-> banana
+{
+    title: "Zombie Internet",
+    date: "2026-09-02",
+    description: "How mass AI-generated content is changing the internet.",
+    cover: "/blog/zombie-internet/cover.webp",
+    url: "/blog/zombie-internet/"
+}
+12. Validate posts
 
-Command not found: banana
+Don't blindly render garbage.
 
-Available commands:
-hello
-freelance
-projects
+At minimum, require:
 
-Do not throw a JavaScript exception.
+title
+date
 
-Do not break the terminal.
+If a Markdown file has:
 
-Do not reload the page.
+---
+description: "blah"
+---
 
-Do not silently ignore the input.
+but no title/date, skip that post.
 
-5. Empty input
+You could optionally allow missing:
 
-If the user presses Enter without typing anything:
+description
+cover
 
->
-
-Nothing should happen.
-
-Do NOT print:
-
-Command not found:
-
-Do NOT add an unnecessary error message.
-
-The terminal should simply create the next prompt.
-
-6. Command parsing
-
-Commands should be treated sensibly with whitespace.
-
-These should all resolve to the same command:
-
-hello
-HELLO
- Hello
-hello
-
-At minimum:
-
-trim leading/trailing whitespace
-normalize command names to lowercase
-
-For example:
-
-HELLO
-
-should behave like:
-
-hello
-
-For project names, be deliberate about case sensitivity.
-
-I'd recommend project identifiers being case-insensitive too:
-
-project AFT
-project aft
-PROJECT aft
-
-can resolve to the same project.
-
-But the displayed project name should preserve its proper capitalization.
-
-7. Help command
-
-I strongly recommend adding:
-
-help
-
-even though it wasn't part of the original four.
-
-It should print:
-
-Available commands:
-
-hello       Learn about me
-freelance   View freelancing information
-projects    List projects
-project     Open a specific project
-help        Show available commands
-clear       Clear terminal
-
-This makes the terminal discoverable instead of forcing the user to know the commands beforehand.
-
-8. clear
-
-Also add:
-
-clear
-
-It should clear the visible terminal history.
-
-It must NOT:
-
-reload the webpage
-reset other sections
-reset GitHub/blog data
-reset animations
-
-It only clears the terminal's displayed history.
-
-9. Command history
-
-The terminal should maintain command history during the current session.
-
-If practical, support:
-
-ArrowUp
-ArrowDown
-
-to navigate previously entered commands.
-
-For example:
-
-> hello
-> projects
-> freelance
-
-Pressing ↑ should cycle backward through:
-
-freelance
-projects
-hello
-
-This is optional functionality, but it would make the terminal feel significantly more authentic.
-
-10. Prevent normal form submission
-
-If the terminal input is inside a <form>, pressing Enter must NOT cause a normal browser form submission.
-
-The JavaScript should intercept it and process the command itself.
-
-There should be no:
-
-page refresh
-URL modification
-accidental form submission
-11. Navigation behavior
-
-terminal.js may trigger navigation to sections, but it should NOT implement the sections themselves.
-
-For example:
-
-freelance
-
-can tell the browser:
-
-scroll to #freelancing
-
-but it should NOT contain the freelancing section's DOM construction, styling, or animations.
-
-Same principle applies to future commands.
-
-Think:
-
-terminal.js
-     ↓
-"Go to freelancing"
-     ↓
-page navigation
-
-NOT:
-
-terminal.js
-     ↓
-build entire freelancing section
-     ↓
-style it
-     ↓
-animate it
-12. GitHub redirects
-
-For:
-
-project <name>
-
-the GitHub URL should come from a predefined project registry.
-
-Bad:
-
-window.location.href =
-    `https://github.com/krriisshhnnaaa/${projectName}`;
-
-Better:
-
-const projects = {
-    project1: "https://github.com/...",
-    project2: "https://github.com/..."
-};
-
-Then look up the requested project.
-
-This prevents arbitrary input from determining the destination.
-
-13. What terminal.js should NOT contain
-
-This is important because otherwise terminal.js will slowly become a 900-line monster. 💀
-
-Do NOT put:
-
-GitHub API calls
-Hygraph API calls
-Blog rendering
-Blog card generation
-Freelancing section generation
-Education/book animation
-Particle systems
-Background animations
-Logo animation
-Global page initialization
-CSS
-Huge amounts of static HTML
-
-inside it.
-
-terminal.js should essentially be:
-
-INPUT
-  ↓
-PARSE COMMAND
-  ↓
-VALIDATE
-  ↓
-EXECUTE COMMAND
-  ↓
-OUTPUT / NAVIGATE
-
-That's it.
-
-14. Error handling
-
-Every command should fail gracefully.
-
-Possible errors:
-
-Unknown command
-Unknown project
-Malformed project command
-Missing project name
-
-Example:
-
-> project
-
-Usage:
-project <project-name>
-
-Type "projects" to see available projects.
-
-And:
-
-> project imaginary-project
-
-Project not found: imaginary-project
-
-Type "projects" to see available projects.
-
-No JavaScript errors should reach the user.
-
-15. Security / robustness
-
-Even though this is a personal portfolio, don't blindly inject user input into HTML.
-
-Avoid doing something equivalent to:
-
-output.innerHTML += userInput;
-
-Instead, create DOM nodes and assign user-controlled text using textContent.
-
-This prevents the terminal from accidentally becoming an HTML/JS injection point.
-
-Also don't execute arbitrary commands.
-
-The terminal is a portfolio CLI simulation, not an actual shell.
+because those aren't necessarily essential.
 
 So:
 
-rm -rf /
-sudo ...
-python ...
-npm ...
-curl ...
+title      REQUIRED
+date       REQUIRED
+description OPTIONAL
+cover      OPTIONAL
+13. Sort by date
 
-should simply result in:
+Once you've loaded all posts:
 
-Command not found: ...
+post A → Sep 2
+post B → Aug 28
+post C → Sep 5
+post D → Aug 10
 
-There is no reason for this terminal to execute operating-system commands.
+sort:
 
-16. Initialization
+Sep 5
+Sep 2
+Aug 28
+Aug 10
 
-terminal.js should expose an initialization function that main.js can call.
+Newest first.
 
-Conceptually:
+Then:
 
-initTerminal();
+posts.slice(0, MAX_POSTS)
 
-main.js owns initialization.
+If MAX_POSTS = 3, only those three reach the Activity Center.
 
-Therefore terminal.js should not assume that it is the application's entry point.
+14. What the Activity Center should display
 
-17. The mental model
+Based on the design we established, the Activity Center isn't the full blog.
 
-If you're implementing this yourself, I'd keep the architecture roughly:
+It's a recent activity feed.
 
-terminal.js
+Something like:
 
-┌─────────────────────┐
-│ Terminal Input      │
-└──────────┬──────────┘
-           ↓
-┌─────────────────────┐
-│ Command Parser      │
-└──────────┬──────────┘
-           ↓
-┌─────────────────────┐
-│ Command Registry    │
-├─────────────────────┤
-│ hello               │
-│ freelance           │
-│ projects            │
-│ project <name>      │
-│ help                │
-│ clear               │
-└──────────┬──────────┘
-           ↓
-┌─────────────────────┐
-│ Command Handler     │
-└──────────┬──────────┘
-           ↓
-     ┌─────┴─────┐
-     ↓           ↓
-  Output      Navigation
+BLOG
+────────────────────────────────
 
-The big rule:
+Zombie Internet
+How mass AI-generated content is...
+Sep 2, 2026
 
-terminal.js controls the terminal. It does not control the rest of the website.
+Building AI Agents
+...
+Sep 1, 2026
+
+Why I Started Using Rust
+...
+Aug 28, 2026
+
+Each item should be clickable.
+
+Click:
+
+Zombie Internet
+
+→ opens that blog post.
+
+The actual horizontally scrolling blog cards are handled by:
+
+blog-horizontal-scroll.js
+
+Not this module.
+
+That's an important separation.
+
+15. Rendering rules
+
+Just like activity-github.js, use DOM APIs.
+
+Don't do:
+
+container.innerHTML = markdownData;
+
+Especially because you're processing external file contents.
+
+Instead:
+
+createElement()
+textContent
+appendChild()
+
+For example:
+
+article
+ ├── title link
+ ├── description
+ └── date
+
+The title should be:
+
+element.textContent = post.title;
+
+rather than interpolated HTML.
+
+16. Loading state
+
+When initialization begins:
+
+Loading blog activity...
+
+Something visually consistent with GitHub Activity:
+
+Fetching recent blog posts...
+
+Then replace it when loading finishes.
+
+17. Empty state
+
+There are two possible empty conditions:
+
+blog-index.json exists
+        ↓
+[]
+
+or:
+
+index has files
+        ↓
+all files invalid
+
+Then display something like:
+
+No recent blog posts.
+
+Don't treat that as an application crash.
+
+18. Error state
+
+Actual infrastructure failure:
+
+blog-index.json couldn't be fetched
+
+or:
+
+Markdown file couldn't be fetched
+
+should produce:
+
+Blog activity couldn't be loaded.
+
+[Retry]
+
+The Retry button simply invokes the loading process again.
+
+19. What happens if ONE Markdown file fails?
+
+I'd recommend partial failure, rather than killing the entire feed.
+
+Example:
+
+index:
+A
+B
+C
+D
+
+A → success
+B → success
+C → 404
+D → success
+
+Result:
+
+A
+B
+D
+
+and silently skip C.
+
+But if:
+
+blog-index.json
+
+itself fails, that's a genuine module-level failure.
+
+So:
+
+Index failure → ERROR
+
+Individual post failure → skip that post
+
+That's a much nicer user experience.
+
+20. Final module architecture
+
+The whole thing should mentally look like this:
+
+                 blog-index.json
+                       │
+                       ▼
+                ┌──────────────┐
+                │ Fetch index  │
+                └──────┬───────┘
+                       │
+                       ▼
+              Markdown file paths
+                       │
+             ┌─────────┼─────────┐
+             ▼         ▼         ▼
+           post.md   post.md   post.md
+             │         │         │
+             └─────────┼─────────┘
+                       ▼
+                 Parse metadata
+                       │
+                       ▼
+                Normalize objects
+                       │
+                       ▼
+                  Validate posts
+                       │
+                       ▼
+                  Sort by date
+                       │
+                       ▼
+                  Limit results
+                       │
+                       ▼
+                Render Activity
+
+And the responsibility boundary is:
+
+activity-blogs.js
+        │
+        ├── Fetch
+        ├── Parse
+        ├── Validate
+        ├── Normalize
+        ├── Sort
+        └── Render
+
+while:
+
+blog-horizontal-scroll.js
+        │
+        └── Blog browsing interaction
+
+and eventually your blog-page code handles:
+
+Markdown → full article HTML
+One architectural decision you need to make now
+
+Before writing activity-blogs.js, decide the article URL format.
+
+I'd personally go with:
+
+/blog/<slug>/
+
+where:
+
+blog/
+└── zombie-internet/
+    └── post.md
+
+maps to:
+
+/blog/zombie-internet/
+
+Then your normalized object is beautifully simple:
+
+{
+    title: "...",
+    date: "...",
+    description: "...",
+    cover: "...",
+    url: "/blog/zombie-internet/"
+}
+
+
+
+
+review on generated activity-github.js  :
+
+
+Syntactically, this looks valid JavaScript. I don't see a syntax-level problem in the uploaded file.
+
+But logically/architecturally: this is still the old Hygraph implementation. That's the big problem.
+
+Your current file is explicitly built around Hygraph:
+
+const DEFAULT_HYGRAPH_ENDPOINT = 'https://ap-south-1.cdn.hygraph.com/...';
+const DEFAULT_AUTHOR_ID = 'cmrozug811d9n07pi8f11cm7y';
+
+and the fetching pipeline sends GraphQL requests to it.
+
+But what we just decided is:
+
+Markdown files
+      ↓
+discover/index
+      ↓
+fetch .md
+      ↓
+parse front matter
+      ↓
+normalize
+      ↓
+sort
+      ↓
+Activity Center
+
+So I would not debug this version further. It's solving the wrong problem.
+
+There are also several pieces that are now unnecessary for the Markdown architecture:
+
+DEFAULT_HYGRAPH_ENDPOINT
+DEFAULT_AUTHOR_ID
+GRAPHQL_QUERIES
+customFetcher
+GraphQL response handling
+authorId
+endpoint
+readTime unless you specifically want it in the activity feed
+tags unless you specifically want them there
+the whole author-filtering fallback system
+
+For example, this entire thing:
+
+try {
+    // query Hygraph by author
+}
+
+followed by:
+
+if (!fetchSucceeded || rawPosts.length === 0) {
+    // query recent posts
+}
+
+is leftover architecture we explicitly decided to get rid of.
+
+There are a couple of smaller issues too.
+
+MAX_POSTS uses ||:
+
+this.maxPosts = options.maxPosts || MAX_POSTS;
+
+so 0 can't be intentionally supplied. Same minor issue we found in activity-github.js.
+
+Also, the module currently says it will display articles, excerpts, reading time, tags, etc. That's considerably more elaborate than what you originally described for the Activity Center.
+
+What I recommend
+
+Don't patch this file. Replace its data layer entirely.
+
+Keep the useful structural ideas:
+
+activity-blog.js
+├── configuration
+├── formatting helpers
+├── Markdown parsing
+├── normalization
+├── sorting
+├── fetching
+├── DOM rendering
+├── controller
+└── initialization/export
+
+But make the actual data pipeline:
+
+blog-index.json
+      ↓
+fetch paths
+      ↓
+fetch each post.md
+      ↓
+parse front matter
+      ↓
+normalize:
+{
+    title,
+    date,
+    description,
+    cover,
+    url
+}
+      ↓
+sort newest → oldest
+      ↓
+take MAX_POSTS
+      ↓
+render
+
+And that's it.
+
+One other thing: you named this activity-blog.js, whereas our original module list had activity-blogs.js. I'd actually stick with activity-blog.js now because the module represents the blog activity feed as a singular subsystem. Just update the planned JS tree accordingly.
