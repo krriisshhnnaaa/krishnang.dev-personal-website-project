@@ -29,3 +29,13 @@ next section : connect with me :
 shows all different social media that i am on 
  
 
+javascript/
+├── main.js
+├── terminal.js
+├── activity-github.js
+├── activity-blogs.js
+├── blog-horizontal-scroll.js
+├── book-education.js
+├── background-animations.js
+└── logo-animation.js
+

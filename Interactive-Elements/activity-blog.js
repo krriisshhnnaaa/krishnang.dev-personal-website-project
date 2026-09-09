@@ -62,7 +62,7 @@
         }
 
         // Match the front matter block between leading --- and closing ---
-        const match = trimmed.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+        const match = trimmed.match(/^---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/);
         if (!match) {
             return null;
         }
@@ -84,13 +84,14 @@
                 continue;
             }
 
-            const key = cleanLine.slice(0, colonIndex).trim();
+            const key = cleanLine.slice(0, colonIndex).trim().toLowerCase();
             let value = cleanLine.slice(colonIndex + 1).trim();
 
             // Remove surrounding single or double quotes
             if (
-                (value.startsWith('"') && value.endsWith('"')) ||
-                (value.startsWith("'") && value.endsWith("'"))
+                value.length >= 2 &&
+                ((value.startsWith('"') && value.endsWith('"')) ||
+                 (value.startsWith("'") && value.endsWith("'")))
             ) {
                 value = value.slice(1, -1);
             }
@@ -119,7 +120,12 @@
             return '/';
         }
 
-        const normalized = filePath.replace(/\\/g, '/');
+        let normalized = filePath.replace(/\\/g, '/').trim();
+        // Strip leading ./
+        if (normalized.startsWith('./')) {
+            normalized = normalized.slice(2);
+        }
+
         const lastSlash = normalized.lastIndexOf('/');
         if (lastSlash === -1) {
             return '/';
@@ -171,9 +177,10 @@
             return trimmed;
         }
 
+        const cleanCover = trimmed.startsWith('./') ? trimmed.slice(2) : trimmed;
         // Resolve relative to markdown directory
         const dir = getDirectory(markdownPath);
-        return `${dir}${trimmed}`;
+        return `${dir}${cleanCover}`;
     }
 
     // ==========================================================================
@@ -220,7 +227,7 @@
 
     /**
      * Formats an ISO date or date string into readable format (e.g., "Sep 2, 2026").
-     * Uses UTC values to avoid local timezone date drift.
+     * Uses explicit component extraction to avoid local timezone date drift.
      * 
      * @param {string} dateString
      * @returns {string}
@@ -228,12 +235,25 @@
     function formatDate(dateString) {
         if (!dateString) return '';
 
-        const date = new Date(dateString);
-        if (Number.isNaN(date.getTime())) {
-            return dateString;
+        const trimmed = String(dateString).trim();
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        // Direct match for YYYY-MM-DD to avoid local timezone offset drift
+        const isoMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (isoMatch) {
+            const year = parseInt(isoMatch[1], 10);
+            const monthIndex = parseInt(isoMatch[2], 10) - 1;
+            const day = parseInt(isoMatch[3], 10);
+            if (monthIndex >= 0 && monthIndex < 12) {
+                return `${months[monthIndex]} ${day}, ${year}`;
+            }
         }
 
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const date = new Date(trimmed);
+        if (Number.isNaN(date.getTime())) {
+            return trimmed;
+        }
+
         return `${months[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
     }
 
@@ -248,11 +268,14 @@
             const timeA = new Date(a.date).getTime();
             const timeB = new Date(b.date).getTime();
 
-            const valA = Number.isNaN(timeA) ? a.date : timeA;
-            const valB = Number.isNaN(timeB) ? b.date : timeB;
+            const validA = !Number.isNaN(timeA);
+            const validB = !Number.isNaN(timeB);
 
-            if (valB > valA) return 1;
-            if (valB < valA) return -1;
+            if (validA && validB) {
+                return timeB - timeA;
+            }
+            if (validA) return -1;
+            if (validB) return 1;
             return 0;
         });
     }
@@ -274,9 +297,27 @@
      */
     async function fetchBlogActivity(indexPath, maxPosts) {
         // Step 5: Fetch blog-index.json
-        const indexRes = await fetch(indexPath);
-        if (!indexRes.ok) {
-            throw new Error(`Failed to fetch blog index: ${indexRes.status} ${indexRes.statusText}`);
+        let indexRes;
+        try {
+            indexRes = await fetch(indexPath);
+            if (!indexRes.ok && indexPath.startsWith('/')) {
+                // Graceful fallback for non-root deployments or relative environments
+                indexRes = await fetch(indexPath.replace(/^\//, ''));
+            }
+        } catch (err) {
+            if (indexPath.startsWith('/')) {
+                try {
+                    indexRes = await fetch(indexPath.replace(/^\//, ''));
+                } catch {
+                    throw new Error(`Failed to fetch blog index: ${err.message}`);
+                }
+            } else {
+                throw new Error(`Failed to fetch blog index: ${err.message}`);
+            }
+        }
+
+        if (!indexRes || !indexRes.ok) {
+            throw new Error(`Failed to fetch blog index: ${indexRes ? indexRes.status : 'network error'}`);
         }
 
         const filePaths = await indexRes.json();
@@ -295,7 +336,13 @@
                     return null;
                 }
 
-                const postRes = await fetch(filePath);
+                let postRes = await fetch(filePath);
+                if (!postRes.ok && filePath.startsWith('/')) {
+                    postRes = await fetch(filePath.replace(/^\//, ''));
+                } else if (!postRes.ok && !filePath.startsWith('/') && !filePath.startsWith('http')) {
+                    postRes = await fetch('/' + filePath);
+                }
+
                 if (!postRes.ok) {
                     // Step 19: Skip missing post silently
                     return null;
