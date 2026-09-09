@@ -1,0 +1,247 @@
+/* ==========================================================================
+   logo-animation.css — Metallic Material & Physical Aesthetics
+   Architecture: Defines the physical material for the interactive </> logo.
+   Consumes CSS Custom Properties dynamically modulated by logo.js:
+     --logo-light-x               (specular highlight X percentage)
+     --logo-light-y               (specular highlight Y percentage)
+     --logo-tilt-x                (pitch rotation around X axis)
+     --logo-tilt-y                (yaw rotation around Y axis)
+     --logo-shift-x               (micro-displacement X)
+     --logo-shift-y               (micro-displacement Y)
+     --logo-interaction-strength  (normalized cursor proximity [0.0 - 1.0])
+   ========================================================================== */
+
+:root {
+  /* Default Ambient Starlight Lighting */
+  --logo-light-x: 50%;
+  --logo-light-y: 30%;
+  --logo-tilt-x: 0deg;
+  --logo-tilt-y: 0deg;
+  --logo-shift-x: 0px;
+  --logo-shift-y: 0px;
+  --logo-interaction-strength: 0;
+
+  /* Metallic Material Palette */
+  --metal-highlight: #ffffff;
+  --metal-shine: #e2e8f0;
+  --metal-surface: #cbd5e1;
+  --metal-mid: #94a3b8;
+  --metal-bevel-dark: #475569;
+  --metal-deep-shadow: #0f172a;
+  --metal-cosmic-glow: rgba(0, 242, 254, 0.4);
+}
+
+/* Base Personal Logo Container & Object */
+#personal-logo,
+.personal-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  padding: 0.35rem 0.85rem;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  perspective: 700px;
+  transform-style: preserve-3d;
+  will-change: transform, filter;
+  transition: border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Metallic Surface Gradient with Dynamic Specular Reflection */
+  background: 
+    radial-gradient(
+      circle at var(--logo-light-x, 50%) var(--logo-light-y, 30%),
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(226, 232, 240, 0.7) 20%,
+      rgba(148, 163, 184, 0.4) 45%,
+      transparent 70%
+    ),
+    linear-gradient(
+      145deg,
+      #f8fafc 0%,
+      #e2e8f0 18%,
+      #94a3b8 38%,
+      #cbd5e1 52%,
+      #64748b 72%,
+      #334155 100%
+    );
+
+  /* Clip text to render rich metallic chrome finish */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Physical Metallic Depth & Dynamic Specular Shadow */
+  filter: 
+    drop-shadow(
+      calc(var(--logo-tilt-y, 0deg) * -0.4) 
+      calc(var(--logo-tilt-x, 0deg) * 0.4 + 3px) 
+      8px rgba(0, 0, 0, 0.75)
+    )
+    drop-shadow(
+      0 0 calc(12px * var(--logo-interaction-strength, 0)) 
+      rgba(0, 242, 254, calc(0.35 * var(--logo-interaction-strength, 0)))
+    );
+
+  /* Subtle 3D Tilt & Micro-Displacement (Lighted Object) */
+  transform: 
+    perspective(700px)
+    translate3d(var(--logo-shift-x, 0px), var(--logo-shift-y, 0px), 0)
+    rotateX(var(--logo-tilt-x, 0deg))
+    rotateY(var(--logo-tilt-y, 0deg));
+}
+
+/* Metallic Bevel Frame (Background Plate) */
+#personal-logo::before,
+.personal-logo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 7px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.65;
+  transition: opacity 0.25s ease;
+}
+
+/* Hover State — Smooth Ambient Proximity Highlight */
+#personal-logo:hover,
+.personal-logo:hover,
+.personal-logo.logo--hovered {
+  border-color: rgba(0, 242, 254, 0.35);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 18px rgba(0, 242, 254, 0.15);
+}
+
+#personal-logo:hover::before,
+.personal-logo:hover::before,
+.personal-logo.logo--hovered::before {
+  opacity: 0.95;
+}
+
+/* Keyboard Focus Accessibility */
+#personal-logo:focus-visible,
+.personal-logo:focus-visible {
+  outline: 2px solid var(--accent-cyan, #00f2fe);
+  outline-offset: 4px;
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.4);
+}
+
+/* ==========================================================================
+   Entrance Animation: "Settling into Reality"
+   Avoids flash, spins, or explosions; mimics a dense physical object
+   being deliberately set down into deep space.
+   ========================================================================== */
+
+.personal-logo.logo--entering {
+  animation: logoSettleEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes logoSettleEntrance {
+  0% {
+    opacity: 0;
+    transform: perspective(700px) translateY(-10px) scale(0.96);
+    filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.9));
+  }
+  60% {
+    opacity: 0.9;
+    transform: perspective(700px) translateY(1.5px) scale(1.008);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(700px) translateY(0) scale(1);
+    filter: 
+      drop-shadow(
+        calc(var(--logo-tilt-y, 0deg) * -0.4) 
+        calc(var(--logo-tilt-x, 0deg) * 0.4 + 3px) 
+        8px rgba(0, 0, 0, 0.75)
+      );
+  }
+}
+
+.personal-logo.logo--settled {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Click / Strike Impact Animation
+   Micro-compression and metallic vibration. Extremely brief (180ms).
+   ========================================================================== */
+
+.personal-logo.logo--impact {
+  animation: logoMetalImpact 0.18s cubic-bezier(0.25, 1.4, 0.5, 1) forwards;
+}
+
+@keyframes logoMetalImpact {
+  0% {
+    transform: 
+      perspective(700px)
+      translate3d(var(--logo-shift-x, 0px), calc(var(--logo-shift-y, 0px) + 1.2px), -3px)
+      scale(0.965);
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.9)) brightness(1.25);
+  }
+  35% {
+    transform: 
+      perspective(700px)
+      translate3d(calc(var(--logo-shift-x, 0px) - 1px), var(--logo-shift-y, 0px), 0)
+      rotateX(calc(var(--logo-tilt-x, 0deg) - 1.5deg))
+      rotateY(calc(var(--logo-tilt-y, 0deg) + 1.5deg))
+      scale(0.985);
+  }
+  70% {
+    transform: 
+      perspective(700px)
+      translate3d(calc(var(--logo-shift-x, 0px) + 0.8px), var(--logo-shift-y, 0px), 0)
+      rotateX(calc(var(--logo-tilt-x, 0deg) + 0.8deg))
+      scale(1.005);
+  }
+  100% {
+    transform: 
+      perspective(700px)
+      translate3d(var(--logo-shift-x, 0px), var(--logo-shift-y, 0px), 0)
+      rotateX(var(--logo-tilt-x, 0deg))
+      rotateY(var(--logo-tilt-y, 0deg))
+      scale(1);
+    filter: 
+      drop-shadow(
+        calc(var(--logo-tilt-y, 0deg) * -0.4) 
+        calc(var(--logo-tilt-x, 0deg) * 0.4 + 3px) 
+        8px rgba(0, 0, 0, 0.75)
+      );
+  }
+}
+
+/* ==========================================================================
+   Accessibility: Prefers-Reduced-Motion Handling
+   Disables 3D spatial transformations and entrance/impact animations.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  #personal-logo,
+  .personal-logo,
+  .personal-logo.logo--entering,
+  .personal-logo.logo--impact,
+  .personal-logo.logo--reduced-motion {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) !important;
+  }
+}

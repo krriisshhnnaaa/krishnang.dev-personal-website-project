@@ -3,6 +3,8 @@
    Cosmic Dark / Cyberpunk Aesthetic
    ========================================================================== */
 
+@import url('./logo-animation.css');
+
 :root {
   /* Color Palette */
   --bg-dark: #07070b;
@@ -72,6 +74,19 @@ body {
     radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
     radial-gradient(circle at 85% 60%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
   background-attachment: fixed;
+}
+
+/* Ambient Cosmic Background Canvas */
+#background-canvas,
+.background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  display: block;
 }
 
 a {

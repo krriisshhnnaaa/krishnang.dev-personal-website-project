@@ -1,707 +1,526 @@
-activity-blog.js is the data-fetching/activity-feed module.
-blog-horizontal-scroll.js should be the interactive blog browser.
-
-So its job is basically:
-
-Take the blog data already available to the page → build/control the horizontal blog cards → handle scrolling and card interaction → navigate to the selected article.
-
-It should not independently talk to Hygraph, GitHub, or the Markdown files. That separation keeps the modules sane.
-
-Architecture
-
-The overall flow should be:
-
-Markdown blog files
-        ↓
-blog-index.json
-        ↓
-activity-blog.js
-        ↓
-normalized blog-post objects
-        ↓
-blog-horizontal-scroll.js
-        ↓
-horizontal blog cards
-        ↓
-user interaction
-        ↓
-selected article
-        ↓
-/blog/<slug>/
-
-For the horizontal-scroll module specifically:
-
-INITIALIZE
-   ↓
-Find blog section/container
-   ↓
-Obtain blog post data
-   ↓
-Validate data
-   ↓
-Create card for each post
-   ↓
-Insert cards into horizontal track
-   ↓
-Attach interaction handlers
-   ↓
-Enable horizontal navigation
-   ↓
-Handle resize / responsive behavior
-   ↓
-User clicks / scrolls / drags
-   ↓
-Update active/visible card
-   ↓
-Navigate when card is selected
-The important architectural decision
-
-I would give this module two responsibilities:
-
-1. Rendering
-2. Interaction
-
-Not data acquisition.
-
-So conceptually:
-
-blog-horizontal-scroll.js
-
-    ├── configuration
-    ├── container resolution
-    ├── data normalization
-    ├── card creation
-    ├── track rendering
-    ├── scroll controls
-    ├── active-card detection
-    ├── event handling
-    ├── responsive handling
-    └── initialization/export
-Algorithmic design
-1. Initialize
-
-When initBlogHorizontalScroll() is called:
-
-Find the blog horizontal-scroll container.
-If it does not exist:
-    exit gracefully.
-
-Find the track that will contain cards.
-If the track does not exist:
-    exit gracefully.
-
-Something like:
-
-BLOG_SECTION
-    └── BLOG_TRACK
-         ├── CARD
-         ├── CARD
-         ├── CARD
-         └── ...
-2. Obtain blog data
-
-This module needs the normalized posts.
+logo.js
+Purpose
 
-There are two clean ways to architect this.
+logo.js controls the interactive personal logo:
 
-Option A — activity-blog.js exposes the posts
-activity-blog.js
-       ↓
-fetches + normalizes posts
-       ↓
-controller.state.posts
-       ↓
-blog-horizontal-scroll.js consumes them
+</>
 
-This avoids fetching the Markdown files twice.
+The logo should appear near the beginning of the webpage as a visually prominent object with a metallic appearance.
 
-This is the architecture I'd prefer.
+It should have a sense of physical presence through lighting, shading, subtle movement, and interaction.
 
-The normalized object is already something like:
+The user can interact with it by clicking it. When clicked, the logo produces the sound of a metal object being struck using an audio file stored locally in the project.
 
-{
-    title,
-    date,
-    description,
-    cover,
-    url
-}
+The overall impression should be:
 
-which is exactly what the card needs.
+A physical metallic </> object embedded inside a digital environment.
 
-3. Validate posts
+It should feel tactile without becoming a game-like UI element.
 
-Before rendering:
+What this module owns
 
-For every post:
-    if title missing → skip
-    if url missing → skip
+logo.js handles:
 
-You don't need to re-validate everything that activity-blog.js already validated.
+1. Logo initialization
+2. Logo element discovery/creation
+3. Logo entrance animation
+4. Interactive hover behavior
+5. Pointer-based lighting / subtle movement
+6. Click interaction
+7. Metallic strike audio playback
+8. Audio cooldown / interaction protection
+9. Optional click animation
+10. Accessibility state
+11. Cleanup
 
-This module is primarily concerned with:
+It does NOT handle:
 
-title
-date
-description
-cover
-url
-4. Create the horizontal track
+1. Background cosmic particles
+2. Terminal functionality
+3. Page navigation
+4. Blog functionality
+5. Education animation
+6. Global colors/theme
+7. General typography
+8. General page layout
+Logo representation
 
-The track is simply a flex/overflow container.
+The canonical logo is:
 
-Conceptually:
+</>
 
-BLOG SECTION
-│
-└── TRACK
-    │
-    ├── CARD 1
-    ├── CARD 2
-    ├── CARD 3
-    ├── CARD 4
-    └── CARD N
-
-CSS handles the actual horizontal layout.
-
-JavaScript should not continuously calculate positions unless necessary.
-
-5. Create each card
-
-For every normalized post:
-
-create article
-    ↓
-add cover image
-    ↓
-add title
-    ↓
-add description
-    ↓
-add publication date
-    ↓
-make card clickable
-    ↓
-append card to track
-
-A conceptual card:
-
-┌───────────────────────────┐
-│                           │
-│        COVER IMAGE        │
-│                           │
-├───────────────────────────┤
-│ Zombie Internet           │
-│ How AI-generated content  │
-│ is changing the internet  │
-│                           │
-│ Sep 2, 2026               │
-└───────────────────────────┘
-
-The card itself should probably link directly to post.url.
-
-That means JavaScript doesn't need some elaborate:
-
-click card
-→ find slug
-→ manually construct URL
-→ redirect
-
-when the normalized object already contains the destination.
-
-Horizontal interaction
-
-Now the interesting part.
-
-You have a horizontal track:
-
-[ CARD 1 ][ CARD 2 ][ CARD 3 ][ CARD 4 ][ CARD 5 ]
-←────────────────────────────────────────────────→
-
-The module can support:
-
-Mouse wheel / trackpad
-        ↓
-native horizontal scrolling
-
-Previous button
-        ↓
-scrollBy()
-
-Next button
-        ↓
-scrollBy()
-
-Click card
-        ↓
-navigate
-
-That means the browser's native scrolling does most of the heavy lifting.
-
-Don't build a custom physics engine.
-
-Seriously 😂
-
-We don't need:
-
-velocity
-acceleration
-friction
-momentum
-drag interpolation
-requestAnimationFrame()
-
-unless the design later specifically requires it.
-
-Native horizontal scrolling is already very good.
-
-Active card detection
-
-This is the one piece of JS that can make the component feel polished.
-
-As the user scrolls:
-
-CARD 1    CARD 2    CARD 3
-   ↓
-determine which card is most visible
-   ↓
-mark it as active
-
-You could use IntersectionObserver.
-
-Algorithm:
-
-Observe every card.
-
-When visibility changes:
-    determine which card has the highest visibility.
-    remove "active" from previous card.
-    add "active" to new card.
-
-Then CSS can do:
-
-.card.active {
-    ...
-}
-
-without JavaScript touching styling details.
-
-Navigation controls
-
-Suppose we have:
-
-←      cards      →
-
-The Previous button:
-
-Find currently visible/active card
-        ↓
-Find previous card
-        ↓
-scroll that card into view
-
-Next:
-
-Find currently visible/active card
-        ↓
-Find next card
-        ↓
-scroll that card into view
-
-Use:
-
-card.scrollIntoView({
-    behavior: 'smooth',
-    block: 'nearest',
-    inline: 'center'
-});
-
-rather than manually calculating pixel offsets.
-
-Much simpler.
-
-Responsive behavior
-
-The JS should mostly leave responsiveness to CSS.
+The actual implementation should preferably use normal text or an SVG rather than an image.
 
 For example:
 
-Desktop:
-3 cards visible
+<div id="personal-logo" class="personal-logo">
+    &lt;/&gt;
+</div>
 
-Tablet:
-2 cards visible
+or an SVG representation if you eventually want much finer control over the geometry.
 
-Mobile:
-1 card visible
+The important thing is that the visual identity remains exactly:
 
-CSS handles the card widths.
+</>
+Metallic appearance
 
-JavaScript only needs to react to layout changes where necessary.
+The JavaScript should not manually draw the metal appearance.
 
-Potentially:
+That belongs primarily to:
 
-resize
+logo-animation.css
+
+CSS can provide:
+
+metallic gradient
+highlight
+shadow
+specular reflection
+depth
+subtle bevel
+glow
+
+The JS merely controls the dynamic aspects.
+
+Think:
+
+CSS
+ ↓
+physical material
+
+JS
+ ↓
+physical interaction
+
+This keeps the module clean.
+
+Initial entrance animation
+
+When the webpage loads, the logo should already be conceptually present, but it should enter into the scene.
+
+Possible sequence:
+
+page begins
+    ↓
+logo appears
+    ↓
+slight opacity increase
+    ↓
+slight vertical movement
+    ↓
+subtle settling
+    ↓
+logo becomes stationary
+
+The animation should feel like an object being placed into the scene rather than a flashy website intro.
+
+Avoid:
+
+spin
+explosion
+huge zoom
+neon flash
+
+A subtle "settling into reality" animation fits the concept much better.
+
+Idle state
+
+After the entrance animation completes, the logo should mostly remain still.
+
+You can give it an extremely subtle idle effect:
+
+tiny light movement
+tiny floating movement
+very subtle reflection
+
+But don't make it continuously bounce.
+
+The logo should feel heavy.
+
+That weight is important to the metallic/physical illusion.
+
+Pointer interaction
+
+When the cursor approaches the logo, the logo can respond subtly.
+
+Possible effects:
+
+cursor approaches
+       ↓
+specular highlight shifts
+       ↓
+tiny positional response
+       ↓
+slight depth/shadow change
+
+The effect should be based on the cursor's position relative to the logo.
+
+Conceptually:
+
+cursor
    ↓
-recalculate active card
+distance + direction
+   ↓
+interaction strength
+   ↓
+light/shadow/transform
 
-But don't attach a giant resize computation.
+The closer the cursor is, the stronger the response.
 
-Lifecycle states
+Don't make it follow the cursor
 
-I wouldn't make this module as elaborate as activity-blog.js.
+The logo should NOT behave like:
 
-It mostly needs:
+cursor moves right
+       ↓
+logo moves right
 
-IDLE
+That would make it feel like a UI widget.
+
+Instead, the logo should behave more like an object being observed under a moving light source.
+
+For example:
+
+cursor → upper-left
+        ↓
+highlight shifts upper-left
+shadow subtly changes
+
+cursor → lower-right
+        ↓
+highlight shifts lower-right
+shadow subtly changes
+
+That is what sells the material.
+
+Click interaction
+
+Clicking the logo triggers a small physical response.
+
+Conceptually:
+
+click
  ↓
-INITIALIZED
+logo receives impact
  ↓
-RENDERED
+tiny compression / displacement
  ↓
-INTERACTIVE
+metal strike sound
+ ↓
+logo settles back
 
-Potential failure states:
+The visual response should be extremely short.
 
-container missing
-track missing
-no posts
-invalid data
+Something like:
 
-For an empty collection:
+normal
+   ↓
+impact
+   ↓
+tiny vibration
+   ↓
+settle
+   ↓
+normal
 
-"No blog posts available."
+No giant animation.
 
-That's enough.
+The sound should be the main feedback.
 
-Pseudocode
+Audio
 
-Now the fun part — this is the version I'd actually use as your implementation blueprint.
+The metal strike sound is stored locally in the project.
 
-MODULE blog-horizontal-scroll
+For example:
 
-CONFIGURATION
-    define default section selector
-    define default track selector
-    define optional previous button selector
-    define optional next button selector
+assets/
+└── audio/
+    └── metal-strike.mp3
 
-FUNCTION initialize(options)
+The exact filename/path should be configurable rather than hardcoded throughout the module.
 
-    resolve section/container
+For example:
 
-    IF container does not exist
-        return null
+audioSrc: 'assets/audio/metal-strike.mp3'
 
-    resolve track
+The module should create or obtain an Audio instance and use it when the logo is clicked.
 
-    IF track does not exist
-        return null
+Conceptually:
 
-    obtain normalized blog posts
+click
+ ↓
+audio.currentTime = 0
+ ↓
+audio.play()
 
-    IF no posts exist
-        render empty state
-        return controller
+Resetting currentTime allows repeated strikes.
 
-    validate posts
+Audio protection
 
-    render cards
+Rapid clicking shouldn't create an absolute mess of overlapping sounds.
 
-    setup scroll interaction
+You should therefore have a configurable cooldown.
 
-    setup navigation controls
+For example:
 
-    setup active-card detection
+audioCooldown: 120
 
-    setup resize handling
+Meaning:
 
-    return controller
+click
+ ↓
+sound plays
+ ↓
+additional clicks during cooldown ignored
+ ↓
+cooldown expires
+ ↓
+next click allowed
 
-Then:
+Don't make the cooldown too long. The user should still be able to click the object repeatedly and hear individual strikes.
 
-FUNCTION getBlogPosts()
+Browser audio restrictions
 
-    obtain posts from activity-blog controller
+The sound should only be triggered from the user's click interaction.
 
-    IF posts are unavailable
-        return empty array
+Do NOT attempt:
 
-    return valid posts
-Card rendering
-FUNCTION renderCards(posts)
+page load
+ ↓
+automatically play metal sound
 
-    clear track
+Browsers commonly restrict autoplay with sound.
 
-    FOR EACH post IN posts
+A click is already a user gesture, so it is the appropriate moment to play the audio.
 
-        create card element
+Pointer lighting algorithm
 
-        create cover image
+A useful model is:
 
-        IF post.cover exists
-            set image source
-            set image alt text
-            append image
-        END IF
+logo bounding rectangle
+        +
+cursor coordinates
+        ↓
+relative cursor position
+        ↓
+normalized X/Y
+        ↓
+CSS custom properties
 
-        create title element
-        set title text
-        append title
+For example:
 
-        IF post.description exists
-            create description
-            set description text
-            append description
-        END IF
+--logo-light-x
+--logo-light-y
+--logo-tilt-x
+--logo-tilt-y
 
-        create date element
-        set formatted date
-        append date
+Then CSS can use those variables to control the appearance.
 
-        create link / clickable wrapper
-        set destination to post.url
+This keeps the actual rendering in CSS.
 
-        append card to track
+The JS essentially becomes:
 
-    END FOR
-Scroll controls
-FUNCTION setupNavigation()
+cursor position
+      ↓
+calculate interaction
+      ↓
+update CSS variables
 
-    IF previous button exists
+rather than manually manipulating dozens of visual properties.
 
-        add click listener
+Hover state
 
-        WHEN clicked:
+You can distinguish:
 
-            determine current active card
+pointer far away
+pointer approaching
+pointer over logo
+pointer leaving
 
-            determine previous card
+The transition should be smooth.
 
-            IF previous card exists
-                scroll previous card into view
-            END IF
+For example:
 
-    END IF
+far
+ ↓
+normal metallic appearance
 
+near
+ ↓
+subtle highlight
 
-    IF next button exists
+over
+ ↓
+stronger specular response
 
-        add click listener
+But don't turn the logo into a glowing button.
 
-        WHEN clicked:
+Click animation state
 
-            determine current active card
+Maintain a tiny internal state:
 
-            determine next card
+logoState = {
+    hovered: false,
+    pressed: false,
+    interactionStrength: 0
+}
 
-            IF next card exists
-                scroll next card into view
-            END IF
+On click:
 
-    END IF
-Active card detection
-FUNCTION setupActiveCardDetection()
+pressed = true
+    ↓
+CSS impact animation
+    ↓
+pressed = false
 
-    create IntersectionObserver
+The CSS animation can handle the actual timing.
 
-    observe every card
+JS shouldn't run a complicated physics simulation just to make the logo vibrate.
 
-    WHEN visibility changes
+Accessibility
 
-        calculate visibility for each card
+The logo is interactive, so it should be keyboard accessible.
 
-        find card with highest visibility
+If it's implemented as a div, give it:
 
-        remove active state from previous card
+tabindex="0"
+role="button"
 
-        add active state to selected card
+and allow:
 
-END FUNCTION
-Click handling
-FUNCTION setupCardInteractions()
+Enter
+Space
 
-    FOR EACH card
+to trigger the same interaction as clicking.
 
-        add click listener
+Even better, if appropriate to the HTML structure, use a <button> and style it to look like the logo.
 
-        WHEN card clicked
+Then accessibility comes much more naturally.
 
-            obtain card's post URL
+Reduced motion
 
-            navigate to post URL
+Respect:
 
-        END WHEN
+prefers-reduced-motion
 
-    END FOR
+If the user has requested reduced motion:
 
-Although, honestly, I'd make the card itself an <a> rather than using a click listener.
+disable entrance movement
+disable hover movement
+disable impact animation
 
-Then the browser handles navigation naturally:
+The logo should still exist and remain usable.
 
-<a href="/blog/zombie-internet/">
-    card contents
-</a>
+The click sound can remain available because reduced motion is about animation, not necessarily audio.
 
-That is cleaner and more accessible.
+Initialization
 
-Full pseudocode architecture
+The public API should be:
 
-Putting everything together:
+initLogoAnimation()
 
-MODULE blog-horizontal-scroll
+Usage:
 
-    CONFIGURATION
+const logoController = initLogoAnimation();
 
-        DEFAULT_CONTAINER_SELECTOR
-        DEFAULT_TRACK_SELECTOR
-        DEFAULT_PREVIOUS_SELECTOR
-        DEFAULT_NEXT_SELECTOR
+It should find:
 
+#personal-logo
 
-    FUNCTION createCard(post)
+or whatever selector you establish in the HTML.
 
-        create article/card
+If the element doesn't exist:
 
-        create link
+don't crash
+don't create random UI
+return safely
 
-        create cover
+This is especially useful while the rest of the site is still being developed.
 
-        IF cover exists
-            add cover
-        END IF
+Public controller
 
-        add title
+I'd expose:
 
-        IF description exists
-            add description
-        END IF
+initLogoAnimation()
 
-        add publication date
+and optionally:
 
-        return card
+controller.destroy()
+controller.getState()
 
+destroy() should:
 
-    FUNCTION renderCards(posts)
+remove pointer listeners
+remove keyboard listeners
+remove click listener
+cancel active timers/animations
+release audio references
+restore modified CSS variables
+Suggested internal structure
 
-        clear track
+Keep the file roughly organized as:
 
-        FOR EACH post
-            card = createCard(post)
-            append card to track
-        END FOR
+logo.js
+│
+├── Configuration
+│
+├── State
+│
+├── Logo discovery
+│
+├── Audio setup
+│
+├── Entrance animation
+│
+├── Pointer tracking
+│
+├── Lighting calculation
+│
+├── Hover handling
+│
+├── Click handling
+│
+├── Keyboard interaction
+│
+├── Reduced-motion handling
+│
+├── Initialization
+│
+└── Cleanup
 
+And the interaction flow becomes:
 
-    FUNCTION getVisibleCard()
+                       ┌──────────────┐
+                       │    Cursor    │
+                       └──────┬───────┘
+                              ↓
+                     pointer position
+                              ↓
+                    distance + direction
+                              ↓
+                     interaction strength
+                              ↓
+                    CSS lighting variables
+                              ↓
+                       metallic logo
 
-        inspect cards
 
-        determine most visible card
+Click ───────────────────────────────┐
+                                     ↓
+                              impact state
+                                     ↓
+                           ┌─────────┴─────────┐
+                           ↓                   ↓
+                     CSS vibration       metal audio
+                           ↓                   ↓
+                           └─────────┬─────────┘
+                                     ↓
+                                  settle
 
-        return card
+And the design philosophy I'd lock in for this module is:
 
+The logo is not an icon. It is an object.
 
-    FUNCTION scrollToCard(card)
-
-        IF card does not exist
-            return
-
-        card.scrollIntoView(smooth + centered)
-
-
-    FUNCTION setupNavigation()
-
-        previous button click
-            current = getVisibleCard()
-            previous = card before current
-            scrollToCard(previous)
-
-        next button click
-            current = getVisibleCard()
-            next = card after current
-            scrollToCard(next)
-
-
-    FUNCTION setupActiveState()
-
-        create IntersectionObserver
-
-        observe cards
-
-        when visibility changes
-            determine most visible card
-            update active class
-
-
-    FUNCTION setupInteractions()
-
-        setup navigation
-
-        setup active state
-
-
-    FUNCTION initialize(options)
-
-        resolve container
-
-        resolve track
-
-        obtain blog posts
-
-        validate posts
-
-        IF no posts
-            render empty state
-            return controller
-
-        renderCards(posts)
-
-        setupInteractions()
-
-        return controller
-
-
-    EXPORT initBlogHorizontalScroll
-One important architecture correction
-
-I would not make blog-horizontal-scroll.js fetch post.md itself.
-
-That would create this:
-
-activity-blog.js
-    ↓ fetch posts
-
-blog-horizontal-scroll.js
-    ↓ fetch same posts again
-
-which is dumb duplication.
-
-Instead:
-
-                ┌── Activity Center
-                │
-Markdown ──→ activity-blog.js
-                │
-                └──→ blog-horizontal-scroll.js
-
-Both components consume the same normalized blog data.
-
-That also means later, when you move from:
-
-Markdown
-
-to:
-
-FastAPI + database
-
-you don't have to rewrite both UI modules. You replace the data source while keeping the rendering/interaction architecture intact.
-
-That's the kind of separation that will save your ass six months from now when this project has inevitably grown twelve tentacles. 🫠
-
-And importantly, this gives blog-horizontal-scroll.js a very clean contract:
-
-INPUT:
-normalized blog posts
-
-OUTPUT:
-interactive horizontal blog browser
+The background represents space.
+The terminal represents computation.
+The </> logo represents you, sitting physically between those two ideas.
