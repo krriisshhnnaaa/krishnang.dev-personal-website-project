@@ -839,6 +839,191 @@ button {
 }
 
 /* ==========================================================================
+   Horizontal Blog Browser (for blog-horizontal-scroll.js)
+   ========================================================================== */
+.blog-scroll-section {
+  position: relative;
+  width: 100%;
+}
+
+.blog-scroll-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.blog-scroll-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.blog-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.blog-nav-btn:hover:not(.is-disabled) {
+  background: rgba(0, 242, 254, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.blog-nav-btn.is-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.blog-track-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.blog-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.75rem 0.25rem 1.5rem 0.25rem;
+  scrollbar-width: thin;
+}
+
+.blog-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.blog-track::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.blog-track::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+.blog-card {
+  flex: 0 0 320px;
+  max-width: 360px;
+  scroll-snap-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: var(--shadow-subtle);
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card:hover, .blog-card.active {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-4px);
+}
+
+.blog-card.active {
+  border-color: var(--border-active);
+}
+
+.blog-card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-card-cover-wrap {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+}
+
+.blog-card-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.blog-card:hover .blog-card-cover {
+  transform: scale(1.05);
+}
+
+.blog-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.6rem;
+}
+
+.blog-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+  transition: color var(--transition);
+}
+
+.blog-card:hover .blog-card-title {
+  color: var(--accent-cyan);
+}
+
+.blog-card-description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.blog-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.blog-scroll-empty, .blog-scroll-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  width: 100%;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .blog-card {
+    flex: 0 0 280px;
+  }
+}
+
+/* ==========================================================================
    Projects Section (Matches terminal.js Registry)
    ========================================================================== */
 .projects-grid {

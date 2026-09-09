@@ -1,759 +1,124 @@
-for activity-blogs.js, the goal is not to build the blog system. It is only the bridge between your Markdown blog files and the Activity Center.
+activity-blog.js is the data-fetching/activity-feed module.
+blog-horizontal-scroll.js should be the interactive blog browser.
 
-1. What the module does
+So its job is basically:
 
-The module's job is:
+Take the blog data already available to the page → build/control the horizontal blog cards → handle scrolling and card interaction → navigate to the selected article.
 
-blog Markdown files
+It should not independently talk to Hygraph, GitHub, or the Markdown files. That separation keeps the modules sane.
+
+Architecture
+
+The overall flow should be:
+
+Markdown blog files
         ↓
-discover their locations
-        ↓
-fetch each Markdown file
-        ↓
-extract front matter
-        ↓
-create normalized blog objects
-        ↓
-sort by publication date
-        ↓
-take recent posts
-        ↓
-render them in Activity Center
-
-For example, suppose you have:
-
-blog/
-├── zombie-internet/
-│   ├── post.md
-│   └── cover.webp
-│
-├── ai-agents/
-│   ├── post.md
-│   └── cover.webp
-│
-└── rust-cli/
-    ├── post.md
-    └── cover.webp
-
-And zombie-internet/post.md contains:
-
----
-title: "Zombie Internet"
-date: "2026-09-02"
-description: "How mass AI-generated content is changing the internet."
-cover: "cover.webp"
----
-
-# Zombie Internet
-
-Article content...
-
-The activity module should ultimately turn that into something conceptually like:
-
-{
-    title: "Zombie Internet",
-    date: "2026-09-02",
-    description: "How mass AI-generated content is changing the internet.",
-    cover: "blog/zombie-internet/cover.webp",
-    url: "blog/zombie-internet/"
-}
-
-The Activity Center then decides how that object looks visually.
-
-2. The important browser limitation
-
-This is the one thing you need to account for before coding.
-
-A browser cannot generally say:
-
-const files = getEverythingInside("./blog/");
-
-A static website doesn't expose directory contents to JavaScript.
-
-So activity-blogs.js needs some source that tells it which Markdown files exist.
-
-For the architecture we're building, I'd use a generated manifest:
-
-blog/
-├── zombie-internet/
-│   └── post.md
-├── ai-agents/
-│   └── post.md
-└── rust-cli/
-    └── post.md
-
 blog-index.json
+        ↓
+activity-blog.js
+        ↓
+normalized blog-post objects
+        ↓
+blog-horizontal-scroll.js
+        ↓
+horizontal blog cards
+        ↓
+user interaction
+        ↓
+selected article
+        ↓
+/blog/<slug>/
 
-The generated blog-index.json could contain:
+For the horizontal-scroll module specifically:
 
-[
-    "blog/zombie-internet/post.md",
-    "blog/ai-agents/post.md",
-    "blog/rust-cli/post.md"
-]
-
-Then the browser can fetch that JSON.
-
-This is not a second source of truth.
-
-The Markdown files remain the source of truth.
-
-The index is merely:
-
-“Here are the Markdown files that currently exist.”
-
-3. Initialization
-
-Expose one function:
-
-initBlogActivity()
-
-main.js calls it when the website starts.
-
-Something conceptually like:
-
-main.js
+INITIALIZE
    ↓
-initBlogActivity()
+Find blog section/container
    ↓
-find #blog-activity
+Obtain blog post data
    ↓
-load posts
+Validate data
+   ↓
+Create card for each post
+   ↓
+Insert cards into horizontal track
+   ↓
+Attach interaction handlers
+   ↓
+Enable horizontal navigation
+   ↓
+Handle resize / responsive behavior
+   ↓
+User clicks / scrolls / drags
+   ↓
+Update active/visible card
+   ↓
+Navigate when card is selected
+The important architectural decision
 
-If the Activity Center doesn't exist on the page, the module should simply return without exploding.
+I would give this module two responsibilities:
 
-4. Configuration
+1. Rendering
+2. Interaction
 
-Keep the configuration tiny.
-
-Something along the lines of:
-
-const BLOG_INDEX = '/blog-index.json';
-const MAX_POSTS = 3;
-const BLOG_ACTIVITY_CONTAINER = '#blog-activity';
-
-You don't need twenty configuration constants.
-
-The module isn't a framework. 😂
-
-5. Fetch the blog index
-
-First:
-
-GET /blog-index.json
-
-You expect:
-
-[
-    "blog/zombie-internet/post.md",
-    "blog/ai-agents/post.md",
-    "blog/rust-cli/post.md"
-]
-
-Validate that the response is actually an array.
-
-If it isn't:
-
-ERROR
-
-If it's an empty array:
-
-EMPTY
-
-Otherwise continue.
-
-6. Fetch every Markdown file
-
-For every path in the index:
-
-blog/zombie-internet/post.md
-blog/ai-agents/post.md
-blog/rust-cli/post.md
-
-perform:
-
-GET /blog/zombie-internet/post.md
-GET /blog/ai-agents/post.md
-GET /blog/rust-cli/post.md
-
-You can fetch them concurrently with Promise.all().
-
-Conceptually:
-
-index
- ├── post.md ──→ fetch
- ├── post.md ──→ fetch
- └── post.md ──→ fetch
-                    ↓
-               Markdown strings
-7. Parse the front matter
-
-You don't need to parse the actual Markdown body for the Activity Center.
-
-You only care about the metadata at the top.
-
-Given:
-
----
-title: "Zombie Internet"
-date: "2026-09-02"
-description: "How mass AI-generated content is changing the internet."
-cover: "cover.webp"
----
-
-# Zombie Internet
-
-A bunch of article content...
-
-you extract:
-
-title
-date
-description
-cover
-
-The front matter is the section between:
-
----
-
-and:
-
----
+Not data acquisition.
 
 So conceptually:
 
-Markdown
-│
-├── front matter
-│   ├── title
-│   ├── date
-│   ├── description
-│   └── cover
-│
-└── article body
-
-The article body can be ignored by this module.
-
-8. Don't build a giant Markdown parser
-
-For this module, you don't need to interpret arbitrary Markdown.
-
-You're only reading a very controlled front-matter format that you define.
-
-You can parse it yourself.
-
-For example:
-
----
-title: "Zombie Internet"
-date: "2026-09-02"
-description: "Something..."
-cover: "cover.webp"
----
-
-Split the front matter into lines.
-
-For each line:
-
-key: value
-
-extract:
-
-key
-value
-
-Then remove surrounding quotes where appropriate.
-
-That's enough for your current system.
-
-If eventually you want full YAML support, that's when you can introduce a YAML parser.
-
-9. Resolve the cover image path
-
-This is an easy thing to accidentally screw up.
-
-Suppose:
-
-Markdown:
-blog/zombie-internet/post.md
-
-cover:
-cover.webp
-
-The actual image is:
-
-blog/zombie-internet/cover.webp
-
-So don't interpret:
-
-cover.webp
-
-as:
-
-/cover.webp
-
-Instead, resolve it relative to the Markdown file's directory.
-
-Conceptually:
-
-post.md
-│
-├── directory = blog/zombie-internet/
-│
-└── cover = cover.webp
-             ↓
-       blog/zombie-internet/cover.webp
-10. Generate the blog URL
-
-You also need a URL for clicking the activity item.
-
-If your blog structure is:
-
-blog/
-└── zombie-internet/
-    └── post.md
-
-then you need to decide what the actual article URL is.
-
-For example:
-
-/blog/zombie-internet/
-
-or:
-
-/blog/zombie-internet.html
-
-or perhaps:
-
-/blog.html?post=zombie-internet
-
-This part needs to match whatever blog-page architecture you eventually implement.
-
-The Activity module shouldn't invent a routing system.
-
-I'd recommend deciding this before you code the renderer.
-
-11. Normalize the data
-
-This is important because it keeps rendering independent from Markdown structure.
-
-Every successful post should become:
-
-{
-    title,
-    date,
-    description,
-    cover,
-    url
-}
-
-So regardless of how the Markdown file looks internally, the Activity Center receives a predictable object.
-
-For example:
-
-{
-    title: "Zombie Internet",
-    date: "2026-09-02",
-    description: "How mass AI-generated content is changing the internet.",
-    cover: "/blog/zombie-internet/cover.webp",
-    url: "/blog/zombie-internet/"
-}
-12. Validate posts
-
-Don't blindly render garbage.
-
-At minimum, require:
-
-title
-date
-
-If a Markdown file has:
-
----
-description: "blah"
----
-
-but no title/date, skip that post.
-
-You could optionally allow missing:
-
-description
-cover
-
-because those aren't necessarily essential.
-
-So:
-
-title      REQUIRED
-date       REQUIRED
-description OPTIONAL
-cover      OPTIONAL
-13. Sort by date
-
-Once you've loaded all posts:
-
-post A → Sep 2
-post B → Aug 28
-post C → Sep 5
-post D → Aug 10
-
-sort:
-
-Sep 5
-Sep 2
-Aug 28
-Aug 10
-
-Newest first.
-
-Then:
-
-posts.slice(0, MAX_POSTS)
-
-If MAX_POSTS = 3, only those three reach the Activity Center.
-
-14. What the Activity Center should display
-
-Based on the design we established, the Activity Center isn't the full blog.
-
-It's a recent activity feed.
+blog-horizontal-scroll.js
+
+    ├── configuration
+    ├── container resolution
+    ├── data normalization
+    ├── card creation
+    ├── track rendering
+    ├── scroll controls
+    ├── active-card detection
+    ├── event handling
+    ├── responsive handling
+    └── initialization/export
+Algorithmic design
+1. Initialize
+
+When initBlogHorizontalScroll() is called:
+
+Find the blog horizontal-scroll container.
+If it does not exist:
+    exit gracefully.
+
+Find the track that will contain cards.
+If the track does not exist:
+    exit gracefully.
 
 Something like:
 
-BLOG
-────────────────────────────────
-
-Zombie Internet
-How mass AI-generated content is...
-Sep 2, 2026
-
-Building AI Agents
-...
-Sep 1, 2026
-
-Why I Started Using Rust
-...
-Aug 28, 2026
-
-Each item should be clickable.
-
-Click:
-
-Zombie Internet
-
-→ opens that blog post.
-
-The actual horizontally scrolling blog cards are handled by:
-
-blog-horizontal-scroll.js
-
-Not this module.
-
-That's an important separation.
-
-15. Rendering rules
-
-Just like activity-github.js, use DOM APIs.
-
-Don't do:
-
-container.innerHTML = markdownData;
-
-Especially because you're processing external file contents.
-
-Instead:
-
-createElement()
-textContent
-appendChild()
-
-For example:
-
-article
- ├── title link
- ├── description
- └── date
-
-The title should be:
-
-element.textContent = post.title;
-
-rather than interpolated HTML.
-
-16. Loading state
-
-When initialization begins:
-
-Loading blog activity...
-
-Something visually consistent with GitHub Activity:
-
-Fetching recent blog posts...
-
-Then replace it when loading finishes.
-
-17. Empty state
-
-There are two possible empty conditions:
-
-blog-index.json exists
-        ↓
-[]
-
-or:
-
-index has files
-        ↓
-all files invalid
-
-Then display something like:
-
-No recent blog posts.
-
-Don't treat that as an application crash.
-
-18. Error state
-
-Actual infrastructure failure:
-
-blog-index.json couldn't be fetched
-
-or:
-
-Markdown file couldn't be fetched
-
-should produce:
-
-Blog activity couldn't be loaded.
-
-[Retry]
-
-The Retry button simply invokes the loading process again.
-
-19. What happens if ONE Markdown file fails?
-
-I'd recommend partial failure, rather than killing the entire feed.
-
-Example:
-
-index:
-A
-B
-C
-D
-
-A → success
-B → success
-C → 404
-D → success
-
-Result:
-
-A
-B
-D
-
-and silently skip C.
-
-But if:
-
-blog-index.json
-
-itself fails, that's a genuine module-level failure.
-
-So:
-
-Index failure → ERROR
-
-Individual post failure → skip that post
-
-That's a much nicer user experience.
-
-20. Final module architecture
-
-The whole thing should mentally look like this:
-
-                 blog-index.json
-                       │
-                       ▼
-                ┌──────────────┐
-                │ Fetch index  │
-                └──────┬───────┘
-                       │
-                       ▼
-              Markdown file paths
-                       │
-             ┌─────────┼─────────┐
-             ▼         ▼         ▼
-           post.md   post.md   post.md
-             │         │         │
-             └─────────┼─────────┘
-                       ▼
-                 Parse metadata
-                       │
-                       ▼
-                Normalize objects
-                       │
-                       ▼
-                  Validate posts
-                       │
-                       ▼
-                  Sort by date
-                       │
-                       ▼
-                  Limit results
-                       │
-                       ▼
-                Render Activity
-
-And the responsibility boundary is:
-
-activity-blogs.js
-        │
-        ├── Fetch
-        ├── Parse
-        ├── Validate
-        ├── Normalize
-        ├── Sort
-        └── Render
-
-while:
-
-blog-horizontal-scroll.js
-        │
-        └── Blog browsing interaction
-
-and eventually your blog-page code handles:
-
-Markdown → full article HTML
-One architectural decision you need to make now
-
-Before writing activity-blogs.js, decide the article URL format.
-
-I'd personally go with:
-
-/blog/<slug>/
-
-where:
-
-blog/
-└── zombie-internet/
-    └── post.md
-
-maps to:
-
-/blog/zombie-internet/
-
-Then your normalized object is beautifully simple:
-
-{
-    title: "...",
-    date: "...",
-    description: "...",
-    cover: "...",
-    url: "/blog/zombie-internet/"
-}
-
-
-
-
-review on generated activity-github.js  :
-
-
-Syntactically, this looks valid JavaScript. I don't see a syntax-level problem in the uploaded file.
-
-But logically/architecturally: this is still the old Hygraph implementation. That's the big problem.
-
-Your current file is explicitly built around Hygraph:
-
-const DEFAULT_HYGRAPH_ENDPOINT = 'https://ap-south-1.cdn.hygraph.com/...';
-const DEFAULT_AUTHOR_ID = 'cmrozug811d9n07pi8f11cm7y';
-
-and the fetching pipeline sends GraphQL requests to it.
-
-But what we just decided is:
-
-Markdown files
-      ↓
-discover/index
-      ↓
-fetch .md
-      ↓
-parse front matter
-      ↓
-normalize
-      ↓
-sort
-      ↓
-Activity Center
-
-So I would not debug this version further. It's solving the wrong problem.
-
-There are also several pieces that are now unnecessary for the Markdown architecture:
-
-DEFAULT_HYGRAPH_ENDPOINT
-DEFAULT_AUTHOR_ID
-GRAPHQL_QUERIES
-customFetcher
-GraphQL response handling
-authorId
-endpoint
-readTime unless you specifically want it in the activity feed
-tags unless you specifically want them there
-the whole author-filtering fallback system
-
-For example, this entire thing:
-
-try {
-    // query Hygraph by author
-}
-
-followed by:
-
-if (!fetchSucceeded || rawPosts.length === 0) {
-    // query recent posts
-}
-
-is leftover architecture we explicitly decided to get rid of.
-
-There are a couple of smaller issues too.
-
-MAX_POSTS uses ||:
-
-this.maxPosts = options.maxPosts || MAX_POSTS;
-
-so 0 can't be intentionally supplied. Same minor issue we found in activity-github.js.
-
-Also, the module currently says it will display articles, excerpts, reading time, tags, etc. That's considerably more elaborate than what you originally described for the Activity Center.
-
-What I recommend
-
-Don't patch this file. Replace its data layer entirely.
-
-Keep the useful structural ideas:
-
+BLOG_SECTION
+    └── BLOG_TRACK
+         ├── CARD
+         ├── CARD
+         ├── CARD
+         └── ...
+2. Obtain blog data
+
+This module needs the normalized posts.
+
+There are two clean ways to architect this.
+
+Option A — activity-blog.js exposes the posts
 activity-blog.js
-├── configuration
-├── formatting helpers
-├── Markdown parsing
-├── normalization
-├── sorting
-├── fetching
-├── DOM rendering
-├── controller
-└── initialization/export
+       ↓
+fetches + normalizes posts
+       ↓
+controller.state.posts
+       ↓
+blog-horizontal-scroll.js consumes them
 
-But make the actual data pipeline:
+This avoids fetching the Markdown files twice.
 
-blog-index.json
-      ↓
-fetch paths
-      ↓
-fetch each post.md
-      ↓
-parse front matter
-      ↓
-normalize:
+This is the architecture I'd prefer.
+
+The normalized object is already something like:
+
 {
     title,
     date,
@@ -761,13 +126,582 @@ normalize:
     cover,
     url
 }
-      ↓
-sort newest → oldest
-      ↓
-take MAX_POSTS
-      ↓
-render
 
-And that's it.
+which is exactly what the card needs.
 
-One other thing: you named this activity-blog.js, whereas our original module list had activity-blogs.js. I'd actually stick with activity-blog.js now because the module represents the blog activity feed as a singular subsystem. Just update the planned JS tree accordingly.
+3. Validate posts
+
+Before rendering:
+
+For every post:
+    if title missing → skip
+    if url missing → skip
+
+You don't need to re-validate everything that activity-blog.js already validated.
+
+This module is primarily concerned with:
+
+title
+date
+description
+cover
+url
+4. Create the horizontal track
+
+The track is simply a flex/overflow container.
+
+Conceptually:
+
+BLOG SECTION
+│
+└── TRACK
+    │
+    ├── CARD 1
+    ├── CARD 2
+    ├── CARD 3
+    ├── CARD 4
+    └── CARD N
+
+CSS handles the actual horizontal layout.
+
+JavaScript should not continuously calculate positions unless necessary.
+
+5. Create each card
+
+For every normalized post:
+
+create article
+    ↓
+add cover image
+    ↓
+add title
+    ↓
+add description
+    ↓
+add publication date
+    ↓
+make card clickable
+    ↓
+append card to track
+
+A conceptual card:
+
+┌───────────────────────────┐
+│                           │
+│        COVER IMAGE        │
+│                           │
+├───────────────────────────┤
+│ Zombie Internet           │
+│ How AI-generated content  │
+│ is changing the internet  │
+│                           │
+│ Sep 2, 2026               │
+└───────────────────────────┘
+
+The card itself should probably link directly to post.url.
+
+That means JavaScript doesn't need some elaborate:
+
+click card
+→ find slug
+→ manually construct URL
+→ redirect
+
+when the normalized object already contains the destination.
+
+Horizontal interaction
+
+Now the interesting part.
+
+You have a horizontal track:
+
+[ CARD 1 ][ CARD 2 ][ CARD 3 ][ CARD 4 ][ CARD 5 ]
+←────────────────────────────────────────────────→
+
+The module can support:
+
+Mouse wheel / trackpad
+        ↓
+native horizontal scrolling
+
+Previous button
+        ↓
+scrollBy()
+
+Next button
+        ↓
+scrollBy()
+
+Click card
+        ↓
+navigate
+
+That means the browser's native scrolling does most of the heavy lifting.
+
+Don't build a custom physics engine.
+
+Seriously 😂
+
+We don't need:
+
+velocity
+acceleration
+friction
+momentum
+drag interpolation
+requestAnimationFrame()
+
+unless the design later specifically requires it.
+
+Native horizontal scrolling is already very good.
+
+Active card detection
+
+This is the one piece of JS that can make the component feel polished.
+
+As the user scrolls:
+
+CARD 1    CARD 2    CARD 3
+   ↓
+determine which card is most visible
+   ↓
+mark it as active
+
+You could use IntersectionObserver.
+
+Algorithm:
+
+Observe every card.
+
+When visibility changes:
+    determine which card has the highest visibility.
+    remove "active" from previous card.
+    add "active" to new card.
+
+Then CSS can do:
+
+.card.active {
+    ...
+}
+
+without JavaScript touching styling details.
+
+Navigation controls
+
+Suppose we have:
+
+←      cards      →
+
+The Previous button:
+
+Find currently visible/active card
+        ↓
+Find previous card
+        ↓
+scroll that card into view
+
+Next:
+
+Find currently visible/active card
+        ↓
+Find next card
+        ↓
+scroll that card into view
+
+Use:
+
+card.scrollIntoView({
+    behavior: 'smooth',
+    block: 'nearest',
+    inline: 'center'
+});
+
+rather than manually calculating pixel offsets.
+
+Much simpler.
+
+Responsive behavior
+
+The JS should mostly leave responsiveness to CSS.
+
+For example:
+
+Desktop:
+3 cards visible
+
+Tablet:
+2 cards visible
+
+Mobile:
+1 card visible
+
+CSS handles the card widths.
+
+JavaScript only needs to react to layout changes where necessary.
+
+Potentially:
+
+resize
+   ↓
+recalculate active card
+
+But don't attach a giant resize computation.
+
+Lifecycle states
+
+I wouldn't make this module as elaborate as activity-blog.js.
+
+It mostly needs:
+
+IDLE
+ ↓
+INITIALIZED
+ ↓
+RENDERED
+ ↓
+INTERACTIVE
+
+Potential failure states:
+
+container missing
+track missing
+no posts
+invalid data
+
+For an empty collection:
+
+"No blog posts available."
+
+That's enough.
+
+Pseudocode
+
+Now the fun part — this is the version I'd actually use as your implementation blueprint.
+
+MODULE blog-horizontal-scroll
+
+CONFIGURATION
+    define default section selector
+    define default track selector
+    define optional previous button selector
+    define optional next button selector
+
+FUNCTION initialize(options)
+
+    resolve section/container
+
+    IF container does not exist
+        return null
+
+    resolve track
+
+    IF track does not exist
+        return null
+
+    obtain normalized blog posts
+
+    IF no posts exist
+        render empty state
+        return controller
+
+    validate posts
+
+    render cards
+
+    setup scroll interaction
+
+    setup navigation controls
+
+    setup active-card detection
+
+    setup resize handling
+
+    return controller
+
+Then:
+
+FUNCTION getBlogPosts()
+
+    obtain posts from activity-blog controller
+
+    IF posts are unavailable
+        return empty array
+
+    return valid posts
+Card rendering
+FUNCTION renderCards(posts)
+
+    clear track
+
+    FOR EACH post IN posts
+
+        create card element
+
+        create cover image
+
+        IF post.cover exists
+            set image source
+            set image alt text
+            append image
+        END IF
+
+        create title element
+        set title text
+        append title
+
+        IF post.description exists
+            create description
+            set description text
+            append description
+        END IF
+
+        create date element
+        set formatted date
+        append date
+
+        create link / clickable wrapper
+        set destination to post.url
+
+        append card to track
+
+    END FOR
+Scroll controls
+FUNCTION setupNavigation()
+
+    IF previous button exists
+
+        add click listener
+
+        WHEN clicked:
+
+            determine current active card
+
+            determine previous card
+
+            IF previous card exists
+                scroll previous card into view
+            END IF
+
+    END IF
+
+
+    IF next button exists
+
+        add click listener
+
+        WHEN clicked:
+
+            determine current active card
+
+            determine next card
+
+            IF next card exists
+                scroll next card into view
+            END IF
+
+    END IF
+Active card detection
+FUNCTION setupActiveCardDetection()
+
+    create IntersectionObserver
+
+    observe every card
+
+    WHEN visibility changes
+
+        calculate visibility for each card
+
+        find card with highest visibility
+
+        remove active state from previous card
+
+        add active state to selected card
+
+END FUNCTION
+Click handling
+FUNCTION setupCardInteractions()
+
+    FOR EACH card
+
+        add click listener
+
+        WHEN card clicked
+
+            obtain card's post URL
+
+            navigate to post URL
+
+        END WHEN
+
+    END FOR
+
+Although, honestly, I'd make the card itself an <a> rather than using a click listener.
+
+Then the browser handles navigation naturally:
+
+<a href="/blog/zombie-internet/">
+    card contents
+</a>
+
+That is cleaner and more accessible.
+
+Full pseudocode architecture
+
+Putting everything together:
+
+MODULE blog-horizontal-scroll
+
+    CONFIGURATION
+
+        DEFAULT_CONTAINER_SELECTOR
+        DEFAULT_TRACK_SELECTOR
+        DEFAULT_PREVIOUS_SELECTOR
+        DEFAULT_NEXT_SELECTOR
+
+
+    FUNCTION createCard(post)
+
+        create article/card
+
+        create link
+
+        create cover
+
+        IF cover exists
+            add cover
+        END IF
+
+        add title
+
+        IF description exists
+            add description
+        END IF
+
+        add publication date
+
+        return card
+
+
+    FUNCTION renderCards(posts)
+
+        clear track
+
+        FOR EACH post
+            card = createCard(post)
+            append card to track
+        END FOR
+
+
+    FUNCTION getVisibleCard()
+
+        inspect cards
+
+        determine most visible card
+
+        return card
+
+
+    FUNCTION scrollToCard(card)
+
+        IF card does not exist
+            return
+
+        card.scrollIntoView(smooth + centered)
+
+
+    FUNCTION setupNavigation()
+
+        previous button click
+            current = getVisibleCard()
+            previous = card before current
+            scrollToCard(previous)
+
+        next button click
+            current = getVisibleCard()
+            next = card after current
+            scrollToCard(next)
+
+
+    FUNCTION setupActiveState()
+
+        create IntersectionObserver
+
+        observe cards
+
+        when visibility changes
+            determine most visible card
+            update active class
+
+
+    FUNCTION setupInteractions()
+
+        setup navigation
+
+        setup active state
+
+
+    FUNCTION initialize(options)
+
+        resolve container
+
+        resolve track
+
+        obtain blog posts
+
+        validate posts
+
+        IF no posts
+            render empty state
+            return controller
+
+        renderCards(posts)
+
+        setupInteractions()
+
+        return controller
+
+
+    EXPORT initBlogHorizontalScroll
+One important architecture correction
+
+I would not make blog-horizontal-scroll.js fetch post.md itself.
+
+That would create this:
+
+activity-blog.js
+    ↓ fetch posts
+
+blog-horizontal-scroll.js
+    ↓ fetch same posts again
+
+which is dumb duplication.
+
+Instead:
+
+                ┌── Activity Center
+                │
+Markdown ──→ activity-blog.js
+                │
+                └──→ blog-horizontal-scroll.js
+
+Both components consume the same normalized blog data.
+
+That also means later, when you move from:
+
+Markdown
+
+to:
+
+FastAPI + database
+
+you don't have to rewrite both UI modules. You replace the data source while keeping the rendering/interaction architecture intact.
+
+That's the kind of separation that will save your ass six months from now when this project has inevitably grown twelve tentacles. 🫠
+
+And importantly, this gives blog-horizontal-scroll.js a very clean contract:
+
+INPUT:
+normalized blog posts
+
+OUTPUT:
+interactive horizontal blog browser
