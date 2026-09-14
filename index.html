@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Krishnang Pandey — 1st Year CSE AI/ML student at Chitkara University. Developer, researcher, systems & freelance engineer.">
+    <title>Krishnang Pandey — krishnang.dev</title>
+
+    <!-- Design Tokens & Global Styles -->
+    <link rel="stylesheet" href="CSS/variables.css">
+    <link rel="stylesheet" href="CSS/base.css">
+    <link rel="stylesheet" href="CSS/logo-animation.css">
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+    <!-- =====================================================
+         BACKGROUND
+         ===================================================== -->
+
+    <canvas id="background-canvas" class="background-canvas" aria-hidden="true"></canvas>
+
+
+    <!-- =====================================================
+         HEADER / INTERACTIVE LOGO
+         ===================================================== -->
+
+    <header class="site-header">
+        <div class="header-inner">
+            <button
+                id="personal-logo"
+                class="personal-logo"
+                type="button"
+                aria-label="Personal Logo: </>, strike for metallic chime"
+            >
+                &lt;/&gt;
+            </button>
+        </div>
+    </header>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main id="main-content">
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section id="hero" class="hero">
+
+            <div class="hero-inner">
+
+                <!-- Introduction -->
+                <div class="hero-intro">
+
+                    <p class="hero-greeting">
+                        Hi, myself
+                    </p>
+
+                    <h1 class="hero-name">
+                        Krishnang Pandey.
+                    </h1>
+
+                    <div class="hero-details">
+                        <p class="hero-role">
+                            Student
+                        </p>
+
+                        <p class="hero-university">
+                            Chitkara University
+                        </p>
+
+                        <p class="hero-degree">
+                            Computer Science Engineering
+                        </p>
+
+                        <p class="hero-specialization">
+                            Artificial Intelligence &amp; Machine Learning
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- Terminal -->
+                <div class="hero-terminal">
+
+                    <div
+                        id="terminal"
+                        class="terminal terminal-card"
+                        aria-label="Interactive terminal"
+                    >
+
+                        <div class="terminal-header">
+                            <span class="terminal-title">
+                                krishnang.dev
+                            </span>
+                        </div>
+
+                        <div class="terminal-body">
+                            <div
+                                id="terminal-output"
+                                class="terminal-output"
+                                aria-live="polite"
+                                aria-atomic="false"
+                            ></div>
+
+                            <form
+                                id="terminal-form"
+                                class="terminal-input-line"
+                            >
+                                <span
+                                    class="terminal-prompt terminal-prompt-text"
+                                    aria-hidden="true"
+                                >
+                                    &gt;
+                                </span>
+
+                                <input
+                                    id="terminal-input"
+                                    class="terminal-input"
+                                    type="text"
+                                    autocomplete="off"
+                                    autocapitalize="off"
+                                    spellcheck="false"
+                                    aria-label="Terminal command"
+                                >
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACTIVITY
+             ================================================= -->
+
+        <section id="activity" class="activity">
+
+            <div class="section-inner">
+
+                <header class="section-header">
+                    <p class="section-label">
+                        Activity
+                    </p>
+
+                    <h2 class="section-title">
+                        What I've been building.
+                    </h2>
+                </header>
+
+
+                <!-- GitHub -->
+                <div class="activity-block activity-github">
+
+                    <header class="activity-block-header">
+                        <h3>GitHub</h3>
+                    </header>
+
+                    <div
+                        id="github-activity"
+                        class="github-activity"
+                        aria-live="polite"
+                    ></div>
+
+                </div>
+
+
+                <!-- Blog activity -->
+                <div class="activity-block activity-blog">
+
+                    <header class="activity-block-header">
+                        <h3>Writing</h3>
+                    </header>
+
+                    <div
+                        id="blog-activity"
+                        class="blog-activity"
+                        aria-live="polite"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             BLOGS
+             ================================================= -->
+
+        <section id="blogs" class="blogs">
+
+            <div class="section-inner">
+
+                <header class="section-header">
+                    <p class="section-label">
+                        Writing
+                    </p>
+
+                    <h2 class="section-title">
+                        Things I've written.
+                    </h2>
+                </header>
+
+
+                <div id="blog-browser" class="blog-browser" data-blog-scroll>
+
+                    <button
+                        type="button"
+                        id="blog-prev"
+                        class="blog-nav blog-nav-prev blog-scroll-prev"
+                        aria-label="Previous article"
+                        data-blog-prev
+                    >
+                        ←
+                    </button>
+
+
+                    <div
+                        class="blog-scroll-container"
+                        aria-label="Blog articles"
+                    >
+
+                        <div
+                            id="blog-track"
+                            class="blog-track blog-cards-track"
+                            data-blog-track
+                        ></div>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="blog-next"
+                        class="blog-nav blog-nav-next blog-scroll-next"
+                        aria-label="Next article"
+                        data-blog-next
+                    >
+                        →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FREELANCING
+             ================================================= -->
+
+        <section id="freelance" class="freelancing freelance" data-section="freelancing">
+
+            <!-- Anchor alias for #freelancing -->
+            <span id="freelancing" class="section-anchor" aria-hidden="true"></span>
+
+            <div class="section-inner">
+
+                <header class="section-header">
+                    <p class="section-label">
+                        Freelancing
+                    </p>
+
+                    <h2 class="section-title">
+                        Let's build something.
+                    </h2>
+                </header>
+
+
+                <div class="freelancing-content">
+
+                    <div class="freelancing-services">
+                        <div class="freelance-card">
+                            <h3 class="freelance-title">Services &amp; Packages</h3>
+                            <ul class="freelance-list">
+                                <li class="freelance-item"><span class="freelance-bullet">•</span> Full-Stack Web Applications (Next.js, Node.js, REST APIs)</li>
+                                <li class="freelance-item"><span class="freelance-bullet">•</span> AI &amp; Local LLM Tooling / CLI Agents</li>
+                                <li class="freelance-item"><span class="freelance-bullet">•</span> Database Architecture &amp; Caching (MySQL, MongoDB, Redis)</li>
+                                <li class="freelance-item"><span class="freelance-bullet">•</span> High-Performance Scripting &amp; Automation (Python, Bash)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="freelancing-contact">
+                        <!-- Contact CTA -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             EDUCATION
+             ================================================= -->
+
+        <section
+            id="education"
+            class="education education-section"
+            data-education-section
+        >
+
+            <div class="section-inner">
+
+                <header class="section-header">
+                    <p class="section-label">
+                        Education
+                    </p>
+
+                    <h2 class="section-title">
+                        The road so far.
+                    </h2>
+                </header>
+
+
+                <div
+                    class="education-book"
+                    data-education-book
+                    aria-label="Education timeline"
+                >
+
+                    <div class="book">
+
+                        <div class="book-cover" data-book-cover>
+                            <!-- Book cover -->
+                        </div>
+
+
+                        <div class="book-pages" data-book-pages>
+
+                            <!--
+                                Education pages defined in HTML.
+                                book-education.js controls scroll-driven state.
+                            -->
+
+                            <article
+                                class="book-page education-page"
+                                data-page="1"
+                                data-education-page="1"
+                            >
+                                <div class="book-page-content">
+                                    <h3>Class 10</h3>
+                                    <p>Secondary School Education</p>
+                                </div>
+                            </article>
+
+
+                            <article
+                                class="book-page education-page"
+                                data-page="2"
+                                data-education-page="2"
+                            >
+                                <div class="book-page-content">
+                                    <h3>Class 12</h3>
+                                    <p>Senior Secondary Education</p>
+                                </div>
+                            </article>
+
+
+                            <article
+                                class="book-page education-page"
+                                data-page="3"
+                                data-education-page="3"
+                            >
+                                <div class="book-page-content">
+                                    <h3>Chitkara University</h3>
+                                    <p>B.Tech. CSE — AI &amp; ML Program</p>
+                                </div>
+                            </article>
+
+
+                            <article
+                                class="book-page education-page"
+                                data-page="4"
+                                data-education-page="4"
+                            >
+                                <div class="book-page-content">
+                                    <h3>Technical Specializations</h3>
+                                    <p>Systems, Artificial Intelligence, &amp; Cloud Infrastructure</p>
+                                </div>
+                            </article>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONNECT
+             ================================================= -->
+
+        <section id="connect" class="connect">
+
+            <div class="section-inner">
+
+                <header class="section-header">
+                    <p class="section-label">
+                        Connect
+                    </p>
+
+                    <h2 class="section-title">
+                        Find me around the internet.
+                    </h2>
+                </header>
+
+
+                <nav
+                    class="social-links"
+                    aria-label="Social links"
+                >
+
+                    <a
+                        href="https://github.com/krriisshhnnaaa"
+                        class="social-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub
+                    </a>
+
+                    <a
+                        href="https://linkedin.com/in/krishnang"
+                        class="social-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        LinkedIn
+                    </a>
+
+                    <a
+                        href="https://instagram.com"
+                        class="social-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Instagram
+                    </a>
+
+                </nav>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         SCRIPTS
+         ===================================================== -->
+    <script src="Interactive-Elements/bg-animations.js"></script>
+    <script src="Interactive-Elements/logo.js"></script>
+    <script src="Interactive-Elements/terminal.js"></script>
+    <script src="Interactive-Elements/activity-github.js"></script>
+    <script src="Interactive-Elements/activity-blog.js"></script>
+    <script src="Interactive-Elements/blog-horizontal-scroll.js"></script>
+    <script src="Interactive-Elements/book-education.js"></script>
+
+    <!-- Orchestration Bootstrap -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Background gravitational field
+            if (typeof initBackgroundAnimations === 'function') {
+                initBackgroundAnimations();
+            }
+
+            // Interactive metallic logo
+            if (typeof initLogoAnimation === 'function') {
+                initLogoAnimation();
+            }
+
+            // Hero terminal
+            if (typeof initTerminal === 'function') {
+                initTerminal();
+            }
+
+            // GitHub activity feed
+            if (typeof initGitHubActivity === 'function') {
+                initGitHubActivity();
+            }
+
+            // Blog activity feed & horizontal browser
+            if (typeof initBlogActivity === 'function') {
+                initBlogActivity();
+            }
+            if (typeof initBlogHorizontalScroll === 'function') {
+                initBlogHorizontalScroll();
+            }
+
+            // Scroll-driven education book
+            if (typeof initBookEducation === 'function') {
+                initBookEducation();
+            }
+        });
+    </script>
+
+</body>
+</html>
