@@ -1,0 +1,165 @@
+/* ==========================================================================
+   variables.css — Design Tokens & Global Custom Properties
+   krishnang.dev
+   ========================================================================== */
+
+:root {
+
+    /* =========================================================
+       COLORS
+       ========================================================= */
+
+    --color-bg: #05070d;
+    --color-bg-secondary: #0a0e17;
+    --color-surface: #0d121c;
+    --color-surface-hover: #111927;
+
+    --color-text: #f2f5f8;
+    --color-text-secondary: #a7b0bd;
+    --color-text-muted: #687383;
+
+    --color-border: rgba(255, 255, 255, 0.10);
+    --color-border-strong: rgba(255, 255, 255, 0.18);
+
+    --color-accent: #8ab4ff;
+    --color-accent-secondary: #a78bfa;
+
+    --color-success: #75d99a;
+    --color-error: #ff7373;
+
+
+    /* =========================================================
+       TYPOGRAPHY
+       ========================================================= */
+
+    --font-body: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 3rem;
+    --font-size-hero: clamp(3rem, 7vw, 7rem);
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+
+    /* =========================================================
+       SPACING
+       ========================================================= */
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --space-9: 6rem;
+    --space-10: 8rem;
+
+
+    /* =========================================================
+       LAYOUT
+       ========================================================= */
+
+    --content-width: 1200px;
+    --content-width-wide: 1400px;
+
+    --page-padding: clamp(1.25rem, 4vw, 4rem);
+
+    --section-spacing: clamp(6rem, 12vw, 12rem);
+
+
+    /* =========================================================
+       BORDERS & RADII
+       ========================================================= */
+
+    --border-width: 1px;
+
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 2rem;
+    --radius-full: 9999px;
+
+
+    /* =========================================================
+       SHADOWS
+       ========================================================= */
+
+    --shadow-sm:
+        0 2px 10px rgba(0, 0, 0, 0.20);
+
+    --shadow-md:
+        0 8px 30px rgba(0, 0, 0, 0.30);
+
+    --shadow-lg:
+        0 20px 60px rgba(0, 0, 0, 0.40);
+
+
+    /* =========================================================
+       ANIMATION
+       ========================================================= */
+
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --duration-slow: 600ms;
+    --duration-section: 900ms;
+
+    --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+
+    /* =========================================================
+       Z-INDEX
+       ========================================================= */
+
+    --z-background: 0;
+    --z-content: 10;
+    --z-overlay: 50;
+    --z-terminal: 100;
+    --z-modal: 1000;
+
+
+    /* =========================================================
+       TERMINAL
+       ========================================================= */
+
+    --terminal-radius: var(--radius-md);
+    --terminal-border: var(--color-border);
+    --terminal-background: rgba(8, 12, 19, 0.92);
+
+    --terminal-header-height: 2.5rem;
+
+    --terminal-padding: 1.25rem;
+
+    --terminal-font-size: 0.875rem;
+    --terminal-line-height: 1.6;
+
+
+    /* =========================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================= */
+
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+
+
+    /* =========================================================
+       ACCESSIBILITY
+       ========================================================= */
+
+    --focus-ring:
+        0 0 0 3px rgba(138, 180, 255, 0.35);
+}

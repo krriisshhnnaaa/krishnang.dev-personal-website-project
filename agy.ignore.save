@@ -39,3 +39,14 @@ javascript/
 ├── background-animations.js -c 
 └── logo-animation.js -c
 
+css/
+├── variables.css
+├── base.css
+├── hero.css
+├── terminal.css
+├── activity.css
+├── blog-horizontal-scroll.css
+├── book-education.css
+├── background-animations.css
+├── logo-animation.css
+└── responsive.css
