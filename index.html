@@ -35,6 +35,13 @@
             >
                 &lt;/&gt;
             </button>
+
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="#activity">Activity</a>
+                <a href="#blogs">Writing</a>
+                <a href="#freelance">Work with me</a>
+                <a href="#connect">Connect</a>
+            </nav>
         </div>
     </header>
 
@@ -55,6 +62,8 @@
 
                 <!-- Introduction -->
                 <div class="hero-intro">
+
+                    <span class="availability"><i></i> Available for thoughtful projects</span>
 
                     <p class="hero-greeting">
                         Hi, myself
@@ -80,6 +89,11 @@
                         <p class="hero-specialization">
                             Artificial Intelligence &amp; Machine Learning
                         </p>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#freelance">Work with me <span>↗</span></a>
+                        <a class="button button-secondary" href="#blogs">Read my writing</a>
                     </div>
 
                 </div>
@@ -295,7 +309,8 @@
                     </div>
 
                     <div class="freelancing-contact">
-                        <!-- Contact CTA -->
+                        <p>Have an idea, a tricky system, or an AI workflow to ship?</p>
+                        <a class="button button-primary" href="mailto:hello@krishnang.dev">Start a conversation <span>↗</span></a>
                     </div>
 
                 </div>
@@ -465,6 +480,11 @@
 
     </main>
 
+    <footer class="site-footer">
+        <p>Designed and built by Krishnang Pandey.</p>
+        <a href="#hero">Back to top ↑</a>
+    </footer>
+
 
     <!-- =====================================================
          SCRIPTS
@@ -501,11 +521,11 @@
             }
 
             // Blog activity feed & horizontal browser
-            if (typeof initBlogActivity === 'function') {
-                initBlogActivity();
-            }
+            const blogActivity = typeof initBlogActivity === 'function'
+                ? initBlogActivity()
+                : null;
             if (typeof initBlogHorizontalScroll === 'function') {
-                initBlogHorizontalScroll();
+                initBlogHorizontalScroll({ activityController: blogActivity });
             }
 
             // Scroll-driven education book
