@@ -25,7 +25,7 @@
     // 1. Configuration
     // ==========================================================================
 
-    /**
+    /**.
      * Default CSS selectors for container, track, and navigation buttons.
      */
     const DEFAULT_CONFIG = {
