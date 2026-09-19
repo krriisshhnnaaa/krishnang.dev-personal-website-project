@@ -1,108 +1,22 @@
-/**
- * ==============================================================================
- * logo.js (logo-animation.js) — Interactive Metallic Logo Controller
- * ==============================================================================
- * 
- * Functional Scope & Architectural Distinction (per instructions):
- * - Controls the interactive personal logo: </>
- * - The logo appears near the beginning of the webpage as a visually prominent
- *   object with a physical metallic appearance and palpable presence.
- * - Manages physical interaction:
- *   1. Logo element discovery / graceful fallback
- *   2. Initial entrance animation ("settling into reality")
- *   3. Idle state (subtle weight, no erratic bouncing)
- *   4. Pointer-based lighting & subtle 3D tilt via CSS custom properties
- *   5. Click interaction triggering physical impact vibration
- *   6. Metallic strike audio playback with cooldown protection
- *   7. Full keyboard accessibility (Enter / Space keypress)
- *   8. Respects prefers-reduced-motion
- *   9. Teardown and cleanup lifecycle
- * 
- * Architectural Boundaries:
- * - What this module OWNS:
- *   1. Discovering #personal-logo (or configured selector)
- *   2. Dynamic CSS variable updates:
- *      --logo-light-x, --logo-light-y
- *      --logo-tilt-x, --logo-tilt-y
- *      --logo-interaction-strength
- *   3. Audio instantiation & click-triggered playback of metal-strike sound
- *   4. Cooldown throttling for audio strikes (default 120ms)
- *   5. Impact state toggling (.logo--impact)
- *   6. Accessibility attributes (role="button", tabindex="0", aria-label)
- *   7. Event listener lifecycle & controller API
- * 
- * - What this module DOES NOT own:
- *   1. Background cosmic particles (handled by bg-animations.js)
- *   2. Terminal functionality (handled by terminal.js)
- *   3. Page navigation
- *   4. Blog functionality
- *   5. Education animation
- *   6. Global colors/theme
- *   7. General typography & layout
- *   8. Drawing metal textures directly (delegated to logo-animation.css)
- * 
- * Interaction Architecture:
- * 
- *                        ┌──────────────┐
- *                        │    Cursor    │
- *                        └──────┬───────┘
- *                               ↓
- *                      pointer position
- *                               ↓
- *                     distance + direction
- *                               ↓
- *                      interaction strength
- *                               ↓
- *                     CSS lighting variables
- *                               ↓
- *                        metallic logo
- * 
- * Click / Space / Enter ─────────────┐
- *                                    ↓
- *                               impact state
- *                                    ↓
- *                          ┌─────────┴─────────┐
- *                          ↓                   ↓
- *                    CSS vibration       metal audio
- *                          ↓                   ↓
- *                          └─────────┬─────────┘
- *                                    ↓
- *                                 settle
- * ==============================================================================
- */
-
 (function (global) {
     'use strict';
 
-    // ==========================================================================
-    // 1. Configuration & Tunable Constants
-    // ==========================================================================
-
-    /**
-     * Default configuration for the interactive metallic logo.
-     * All options can be overridden via options passed to initLogoAnimation().
-     */
     const DEFAULT_CONFIG = {
-        // DOM Discovery Selectors
         selector: '#personal-logo, .personal-logo, [data-personal-logo]',
         containerSelector: 'header, nav, .nav-container, body',
 
-        // Audio Configuration
-        // Stored locally in the project per instructions specification
         audioSrc: 'AUDIO.mp3',
         audioFallbackSrc: 'assets/audio/metal-strike.mp3',
-        audioCooldown: 120, // ms cooldown between strikes (per instructions: audioCooldown: 120)
-        audioVolume: 0.75,  // audio volume (0.0 to 1.0)
+        audioCooldown: 120,
+        audioVolume: 0.75,
 
-        // Lighting & Spatial Physics
-        interactionRadius: 320,  // Distance in px where cursor begins affecting lighting
-        maxTiltDeg: 6.5,         // Maximum subtle 3D rotational tilt angle (degrees)
-        maxDisplacementPx: 2.5,  // Maximum subtle position translation (px)
-        lightShiftRange: 40,     // Percentage range for moving specular highlight (-40% to +40%)
-        defaultLightX: 50,       // Default ambient light X percentage
-        defaultLightY: 30,       // Default ambient light Y percentage (overhead starlight)
+        interactionRadius: 320,
+        maxTiltDeg: 6.5,
+        maxDisplacementPx: 2.5,
+        lightShiftRange: 40,
+        defaultLightX: 50,
+        defaultLightY: 30,
 
-        // CSS Class Names
         classLoaded: 'logo--loaded',
         classEntering: 'logo--entering',
         classSettled: 'logo--settled',
@@ -110,7 +24,6 @@
         classImpact: 'logo--impact',
         classReducedMotion: 'logo--reduced-motion',
 
-        // CSS Custom Property Names
         cssPropLightX: '--logo-light-x',
         cssPropLightY: '--logo-light-y',
         cssPropTiltX: '--logo-tilt-x',
@@ -119,43 +32,19 @@
         cssPropShiftY: '--logo-shift-y',
         cssPropInteraction: '--logo-interaction-strength',
 
-        // Animation Timings
-        entranceDurationMs: 650, // Duration of the settling entrance animation
-        impactDurationMs: 320,   // Duration of the strike compression & kinetic recoil
+        entranceDurationMs: 650,
+        impactDurationMs: 320,
 
-        // Fallback creation behavior:
-        // Per spec: "If element doesn't exist: don't crash, don't create random UI, return safely"
         createIfMissing: false
     };
 
-    /**
-     * Active instances registry for cleanup and duplicate prevention.
-     */
     const activeInstances = new Set();
 
-    // ==========================================================================
-    // 2. Mathematical & Environmental Helpers
-    // ==========================================================================
-
-    /**
-     * Standard Hermite smoothstep function.
-     * Produces a smooth S-curve interpolation between 0 and 1.
-     * 
-     * @param {number} min - Lower bound
-     * @param {number} max - Upper bound
-     * @param {number} value - Input value
-     * @returns {number} Value clamped to [0, 1]
-     */
     function smoothstep(min, max, value) {
         const x = Math.max(0, Math.min(1, (value - min) / (max - min)));
         return x * x * (3 - 2 * x);
     }
 
-    /**
-     * Checks if the user's operating system prefers reduced motion.
-     * 
-     * @returns {boolean}
-     */
     function checkReducedMotion() {
         if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
             return false;
@@ -163,23 +52,14 @@
         return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 
-    // ==========================================================================
-    // 3. LogoController Class
-    // ==========================================================================
-
     class LogoController {
-        /**
-         * @param {Object} [options] - Configuration overrides
-         */
         constructor(options = {}) {
             this.config = Object.assign({}, DEFAULT_CONFIG, options);
 
-            // Lifecycle flags
             this.isDestroyed = false;
             this.isSettled = false;
             this.prefersReducedMotion = checkReducedMotion();
 
-            // Interactive state
             this.state = {
                 hovered: false,
                 pressed: false,
@@ -191,18 +71,15 @@
                 tiltY: 0
             };
 
-            // DOM & Audio references
             this.element = null;
             this.audio = null;
             this.audioLoaded = false;
             this.isDynamicElement = false;
 
-            // Timer references for precise cleanup
             this.entranceTimerId = null;
             this.impactTimerId = null;
             this.mediaQueryList = null;
 
-            // Bound event handlers
             this._onPointerMove = this._onPointerMove.bind(this);
             this._onPointerEnter = this._onPointerEnter.bind(this);
             this._onPointerLeave = this._onPointerLeave.bind(this);
@@ -211,27 +88,14 @@
             this._onKeyDown = this._onKeyDown.bind(this);
             this._onReducedMotionChange = this._onReducedMotionChange.bind(this);
 
-            // Initialize
             this._init();
         }
 
-        // ======================================================================
-        // 4. Logo Discovery & Element Setup
-        // ======================================================================
-
-        /**
-         * Discovers or optionally creates the personal logo element.
-         * Per spec: If element doesn't exist, don't crash, return safely.
-         * 
-         * @private
-         * @returns {boolean} True if logo element is successfully resolved
-         */
         _setupElement() {
             if (typeof document === 'undefined') {
                 return false;
             }
 
-            // Look for existing element matching selector
             let el = document.querySelector(this.config.selector);
 
             if (!el && this.config.createIfMissing) {
@@ -250,32 +114,22 @@
             }
 
             if (!el) {
-                // Return false gracefully as specified
                 return false;
             }
 
             this.element = el;
 
-            // Ensure rich multi-layer glyph spans exist if only plain text is present
             if (!el.querySelector('.logo-glyph-slash')) {
                 el.innerHTML = '<span class="logo-glyph-open">&lt;</span><span class="logo-glyph-slash">/</span><span class="logo-glyph-close">&gt;</span>';
             }
 
-            // Accessibility configuration
             this._setupAccessibility();
 
-            // Set initial CSS custom properties
             this._resetCssProperties();
 
             return true;
         }
 
-        /**
-         * Configures accessibility attributes on the logo element.
-         * Ensures tabindex="0", role="button", and aria-label.
-         * 
-         * @private
-         */
         _setupAccessibility() {
             const el = this.element;
             if (!el) return;
@@ -295,15 +149,6 @@
             }
         }
 
-        // ======================================================================
-        // 5. Audio Setup & Playback Protection
-        // ======================================================================
-
-        /**
-         * Initializes the HTML5 Audio instance with local audio file.
-         * 
-         * @private
-         */
         _setupAudio() {
             if (typeof Audio === 'undefined') {
                 return;
@@ -314,10 +159,8 @@
                 audio.preload = 'auto';
                 audio.volume = Math.max(0, Math.min(1, this.config.audioVolume));
 
-                // Primary path (stored locally in project)
                 audio.src = this.config.audioSrc;
 
-                // Graceful fallback listener if primary path differs
                 audio.addEventListener('error', () => {
                     if (this.config.audioFallbackSrc && audio.src !== this.config.audioFallbackSrc) {
                         audio.src = this.config.audioFallbackSrc;
@@ -328,18 +171,11 @@
                 this.audio = audio;
                 this.audioLoaded = true;
             } catch (err) {
-                // Audio failure shouldn't crash the UI
                 this.audio = null;
                 this.audioLoaded = false;
             }
         }
 
-        /**
-         * Synthesizes a realistic metallic bar chime using the Web Audio API as a robust
-         * zero-dependency acoustic fallback when audio playback is policy-restricted or missing.
-         * 
-         * @private
-         */
         _synthesizeMetallicChime() {
             if (typeof window === 'undefined') return;
             try {
@@ -353,7 +189,6 @@
                 }
                 const ctx = this._audioCtx;
                 const now = ctx.currentTime;
-                // Harmonic frequencies simulating struck metallic plate: 1175Hz (D6), 2350Hz, 3525Hz
                 const harmonics = [
                     { freq: 1175, gain: 0.25, decay: 0.65 },
                     { freq: 2350, gain: 0.12, decay: 0.45 },
@@ -374,20 +209,11 @@
             } catch (_) {}
         }
 
-        /**
-         * Plays the metallic strike sound with cooldown protection.
-         * Ensures repeated rapid clicks produce distinct individual strikes
-         * without chaotic overlapping or performance degradation.
-         * 
-         * @returns {boolean} True if strike audio was played
-         * @private
-         */
         _playStrikeAudio() {
             const now = performance.now();
 
-            // Cooldown protection check (per instructions: audioCooldown default 120ms)
             if (now - this.state.lastStrikeTime < this.config.audioCooldown) {
-                return false; // Rapid click ignored during active cooldown
+                return false;
             }
 
             this.state.lastStrikeTime = now;
@@ -398,13 +224,11 @@
             }
 
             try {
-                // Resetting currentTime allows immediate crisp repeated strikes
                 this.audio.currentTime = 0;
                 const playPromise = this.audio.play();
 
                 if (playPromise && typeof playPromise.catch === 'function') {
                     playPromise.catch(() => {
-                        // Browser autoplay policy restriction: fall back to synth
                         this._synthesizeMetallicChime();
                     });
                 }
@@ -415,17 +239,6 @@
             }
         }
 
-        // ======================================================================
-        // 6. Entrance Animation
-        // ======================================================================
-
-        /**
-         * Triggers the subtle "settling into reality" entrance animation.
-         * Avoids spins, explosions, or neon flashes; feels like a heavy object
-         * being placed into the scene.
-         * 
-         * @private
-         */
         _runEntranceAnimation() {
             const el = this.element;
             if (!el) return;
@@ -449,20 +262,6 @@
             }, this.config.entranceDurationMs);
         }
 
-        // ======================================================================
-        // 7. Pointer Tracking & Lighting Calculation
-        // ======================================================================
-
-        /**
-         * Calculates cursor distance and relative angle to the logo, updating
-         * CSS custom properties to dynamically shift specular highlights and 3D tilt.
-         * 
-         * Behaves like an object observed under a moving light source rather than
-         * physically following the cursor like a widget.
-         * 
-         * @param {PointerEvent|MouseEvent} e
-         * @private
-         */
         _onPointerMove(e) {
             if (!this.element || this.isDestroyed || this.prefersReducedMotion) return;
 
@@ -477,23 +276,18 @@
             const radius = this.config.interactionRadius;
 
             if (distance < radius) {
-                // Smooth falloff: 1 at center, 0 at interaction boundary
                 const s = smoothstep(0, radius, distance);
                 const influence = 1 - s;
 
-                // Normalized offset within the bounding interaction field [-1, 1]
                 const normX = Math.max(-1, Math.min(1, dx / (radius * 0.75)));
                 const normY = Math.max(-1, Math.min(1, dy / (radius * 0.75)));
 
-                // 1. Specular highlight position (shifts toward cursor light source)
                 const lightX = this.config.defaultLightX + (normX * this.config.lightShiftRange);
                 const lightY = this.config.defaultLightY + (normY * this.config.lightShiftRange);
 
-                // 2. Subtle 3D tilt (pitch around X axis, yaw around Y axis)
                 const tiltX = -normY * this.config.maxTiltDeg * influence;
                 const tiltY = normX * this.config.maxTiltDeg * influence;
 
-                // 3. Subtle micro-displacement (weighted object resistance)
                 const shiftX = normX * this.config.maxDisplacementPx * influence;
                 const shiftY = normY * this.config.maxDisplacementPx * influence;
 
@@ -503,7 +297,6 @@
                 this.state.tiltX = tiltX;
                 this.state.tiltY = tiltY;
 
-                // Update CSS Custom Properties
                 const style = this.element.style;
                 style.setProperty(this.config.cssPropLightX, `${lightX.toFixed(2)}%`);
                 style.setProperty(this.config.cssPropLightY, `${lightY.toFixed(2)}%`);
@@ -513,15 +306,10 @@
                 style.setProperty(this.config.cssPropShiftY, `${shiftY.toFixed(2)}px`);
                 style.setProperty(this.config.cssPropInteraction, influence.toFixed(3));
             } else if (this.state.interactionStrength > 0) {
-                // Reset when cursor leaves interaction radius
                 this._resetCssProperties();
             }
         }
 
-        /**
-         * Resets dynamic CSS custom properties back to ambient rest defaults.
-         * @private
-         */
         _resetCssProperties() {
             if (!this.element) return;
 
@@ -541,14 +329,6 @@
             style.setProperty(this.config.cssPropInteraction, '0');
         }
 
-        // ======================================================================
-        // 8. Hover, Click & Keyboard Handling
-        // ======================================================================
-
-        /**
-         * Pointer enter handler.
-         * @private
-         */
         _onPointerEnter() {
             this.state.hovered = true;
             if (this.element) {
@@ -556,10 +336,6 @@
             }
         }
 
-        /**
-         * Pointer leave handler.
-         * @private
-         */
         _onPointerLeave() {
             this.state.hovered = false;
             if (this.element) {
@@ -568,42 +344,23 @@
             this._resetCssProperties();
         }
 
-        /**
-         * Pointer down handler.
-         * @private
-         */
         _onPointerDown(e) {
-            // Only trigger on primary mouse button or touch
             if (e.button !== 0) return;
             this.triggerImpact();
         }
 
-        /**
-         * Click handler.
-         * @private
-         */
         _onClick(e) {
             e.preventDefault();
             this.triggerImpact();
         }
 
-        /**
-         * Keyboard interaction handler (Enter or Space triggers impact).
-         * 
-         * @param {KeyboardEvent} e
-         * @private
-         */
         _onKeyDown(e) {
             if (e.key === 'Enter' || e.key === ' ' || e.code === 'Space') {
-                e.preventDefault(); // Prevent page scrolling on Space
+                e.preventDefault();
                 this.triggerImpact();
             }
         }
 
-        /**
-         * Emits an expanding holographic shockwave ring around the logo center.
-         * @private
-         */
         _spawnShockwave() {
             if (!this.element || this.prefersReducedMotion || typeof document === 'undefined') return;
             try {
@@ -626,10 +383,6 @@
             } catch (_) {}
         }
 
-        /**
-         * Emits energetic micro-sparks radiating outward from the strike point.
-         * @private
-         */
         _spawnSparks() {
             if (!this.element || this.prefersReducedMotion || typeof document === 'undefined') return;
             try {
@@ -653,33 +406,20 @@
             } catch (_) {}
         }
 
-        /**
-         * Triggers the physical impact response:
-         * 1. Plays local metal-strike audio with cooldown protection & synth fallback
-         * 2. Emits physical holographic shockwave ring and kinetic sparks
-         * 3. Triggers quantum kinetic recoil and chromatic burst animation via CSS class
-         * 4. Settles back smoothly to rest state
-         * 
-         * Can be called programmatically via controller.triggerImpact().
-         */
         triggerImpact() {
             if (!this.element || this.isDestroyed) return;
 
-            // 1. Play metallic strike audio
             this._playStrikeAudio();
 
-            // 2. Physical impact vibration & visual kinetic burst (disabled if reduced motion)
             if (!this.prefersReducedMotion) {
                 this.state.pressed = true;
                 const el = this.element;
 
-                // Emit dynamic holographic shockwave and sparks
                 this._spawnShockwave();
                 this._spawnSparks();
 
-                // Retrigger class cleanly even on repeated rapid clicks
                 el.classList.remove(this.config.classImpact);
-                void el.offsetWidth; // Force CSS reflow
+                void el.offsetWidth;
                 el.classList.add(this.config.classImpact);
 
                 if (this.impactTimerId) {
@@ -695,16 +435,6 @@
             }
         }
 
-        // ======================================================================
-        // 9. Reduced Motion Handling
-        // ======================================================================
-
-        /**
-         * Handles system prefers-reduced-motion preference changes.
-         * 
-         * @param {MediaQueryListEvent} e
-         * @private
-         */
         _onReducedMotionChange(e) {
             this.prefersReducedMotion = e.matches;
             if (this.element) {
@@ -717,39 +447,26 @@
             }
         }
 
-        // ======================================================================
-        // 10. Initialization & Event Binding
-        // ======================================================================
-
-        /**
-         * Initializes element discovery, audio, listeners, and entrance animation.
-         * @private
-         */
         _init() {
             const hasElement = this._setupElement();
             if (!hasElement) {
-                // Return safely without error if element not found in DOM
                 this.isDestroyed = true;
                 return;
             }
 
-            // Setup audio system
             this._setupAudio();
 
             const el = this.element;
 
-            // Attach element interaction listeners
             el.addEventListener('pointerenter', this._onPointerEnter, { passive: true });
             el.addEventListener('pointerleave', this._onPointerLeave, { passive: true });
             el.addEventListener('pointerdown', this._onPointerDown, { passive: true });
             el.addEventListener('click', this._onClick);
             el.addEventListener('keydown', this._onKeyDown);
 
-            // Attach document-wide pointer tracking for ambient lighting calculations
             if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
                 window.addEventListener('pointermove', this._onPointerMove, { passive: true });
 
-                // Reduced motion media query listener
                 if (typeof window.matchMedia === 'function') {
                     this.mediaQueryList = window.matchMedia('(prefers-reduced-motion: reduce)');
                     if (this.mediaQueryList && this.mediaQueryList.addEventListener) {
@@ -760,22 +477,11 @@
                 }
             }
 
-            // Trigger initial entrance animation
             this._runEntranceAnimation();
 
-            // Track instance
             activeInstances.add(this);
         }
 
-        // ======================================================================
-        // 11. Public Controller API & Cleanup
-        // ======================================================================
-
-        /**
-         * Returns current controller snapshot.
-         * 
-         * @returns {Object} State summary
-         */
         getState() {
             return {
                 isDestroyed: this.isDestroyed,
@@ -794,11 +500,6 @@
             };
         }
 
-        /**
-         * Dynamically updates configuration parameters.
-         * 
-         * @param {Object} newOptions - Partial configuration overrides
-         */
         setOptions(newOptions = {}) {
             Object.assign(this.config, newOptions);
             if (newOptions.audioVolume !== undefined && this.audio) {
@@ -806,15 +507,10 @@
             }
         }
 
-        /**
-         * Complete teardown: removes pointer, keyboard, and click listeners,
-         * cancels active timers, releases audio resources, and restores CSS properties.
-         */
         destroy() {
             if (this.isDestroyed) return;
             this.isDestroyed = true;
 
-            // 1. Clear pending timers
             if (this.entranceTimerId) {
                 clearTimeout(this.entranceTimerId);
                 this.entranceTimerId = null;
@@ -824,7 +520,6 @@
                 this.impactTimerId = null;
             }
 
-            // 2. Remove element listeners
             if (this.element) {
                 this.element.removeEventListener('pointerenter', this._onPointerEnter);
                 this.element.removeEventListener('pointerleave', this._onPointerLeave);
@@ -832,7 +527,6 @@
                 this.element.removeEventListener('click', this._onClick);
                 this.element.removeEventListener('keydown', this._onKeyDown);
 
-                // Remove CSS classes
                 this.element.classList.remove(
                     this.config.classLoaded,
                     this.config.classEntering,
@@ -841,7 +535,6 @@
                     this.config.classImpact
                 );
 
-                // Restore modified CSS custom properties
                 const style = this.element.style;
                 style.removeProperty(this.config.cssPropLightX);
                 style.removeProperty(this.config.cssPropLightY);
@@ -851,13 +544,11 @@
                 style.removeProperty(this.config.cssPropShiftY);
                 style.removeProperty(this.config.cssPropInteraction);
 
-                // If dynamically created element, remove from DOM
                 if (this.isDynamicElement && this.element.parentNode) {
                     this.element.parentNode.removeChild(this.element);
                 }
             }
 
-            // 3. Remove window listeners
             if (typeof window !== 'undefined' && typeof window.removeEventListener === 'function') {
                 window.removeEventListener('pointermove', this._onPointerMove);
 
@@ -871,32 +562,18 @@
                 }
             }
 
-            // 4. Release audio references
             if (this.audio) {
                 this.audio.pause();
                 this.audio.src = '';
                 this.audio = null;
             }
 
-            // 5. Clear references
             this.element = null;
             activeInstances.delete(this);
         }
     }
 
-    // ==========================================================================
-    // 12. Public Initializer & Export
-    // ==========================================================================
-
-    /**
-     * Initializes the interactive metallic logo.
-     * Prevents duplicate instances on the same DOM element.
-     * 
-     * @param {Object} [options] - Configuration overrides
-     * @returns {LogoController|null} Controller instance or null if element not found
-     */
     function initLogoAnimation(options = {}) {
-        // Multi-init guard: return existing active instance if already bound to matching selector
         const selector = options.selector || DEFAULT_CONFIG.selector;
         for (const instance of activeInstances) {
             if (instance.config.selector === selector && !instance.isDestroyed) {
@@ -912,14 +589,12 @@
         return controller.element ? controller : (options.returnInactive ? controller : null);
     }
 
-    // Expose globally on window
     if (typeof global !== 'undefined') {
         global.initLogoAnimation = initLogoAnimation;
-        global.initLogo = initLogoAnimation; // Convenience alias
+        global.initLogo = initLogoAnimation;
         global.LogoController = LogoController;
     }
 
-    // CommonJS support for test suites, bundlers, and Node environments
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = {
             initLogoAnimation,
