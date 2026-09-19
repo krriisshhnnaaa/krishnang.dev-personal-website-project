@@ -20,5 +20,8 @@
   "homepage": "https://github.com/krriisshhnnaaa/krishnang.dev-personal-website-project#readme",
   "devDependencies": {
     "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }
