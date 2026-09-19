@@ -121,7 +121,7 @@
 
         // Animation Timings
         entranceDurationMs: 650, // Duration of the settling entrance animation
-        impactDurationMs: 180,   // Duration of the strike compression & vibration
+        impactDurationMs: 320,   // Duration of the strike compression & kinetic recoil
 
         // Fallback creation behavior:
         // Per spec: "If element doesn't exist: don't crash, don't create random UI, return safely"
@@ -256,6 +256,11 @@
 
             this.element = el;
 
+            // Ensure rich multi-layer glyph spans exist if only plain text is present
+            if (!el.querySelector('.logo-glyph-slash')) {
+                el.innerHTML = '<span class="logo-glyph-open">&lt;</span><span class="logo-glyph-slash">/</span><span class="logo-glyph-close">&gt;</span>';
+            }
+
             // Accessibility configuration
             this._setupAccessibility();
 
@@ -330,6 +335,46 @@
         }
 
         /**
+         * Synthesizes a realistic metallic bar chime using the Web Audio API as a robust
+         * zero-dependency acoustic fallback when audio playback is policy-restricted or missing.
+         * 
+         * @private
+         */
+        _synthesizeMetallicChime() {
+            if (typeof window === 'undefined') return;
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                if (!this._audioCtx) {
+                    this._audioCtx = new AudioCtx();
+                }
+                if (this._audioCtx.state === 'suspended') {
+                    this._audioCtx.resume();
+                }
+                const ctx = this._audioCtx;
+                const now = ctx.currentTime;
+                // Harmonic frequencies simulating struck metallic plate: 1175Hz (D6), 2350Hz, 3525Hz
+                const harmonics = [
+                    { freq: 1175, gain: 0.25, decay: 0.65 },
+                    { freq: 2350, gain: 0.12, decay: 0.45 },
+                    { freq: 3525, gain: 0.06, decay: 0.25 }
+                ];
+                harmonics.forEach(({ freq, gain, decay }) => {
+                    const osc = ctx.createOscillator();
+                    const gainNode = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now);
+                    gainNode.gain.setValueAtTime(gain * this.config.audioVolume, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+                    osc.connect(gainNode);
+                    gainNode.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + decay + 0.05);
+                });
+            } catch (_) {}
+        }
+
+        /**
          * Plays the metallic strike sound with cooldown protection.
          * Ensures repeated rapid clicks produce distinct individual strikes
          * without chaotic overlapping or performance degradation.
@@ -348,7 +393,8 @@
             this.state.lastStrikeTime = now;
 
             if (!this.audio) {
-                return false;
+                this._synthesizeMetallicChime();
+                return true;
             }
 
             try {
@@ -358,12 +404,14 @@
 
                 if (playPromise && typeof playPromise.catch === 'function') {
                     playPromise.catch(() => {
-                        // Safely handle browser autoplay policy restriction
+                        // Browser autoplay policy restriction: fall back to synth
+                        this._synthesizeMetallicChime();
                     });
                 }
                 return true;
             } catch (err) {
-                return false;
+                this._synthesizeMetallicChime();
+                return true;
             }
         }
 
@@ -553,10 +601,64 @@
         }
 
         /**
+         * Emits an expanding holographic shockwave ring around the logo center.
+         * @private
+         */
+        _spawnShockwave() {
+            if (!this.element || this.prefersReducedMotion || typeof document === 'undefined') return;
+            try {
+                const parent = this.element.parentElement || this.element;
+                let container = parent.querySelector('.logo-shockwave-container');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.className = 'logo-shockwave-container';
+                    if (getComputedStyle(parent).position === 'static') {
+                        parent.style.position = 'relative';
+                    }
+                    parent.appendChild(container);
+                }
+                const ring = document.createElement('span');
+                ring.className = 'logo-shockwave-ring';
+                container.appendChild(ring);
+                setTimeout(() => {
+                    if (ring.parentNode) ring.parentNode.removeChild(ring);
+                }, 600);
+            } catch (_) {}
+        }
+
+        /**
+         * Emits energetic micro-sparks radiating outward from the strike point.
+         * @private
+         */
+        _spawnSparks() {
+            if (!this.element || this.prefersReducedMotion || typeof document === 'undefined') return;
+            try {
+                const sparkCount = 6;
+                for (let i = 0; i < sparkCount; i++) {
+                    const spark = document.createElement('span');
+                    spark.className = 'logo-spark';
+                    const angle = (i / sparkCount) * 2 * Math.PI + (Math.random() - 0.5) * 0.6;
+                    const distance = 28 + Math.random() * 32;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    spark.style.setProperty('--spark-tx', `${tx.toFixed(1)}px`);
+                    spark.style.setProperty('--spark-ty', `${ty.toFixed(1)}px`);
+                    spark.style.left = '50%';
+                    spark.style.top = '50%';
+                    this.element.appendChild(spark);
+                    setTimeout(() => {
+                        if (spark.parentNode) spark.parentNode.removeChild(spark);
+                    }, 480);
+                }
+            } catch (_) {}
+        }
+
+        /**
          * Triggers the physical impact response:
-         * 1. Plays local metal-strike audio with cooldown protection
-         * 2. Triggers micro-compression and vibration animation via CSS class
-         * 3. Settles back smoothly to rest state
+         * 1. Plays local metal-strike audio with cooldown protection & synth fallback
+         * 2. Emits physical holographic shockwave ring and kinetic sparks
+         * 3. Triggers quantum kinetic recoil and chromatic burst animation via CSS class
+         * 4. Settles back smoothly to rest state
          * 
          * Can be called programmatically via controller.triggerImpact().
          */
@@ -566,10 +668,14 @@
             // 1. Play metallic strike audio
             this._playStrikeAudio();
 
-            // 2. Physical impact vibration (disabled if reduced motion)
+            // 2. Physical impact vibration & visual kinetic burst (disabled if reduced motion)
             if (!this.prefersReducedMotion) {
                 this.state.pressed = true;
                 const el = this.element;
+
+                // Emit dynamic holographic shockwave and sparks
+                this._spawnShockwave();
+                this._spawnSparks();
 
                 // Retrigger class cleanly even on repeated rapid clicks
                 el.classList.remove(this.config.classImpact);

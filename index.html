@@ -1,47 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Krishnang Pandey — 1st Year CSE AI/ML student at Chitkara University. Developer, researcher, systems & freelance engineer.">
     <title>Krishnang Pandey — krishnang.dev</title>
 
-    <!-- Design Tokens & Global Styles -->
-    <link rel="stylesheet" href="CSS/variables.css">
-    <link rel="stylesheet" href="CSS/base.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN Engine -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#030712',
+                            surface: '#080e1e',
+                            card: 'rgba(13, 20, 36, 0.75)',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            glow: 'rgba(0, 242, 254, 0.35)',
+                        },
+                        cyber: {
+                            cyan: '#00f2fe',
+                            blue: '#38bdf8',
+                            neon: '#00ffff',
+                            purple: '#a855f7',
+                            violet: '#8b5cf6',
+                            magenta: '#ec4899',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            rose: '#f43f5e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace']
+                    },
+                    boxShadow: {
+                        'glow-cyan': '0 0 30px rgba(0, 242, 254, 0.25)',
+                        'glow-purple': '0 0 30px rgba(168, 85, 247, 0.25)',
+                        'glow-emerald': '0 0 25px rgba(16, 185, 129, 0.3)',
+                        'card-cyber': '0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                    },
+                    animation: {
+                        'levitate': 'levitate 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'conic-spin': 'conicSpin 6s linear infinite',
+                        'shimmer': 'shimmer 2.5s linear infinite',
+                        'radar-ping': 'radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+                    },
+                    keyframes: {
+                        levitate: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-5px)' }
+                        },
+                        conicSpin: {
+                            'from': { transform: 'rotate(0deg)' },
+                            'to': { transform: 'rotate(360deg)' }
+                        },
+                        shimmer: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' }
+                        },
+                        radarPing: {
+                            '75%, 100%': { transform: 'scale(2.2)', opacity: '0' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Compiled Local Tailwind Build & Component Overrides -->
+    <link rel="stylesheet" href="dist/output.css">
     <link rel="stylesheet" href="CSS/logo-animation.css">
     <link rel="stylesheet" href="CSS/style.css">
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden">
 
     <!-- =====================================================
-         BACKGROUND
+         BACKGROUND CANVAS & AMBIENT AURORA ORBS
          ===================================================== -->
+    <canvas id="background-canvas" class="background-canvas fixed inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
 
-    <canvas id="background-canvas" class="background-canvas" aria-hidden="true"></canvas>
+    <!-- Ambient Glowing Nebulae -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow"></div>
+    <div class="fixed top-1/2 right-12 w-[30rem] h-[30rem] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+    <div class="fixed bottom-10 left-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
 
     <!-- =====================================================
-         HEADER / INTERACTIVE LOGO
+         HEADER / QUANTUM KINETIC LOGO & NAVIGATION
          ===================================================== -->
+    <header class="fixed top-0 inset-x-0 z-50 h-20 backdrop-blur-xl bg-slate-950/75 border-b border-slate-800/60 transition-all duration-300 site-header">
+        <div class="max-w-7xl mx-auto h-full px-6 sm:px-8 flex items-center justify-between header-inner">
 
-    <header class="site-header">
-        <div class="header-inner">
-            <button
-                id="personal-logo"
-                class="personal-logo"
-                type="button"
-                aria-label="Personal Logo: </>, strike for metallic chime"
-            >
-                &lt;/&gt;
-            </button>
+            <!-- Logo Section with Kinetic Shockwave Anchor -->
+            <div class="relative flex items-center gap-3">
+                <button
+                    id="personal-logo"
+                    class="personal-logo group relative"
+                    type="button"
+                    aria-label="Personal Logo: </>, strike for metallic chime"
+                >
+                    <span class="logo-glyph-open">&lt;</span>
+                    <span class="logo-glyph-slash">/</span>
+                    <span class="logo-glyph-close">&gt;</span>
+                </button>
 
-            <nav class="site-nav" aria-label="Primary navigation">
-                <a href="#activity">Activity</a>
-                <a href="#blogs">Writing</a>
-                <a href="#freelance">Work with me</a>
-                <a href="#connect">Connect</a>
+                <!-- Subtle terminal prompt badge -->
+                <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900/80 border border-slate-800 text-xs font-mono text-slate-400">
+                    <span class="text-cyan-400 font-bold">&gt;</span> krishnang.dev
+                </span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="site-nav flex items-center gap-1 sm:gap-4" aria-label="Primary navigation">
+                <a href="#activity" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Activity</a>
+                <a href="#blogs" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Writing</a>
+                <a href="#freelance" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Services</a>
+                <a href="#education" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Timeline</a>
+                <a href="#connect" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Connect</a>
+
+                <!-- Quick Action CTA -->
+                <a href="#freelance" class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 ml-2 rounded-xl text-xs font-semibold uppercase tracking-wider text-cyan-300 bg-cyan-950/40 border border-cyan-500/30 hover:bg-cyan-500 hover:text-slate-950 hover:border-cyan-400 shadow-sm hover:shadow-glow-cyan transition-all duration-300">
+                    Hire Me <span>↗</span>
+                </a>
             </nav>
+
         </div>
     </header>
 
@@ -49,69 +141,94 @@
     <!-- =====================================================
          MAIN CONTENT
          ===================================================== -->
-
-    <main id="main-content">
+    <main id="main-content" class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col gap-24 sm:gap-32 pt-28 pb-20">
 
         <!-- =================================================
-             HERO
+             HERO SECTION
              ================================================= -->
+        <section id="hero" class="hero min-h-[calc(100vh-7rem)] flex items-center">
+            <div class="hero-inner w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-        <section id="hero" class="hero">
+                <!-- Left Column: Introduction -->
+                <div class="hero-intro lg:col-span-7 flex flex-col items-start">
 
-            <div class="hero-inner">
+                    <!-- Availability Status Pill -->
+                    <div class="availability inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-xs font-mono text-emerald-300 shadow-sm shadow-emerald-950/50 mb-6 backdrop-blur-sm">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span>Available for thoughtful projects</span>
+                    </div>
 
-                <!-- Introduction -->
-                <div class="hero-intro">
-
-                    <span class="availability"><i></i> Available for thoughtful projects</span>
-
-                    <p class="hero-greeting">
+                    <!-- Greeting -->
+                    <p class="hero-greeting text-lg sm:text-xl text-slate-400 font-mono tracking-wide">
                         Hi, myself
                     </p>
 
-                    <h1 class="hero-name">
+                    <!-- Primary Heading / Name -->
+                    <h1 class="hero-name text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mt-2 mb-6 bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent hover:from-cyan-200 hover:via-white hover:to-blue-300 transition-all duration-500">
                         Krishnang Pandey.
                     </h1>
 
-                    <div class="hero-details">
-                        <p class="hero-role">
-                            Student
-                        </p>
+                    <!-- Education Details Cyber Card -->
+                    <div class="hero-details w-full max-w-xl p-5 rounded-2xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 mb-8">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-500"></div>
 
-                        <p class="hero-university">
-                            Chitkara University
-                        </p>
+                        <div class="pl-2 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <p class="hero-role text-base sm:text-lg font-semibold text-slate-100 flex items-center gap-2">
+                                    <span>Student &amp; Systems Engineer</span>
+                                </p>
+                                <span class="text-[10px] uppercase font-mono tracking-widest px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/20">Year 1</span>
+                            </div>
 
-                        <p class="hero-degree">
-                            Computer Science Engineering
-                        </p>
+                            <p class="hero-university text-sm sm:text-base font-medium text-slate-300">
+                                Chitkara University
+                            </p>
 
-                        <p class="hero-specialization">
-                            Artificial Intelligence &amp; Machine Learning
-                        </p>
+                            <p class="hero-degree text-xs sm:text-sm text-slate-400">
+                                Computer Science Engineering
+                            </p>
+
+                            <p class="hero-specialization text-xs sm:text-sm font-semibold text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text">
+                                Artificial Intelligence &amp; Machine Learning
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="hero-actions">
-                        <a class="button button-primary" href="#freelance">Work with me <span>↗</span></a>
-                        <a class="button button-secondary" href="#blogs">Read my writing</a>
+                    <!-- Call To Action Buttons -->
+                    <div class="hero-actions flex flex-wrap items-center gap-4">
+                        <a
+                            class="button button-primary relative group overflow-hidden px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+                            href="#freelance"
+                        >
+                            <span class="relative z-10 flex items-center gap-2">
+                                Work with me <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+                            </span>
+                            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                        </a>
+
+                        <a
+                            class="button button-secondary px-6 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-slate-700/60 hover:border-slate-500 text-slate-200 text-sm font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+                            href="#blogs"
+                        >
+                            Read my writing
+                        </a>
                     </div>
 
                 </div>
 
 
-                <!-- Terminal -->
-                <div class="hero-terminal">
-
+                <!-- Right Column: Interactive Terminal -->
+                <div class="hero-terminal lg:col-span-5 w-full max-w-lg mx-auto lg:max-w-none">
                     <div
                         id="terminal"
                         class="terminal terminal-card"
                         aria-label="Interactive terminal"
                     >
-
                         <div class="terminal-header">
-                            <span class="terminal-title">
-                                krishnang.dev
-                            </span>
+                            <span class="terminal-title">krishnang.dev ~ zsh</span>
                         </div>
 
                         <div class="terminal-body">
@@ -141,95 +258,111 @@
                                     autocapitalize="off"
                                     spellcheck="false"
                                     aria-label="Terminal command"
+                                    placeholder="Type 'help'..."
                                 >
                             </form>
                         </div>
+                    </div>
+                </div>
 
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             ACTIVITY SECTION (GitHub & Writing Feeds)
+             ================================================= -->
+        <section id="activity" class="activity scroll-mt-24 pt-8">
+            <div class="section-inner space-y-10">
+
+                <!-- Header -->
+                <header class="section-header">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
+                        Activity
+                    </p>
+                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+                        What I've been building.
+                    </h2>
+                </header>
+
+                <!-- Activity Grids -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                    <!-- GitHub Feed Card -->
+                    <div class="activity-block activity-github p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl flex flex-col">
+                        <header class="activity-block-header flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5 text-slate-300" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                </svg>
+                                <h3 class="text-sm font-mono font-semibold text-slate-200">GitHub Commits</h3>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Live Sync
+                            </span>
+                        </header>
+
+                        <div
+                            id="github-activity"
+                            class="github-activity flex-1"
+                            aria-live="polite"
+                        ></div>
+                    </div>
+
+                    <!-- Writing Feed Card -->
+                    <div class="activity-block activity-blog p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl flex flex-col">
+                        <header class="activity-block-header flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                                <h3 class="text-sm font-mono font-semibold text-slate-200">Recent Writing</h3>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-purple-400 bg-purple-950/40 px-2 py-0.5 rounded border border-purple-500/20">
+                                Essays &amp; Notes
+                            </span>
+                        </header>
+
+                        <div
+                            id="blog-activity"
+                            class="blog-activity flex-1"
+                            aria-live="polite"
+                        ></div>
                     </div>
 
                 </div>
 
             </div>
-
         </section>
 
 
         <!-- =================================================
-             ACTIVITY
+             BLOGS SECTION (Horizontal Carousel)
              ================================================= -->
+        <section id="blogs" class="blogs scroll-mt-24 pt-8">
+            <div class="section-inner space-y-8">
 
-        <section id="activity" class="activity">
+                <header class="section-header flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                    <div>
+                        <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
+                            Writing
+                        </p>
+                        <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+                            Things I've written.
+                        </h2>
+                    </div>
 
-            <div class="section-inner">
-
-                <header class="section-header">
-                    <p class="section-label">
-                        Activity
+                    <p class="text-sm text-slate-400 max-w-sm">
+                        Technical explorations on systems programming, artificial intelligence workflows, and internet architecture.
                     </p>
-
-                    <h2 class="section-title">
-                        What I've been building.
-                    </h2>
                 </header>
 
 
-                <!-- GitHub -->
-                <div class="activity-block activity-github">
-
-                    <header class="activity-block-header">
-                        <h3>GitHub</h3>
-                    </header>
-
-                    <div
-                        id="github-activity"
-                        class="github-activity"
-                        aria-live="polite"
-                    ></div>
-
-                </div>
-
-
-                <!-- Blog activity -->
-                <div class="activity-block activity-blog">
-
-                    <header class="activity-block-header">
-                        <h3>Writing</h3>
-                    </header>
-
-                    <div
-                        id="blog-activity"
-                        class="blog-activity"
-                        aria-live="polite"
-                    ></div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             BLOGS
-             ================================================= -->
-
-        <section id="blogs" class="blogs">
-
-            <div class="section-inner">
-
-                <header class="section-header">
-                    <p class="section-label">
-                        Writing
-                    </p>
-
-                    <h2 class="section-title">
-                        Things I've written.
-                    </h2>
-                </header>
-
-
+                <!-- Carousel Browser -->
                 <div id="blog-browser" class="blog-browser" data-blog-scroll>
 
+                    <!-- Previous Button -->
                     <button
                         type="button"
                         id="blog-prev"
@@ -240,21 +373,19 @@
                         ←
                     </button>
 
-
+                    <!-- Scroll Track Container -->
                     <div
                         class="blog-scroll-container"
                         aria-label="Blog articles"
                     >
-
                         <div
                             id="blog-track"
                             class="blog-track blog-cards-track"
                             data-blog-track
                         ></div>
-
                     </div>
 
-
+                    <!-- Next Button -->
                     <button
                         type="button"
                         id="blog-next"
@@ -268,76 +399,117 @@
                 </div>
 
             </div>
-
         </section>
 
 
         <!-- =================================================
-             FREELANCING
+             FREELANCING / SERVICES SECTION
              ================================================= -->
-
-        <section id="freelance" class="freelancing freelance" data-section="freelancing">
+        <section id="freelance" class="freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
 
             <!-- Anchor alias for #freelancing -->
-            <span id="freelancing" class="section-anchor" aria-hidden="true"></span>
+            <span id="freelancing" class="section-anchor sr-only" aria-hidden="true"></span>
 
-            <div class="section-inner">
+            <div class="section-inner space-y-10">
 
                 <header class="section-header">
-                    <p class="section-label">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
                         Freelancing
                     </p>
-
-                    <h2 class="section-title">
+                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
                         Let's build something.
                     </h2>
                 </header>
 
 
-                <div class="freelancing-content">
+                <div class="freelancing-content grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
-                    <div class="freelancing-services">
-                        <div class="freelance-card">
-                            <h3 class="freelance-title">Services &amp; Packages</h3>
-                            <ul class="freelance-list">
-                                <li class="freelance-item"><span class="freelance-bullet">•</span> Full-Stack Web Applications (Next.js, Node.js, REST APIs)</li>
-                                <li class="freelance-item"><span class="freelance-bullet">•</span> AI &amp; Local LLM Tooling / CLI Agents</li>
-                                <li class="freelance-item"><span class="freelance-bullet">•</span> Database Architecture &amp; Caching (MySQL, MongoDB, Redis)</li>
-                                <li class="freelance-item"><span class="freelance-bullet">•</span> High-Performance Scripting &amp; Automation (Python, Bash)</li>
-                            </ul>
+                    <!-- Left: Services Matrix -->
+                    <div class="freelancing-services lg:col-span-7">
+                        <div class="freelance-card p-6 sm:p-8 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl h-full flex flex-col justify-between">
+                            <div>
+                                <h3 class="freelance-title text-xl font-bold text-white mb-6 flex items-center gap-2.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400"></span>
+                                    Services &amp; Packages
+                                </h3>
+
+                                <ul class="freelance-list space-y-4">
+                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
+                                        <span class="text-cyan-400 font-bold">•</span>
+                                        <span class="text-sm text-slate-300"><strong class="text-white">Full-Stack Web Applications</strong> (Next.js, Node.js, Express, REST APIs, Tailwind)</span>
+                                    </li>
+
+                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
+                                        <span class="text-cyan-400 font-bold">•</span>
+                                        <span class="text-sm text-slate-300"><strong class="text-white">AI &amp; Local LLM Tooling</strong> (Multi-Agent workflows, Ollama, CLI Agents, RAG pipelines)</span>
+                                    </li>
+
+                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
+                                        <span class="text-cyan-400 font-bold">•</span>
+                                        <span class="text-sm text-slate-300"><strong class="text-white">Database Architecture &amp; Caching</strong> (PostgreSQL, MySQL, MongoDB, Redis optimization)</span>
+                                    </li>
+
+                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
+                                        <span class="text-cyan-400 font-bold">•</span>
+                                        <span class="text-sm text-slate-300"><strong class="text-white">High-Performance Scripting &amp; Automation</strong> (Python, Bash, Rust micro-utilities)</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <p class="text-xs text-slate-500 font-mono mt-6 pt-4 border-t border-slate-800/80">
+                                Open for contracts, freelance gigs, and collaborative open-source ventures.
+                            </p>
                         </div>
                     </div>
 
-                    <div class="freelancing-contact">
-                        <p>Have an idea, a tricky system, or an AI workflow to ship?</p>
-                        <a class="button button-primary" href="mailto:hello@krishnang.dev">Start a conversation <span>↗</span></a>
+                    <!-- Right: Direct CTA Card -->
+                    <div class="freelancing-contact lg:col-span-5 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-950 to-cyan-950/30 border border-cyan-500/30 backdrop-blur-md shadow-2xl flex flex-col justify-center items-start gap-6 relative overflow-hidden">
+                        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold uppercase tracking-wider bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                            Let's Collaborate
+                        </span>
+
+                        <h3 class="text-2xl font-bold text-white">
+                            Have an idea, a tricky system, or an AI workflow to ship?
+                        </h3>
+
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            I help bring concepts from whiteboard architecture to production-grade deployment with clean code and high reliability.
+                        </p>
+
+                        <a
+                            class="button button-primary relative group overflow-hidden px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-slate-950 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+                            href="mailto:hello@krishnang.dev"
+                        >
+                            <span class="relative z-10 flex items-center gap-2">
+                                Start a conversation <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+                            </span>
+                            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                        </a>
                     </div>
 
                 </div>
 
             </div>
-
         </section>
 
 
         <!-- =================================================
-             EDUCATION
+             EDUCATION SECTION (3D Scroll-Driven Book)
              ================================================= -->
-
         <section
             id="education"
-            class="education education-section"
+            class="education education-section scroll-mt-24 pt-8"
             data-education-section
         >
-
-            <div class="section-inner">
+            <div class="section-inner space-y-10">
 
                 <header class="section-header">
-                    <p class="section-label">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
                         Education
                     </p>
-
-                    <h2 class="section-title">
+                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
                         The road so far.
                     </h2>
                 </header>
@@ -348,146 +520,188 @@
                     data-education-book
                     aria-label="Education timeline"
                 >
-
                     <div class="book">
 
                         <div class="book-cover" data-book-cover>
-                            <!-- Book cover -->
+                            <!-- Cover rendered via CSS / book-education.js -->
                         </div>
-
 
                         <div class="book-pages" data-book-pages>
 
-                            <!--
-                                Education pages defined in HTML.
-                                book-education.js controls scroll-driven state.
-                            -->
-
+                            <!-- Page 1: Class 10 -->
                             <article
                                 class="book-page education-page"
                                 data-page="1"
                                 data-education-page="1"
                             >
-                                <div class="book-page-content">
-                                    <h3>Class 10</h3>
-                                    <p>Secondary School Education</p>
+                                <div class="book-page-content text-left space-y-2">
+                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Foundation</span>
+                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Class 10</h3>
+                                    <p class="text-sm text-slate-300">Secondary School Education</p>
+                                    <p class="text-xs text-slate-400 mt-2">Built foundations in mathematics, physical sciences, and introductory computational logic.</p>
                                 </div>
                             </article>
 
-
+                            <!-- Page 2: Class 12 -->
                             <article
                                 class="book-page education-page"
                                 data-page="2"
                                 data-education-page="2"
                             >
-                                <div class="book-page-content">
-                                    <h3>Class 12</h3>
-                                    <p>Senior Secondary Education</p>
+                                <div class="book-page-content text-left space-y-2">
+                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Senior School</span>
+                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Class 12</h3>
+                                    <p class="text-sm text-slate-300">Senior Secondary Education</p>
+                                    <p class="text-xs text-slate-400 mt-2">Non-Medical Sciences (PCM) with Computer Science. Deep focus on algorithms, problem-solving, and calculus.</p>
                                 </div>
                             </article>
 
-
+                            <!-- Page 3: Chitkara University -->
                             <article
                                 class="book-page education-page"
                                 data-page="3"
                                 data-education-page="3"
                             >
-                                <div class="book-page-content">
-                                    <h3>Chitkara University</h3>
-                                    <p>B.Tech. CSE — AI &amp; ML Program</p>
+                                <div class="book-page-content text-left space-y-2">
+                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Undergraduate</span>
+                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Chitkara University</h3>
+                                    <p class="text-sm text-slate-300">B.Tech. CSE — AI &amp; ML Program</p>
+                                    <p class="text-xs text-slate-400 mt-2">Core study in data structures, algorithms, neural architectures, distributed computing, and machine learning models.</p>
                                 </div>
                             </article>
 
-
+                            <!-- Page 4: Technical Specializations -->
                             <article
                                 class="book-page education-page"
                                 data-page="4"
                                 data-education-page="4"
                             >
-                                <div class="book-page-content">
-                                    <h3>Technical Specializations</h3>
-                                    <p>Systems, Artificial Intelligence, &amp; Cloud Infrastructure</p>
+                                <div class="book-page-content text-left space-y-2">
+                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Focus Areas</span>
+                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Specializations</h3>
+                                    <p class="text-sm text-slate-300">Systems &amp; Agentic AI</p>
+                                    <p class="text-xs text-slate-400 mt-2">High-performance tooling in Rust and Go, local LLM orchestration, Linux system tuning, and modern web architectures.</p>
                                 </div>
                             </article>
 
                         </div>
 
                     </div>
-
                 </div>
 
             </div>
-
         </section>
 
 
         <!-- =================================================
-             CONNECT
+             CONNECT / SOCIAL SECTION
              ================================================= -->
-
-        <section id="connect" class="connect">
-
-            <div class="section-inner">
+        <section id="connect" class="connect scroll-mt-24 pt-8">
+            <div class="section-inner space-y-8">
 
                 <header class="section-header">
-                    <p class="section-label">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
                         Connect
                     </p>
-
-                    <h2 class="section-title">
+                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
                         Find me around the internet.
                     </h2>
                 </header>
 
 
                 <nav
-                    class="social-links"
+                    class="social-links grid grid-cols-1 sm:grid-cols-3 gap-4"
                     aria-label="Social links"
                 >
-
+                    <!-- GitHub Card -->
                     <a
                         href="https://github.com/krriisshhnnaaa"
-                        class="social-link"
+                        class="social-link group p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/80 transition-all duration-300 flex items-center justify-between"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        GitHub
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-mono font-semibold text-sm text-white group-hover:text-purple-300 transition-colors">GitHub</h4>
+                                <span class="text-xs text-slate-400">@krriisshhnnaaa</span>
+                            </div>
+                        </div>
+                        <span class="text-slate-500 group-hover:text-purple-400 group-hover:translate-x-1 transition-all">↗</span>
                     </a>
 
+                    <!-- LinkedIn Card -->
                     <a
                         href="https://linkedin.com/in/krishnang"
-                        class="social-link"
+                        class="social-link group p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all duration-300 flex items-center justify-between"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        LinkedIn
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-mono font-semibold text-sm text-white group-hover:text-blue-300 transition-colors">LinkedIn</h4>
+                                <span class="text-xs text-slate-400">krishnang</span>
+                            </div>
+                        </div>
+                        <span class="text-slate-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all">↗</span>
                     </a>
 
+                    <!-- Instagram Card -->
                     <a
                         href="https://instagram.com"
-                        class="social-link"
+                        class="social-link group p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-pink-500/50 hover:bg-slate-900/80 transition-all duration-300 flex items-center justify-between"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Instagram
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-pink-950/60 border border-pink-500/30 flex items-center justify-center text-pink-400 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-mono font-semibold text-sm text-white group-hover:text-pink-300 transition-colors">Instagram</h4>
+                                <span class="text-xs text-slate-400">@krishnang</span>
+                            </div>
+                        </div>
+                        <span class="text-slate-500 group-hover:text-pink-400 group-hover:translate-x-1 transition-all">↗</span>
                     </a>
-
                 </nav>
 
             </div>
-
         </section>
 
     </main>
 
-    <footer class="site-footer">
-        <p>Designed and built by Krishnang Pandey.</p>
-        <a href="#hero">Back to top ↑</a>
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+    <footer class="site-footer border-t border-slate-800/80 bg-slate-950/90 py-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+            <p>Designed and built by Krishnang Pandey.</p>
+
+            <div class="flex items-center gap-6">
+                <span class="text-slate-500">Tailwind CSS &amp; Web Components</span>
+                <a href="#hero" class="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors">
+                    Back to top ↑
+                </a>
+            </div>
+        </div>
     </footer>
 
 
     <!-- =====================================================
-         SCRIPTS
+         SCRIPTS & CONTROLLER ORCHESTRATION
          ===================================================== -->
     <script src="Interactive-Elements/bg-animations.js"></script>
     <script src="Interactive-Elements/logo.js"></script>
@@ -500,35 +714,36 @@
     <!-- Orchestration Bootstrap -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Background gravitational field
+            // 1. Cosmic gravitational particle field
             if (typeof initBackgroundAnimations === 'function') {
                 initBackgroundAnimations();
             }
 
-            // Interactive metallic logo
+            // 2. Interactive Quantum Kinetic Logo
             if (typeof initLogoAnimation === 'function') {
                 initLogoAnimation();
             }
 
-            // Hero terminal
+            // 3. Hero Developer Terminal
             if (typeof initTerminal === 'function') {
                 initTerminal();
             }
 
-            // GitHub activity feed
+            // 4. Live GitHub Activity Feed
             if (typeof initGitHubActivity === 'function') {
                 initGitHubActivity();
             }
 
-            // Blog activity feed & horizontal browser
+            // 5. Blog Activity Feed & Horizontal Carousel
             const blogActivity = typeof initBlogActivity === 'function'
                 ? initBlogActivity()
                 : null;
+
             if (typeof initBlogHorizontalScroll === 'function') {
                 initBlogHorizontalScroll({ activityController: blogActivity });
             }
 
-            // Scroll-driven education book
+            // 6. Scroll-Driven 3D Education Book
             if (typeof initBookEducation === 'function') {
                 initBookEducation();
             }
