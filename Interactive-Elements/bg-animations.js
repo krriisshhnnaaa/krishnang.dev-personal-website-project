@@ -6,7 +6,7 @@
         canvasClass: 'background-canvas',
         container: null,
 
-        particleCount: 100,
+        particleCount: 165,
 
         categories: {
             dust: {
@@ -59,9 +59,11 @@
         driftAmount: 1.8,
         returnSpeed: 0.065,
         maxParticleSpeed: 14,
+        constellationDistance: 115,
+        constellationOpacity: 0.16,
 
         maxDpr: 2,
-        zIndex: -1,
+        zIndex: 0,
         enableSwirl: true,
         enableDrift: true,
         resizeDebounceMs: 120
@@ -106,6 +108,9 @@
             this.dpr = 1;
 
             this.particles = [];
+            this.prefersReducedMotion = typeof window !== 'undefined'
+                && window.matchMedia
+                && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             this.mouse = {
                 x: -9999,
@@ -276,6 +281,7 @@
                     driftAmount: driftAmount,
                     phase: phase,
                     phaseY: phaseY,
+                    twinkleSpeed: randomRange(0.8, 2.4),
 
                     spin: spin
                 });
@@ -404,7 +410,7 @@
                 p.x += deltaX;
                 p.y += deltaY;
 
-                const opacityPulse = Math.sin(timeSec * (p.driftSpeed * 1.6) + p.phase) * 0.06;
+                const opacityPulse = Math.sin(timeSec * p.twinkleSpeed + p.phase) * (p.type === 'bright' ? 0.16 : 0.06);
                 p.opacity = Math.max(0.08, Math.min(1.0, p.baseOpacity + opacityPulse));
             }
         }
@@ -418,8 +424,45 @@
             const particles = this.particles;
             const len = particles.length;
 
+            // Only nearby brighter stars are connected, preserving a subtle
+            // constellation effect without turning the sky into a grid.
+            const maxDistance = this.config.constellationDistance;
+            const maxDistanceSquared = maxDistance * maxDistance;
+            for (let i = 0; i < len; i++) {
+                const a = particles[i];
+                if (a.type === 'dust') continue;
+                for (let j = i + 1; j < len; j++) {
+                    const b = particles[j];
+                    if (b.type === 'dust') continue;
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const distanceSquared = dx * dx + dy * dy;
+                    if (distanceSquared > maxDistanceSquared) continue;
+
+                    const alpha = (1 - Math.sqrt(distanceSquared) / maxDistance)
+                        * this.config.constellationOpacity
+                        * Math.min(a.opacity, b.opacity);
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.strokeStyle = `rgba(86, 207, 255, ${alpha.toFixed(3)})`;
+                    ctx.lineWidth = 0.45;
+                    ctx.stroke();
+                }
+            }
+
             for (let i = 0; i < len; i++) {
                 const p = particles[i];
+
+                if (p.type === 'bright') {
+                    const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 6);
+                    glow.addColorStop(0, p.colorPrefix + (p.opacity * 0.28).toFixed(3) + ')');
+                    glow.addColorStop(1, p.colorPrefix + '0)');
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * 6, 0, Math.PI * 2);
+                    ctx.fillStyle = glow;
+                    ctx.fill();
+                }
 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -427,10 +470,14 @@
                 ctx.fill();
 
                 if (p.type === 'bright') {
+                    ctx.strokeStyle = p.colorPrefix + (p.opacity * 0.5).toFixed(3) + ')';
+                    ctx.lineWidth = 0.7;
                     ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size * 2.4, 0, Math.PI * 2);
-                    ctx.fillStyle = p.colorPrefix + (p.opacity * 0.18).toFixed(3) + ')';
-                    ctx.fill();
+                    ctx.moveTo(p.x - p.size * 2.8, p.y);
+                    ctx.lineTo(p.x + p.size * 2.8, p.y);
+                    ctx.moveTo(p.x, p.y - p.size * 2.8);
+                    ctx.lineTo(p.x, p.y + p.size * 2.8);
+                    ctx.stroke();
                 }
             }
         }
@@ -472,6 +519,12 @@
             }
 
             this._createParticles(this.config.particleCount);
+
+            if (this.prefersReducedMotion) {
+                this._renderParticles();
+                activeInstances.add(this);
+                return;
+            }
 
             if (typeof window !== 'undefined') {
                 window.addEventListener('pointermove', this._onPointerMove, { passive: true });
