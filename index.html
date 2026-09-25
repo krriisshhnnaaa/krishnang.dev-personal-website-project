@@ -502,7 +502,7 @@
 
 
         <!-- =================================================
-             EDUCATION SECTION (3D Scroll-Driven Book)
+             EDUCATION SECTION (Interactive 3D Book)
              ================================================= -->
         <section
             id="education"
@@ -526,11 +526,9 @@
                     data-education-book
                     aria-label="Education timeline"
                 >
-                    <div class="book">
+                    <div class="book" role="group" aria-label="Interactive education book">
 
-                        <div class="book-cover" data-book-cover>
-                            <!-- Cover rendered via CSS / book-education.js -->
-                        </div>
+                        <button class="book-cover" data-book-cover type="button" aria-expanded="false" aria-label="Open education book"></button>
 
                         <div class="book-pages" data-book-pages>
 
@@ -592,6 +590,12 @@
 
                         </div>
 
+                    </div>
+
+                    <div class="book-controls" data-book-controls>
+                        <button class="book-control" type="button" data-book-previous aria-label="Previous page">← Previous</button>
+                        <span class="book-status" data-book-status aria-live="polite">Closed</span>
+                        <button class="book-control" type="button" data-book-next aria-label="Next page">Next →</button>
                     </div>
                 </div>
 

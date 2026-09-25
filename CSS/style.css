@@ -444,17 +444,10 @@
 }
 
 /* ==========================================================================
-   Education 3D Scroll-Driven Book (Compatible with book-education.js)
+   Interactive Education 3D Book (Compatible with book-education.js)
    Cyber-Tome / Futuristic Ledger Styling
    ========================================================================== */
-.education-section {
-  min-height: 130vh;
-  position: relative;
-}
-
 .education-book {
-  position: sticky;
-  top: 7rem;
   perspective: 1400px;
   margin: 0 auto;
 }
@@ -465,6 +458,13 @@
   height: 380px;
   margin: 0 auto;
   transform-style: preserve-3d;
+  cursor: pointer;
+  outline: none;
+}
+
+.book:focus-visible {
+  outline: 2px solid #00f2fe;
+  outline-offset: 8px;
 }
 
 .book-cover,
@@ -487,6 +487,7 @@
   align-items: center;
   padding: 2.5rem;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .book-cover::before {
@@ -530,6 +531,8 @@
   box-shadow: 2px 5px 25px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transform-origin: left center;
   transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+  pointer-events: none;
 }
 
 .book-page-content {
@@ -564,7 +567,54 @@
 
 .education-page--active,
 .education-page.is-active {
-  z-index: 5;
+  pointer-events: auto;
+}
+
+.book-controls {
+  width: min(680px, 100%);
+  margin: 1.5rem auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.book-control {
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 0.65rem;
+  background: rgba(8, 14, 30, 0.8);
+  color: #a5f3fc;
+  font: 600 0.8rem 'JetBrains Mono', monospace;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.book-control:hover:not(:disabled) {
+  background: rgba(0, 242, 254, 0.14);
+  border-color: #00f2fe;
+  transform: translateY(-2px);
+}
+
+.book-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.book-status {
+  color: #94a3b8;
+  font: 0.75rem 'JetBrains Mono', monospace;
+}
+
+@media (max-width: 640px) {
+  .book {
+    height: 330px;
+  }
+
+  .book-page,
+  .book-cover {
+    padding: 1.5rem;
+  }
 }
 
 /* ==========================================================================

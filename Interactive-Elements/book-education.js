@@ -3,288 +3,142 @@
 
     const DEFAULT_CONFIG = {
         sectionSelector: '#education, .education-section, [data-education-section]',
-        bookSelector: '.education-book, [data-education-book]',
-        pagesContainerSelector: '.book-pages, [data-book-pages]',
+        bookSelector: '.book',
         pageSelector: '.education-page, [data-education-page]',
         coverSelector: '.book-cover, [data-book-cover]',
-
+        previousSelector: '[data-book-previous]',
+        nextSelector: '[data-book-next]',
+        statusSelector: '[data-book-status]',
         bookOpenClass: 'book--open',
         bookClosedClass: 'book--closed',
-        bookOpeningClass: 'book--opening',
-
         pageActiveClass: 'education-page--active',
         pageFlippedClass: 'education-page--flipped',
-
-        openClass: 'is-open',
-        closedClass: 'is-closed',
-        activeClass: 'is-active',
-        flippedClass: 'is-flipped',
-
-        cssVarProgress: '--education-progress',
-        cssVarActivePage: '--education-active-page',
-        cssVarPageCount: '--education-page-count',
-        cssVarPageProgress: '--education-page-progress',
-
-        onPageChange: null,
-        onProgress: null
+        onPageChange: null
     };
 
     function clamp(value, min, max) {
-        if (typeof value !== 'number' || Number.isNaN(value)) {
-            return min;
-        }
         return Math.min(Math.max(value, min), max);
-    }
-
-    function calculateSectionProgress(section, viewportHeight) {
-        if (!section || typeof section.getBoundingClientRect !== 'function') {
-            return 0;
-        }
-
-        const rect = section.getBoundingClientRect();
-        const vh = viewportHeight || (typeof window !== 'undefined' ? window.innerHeight : 0) || 1;
-        const scrollDistance = rect.height - vh;
-
-        let rawProgress;
-
-        if (scrollDistance > 0) {
-            rawProgress = -rect.top / scrollDistance;
-        } else {
-            const totalTravel = vh + rect.height;
-            rawProgress = totalTravel > 0 ? (vh - rect.top) / totalTravel : 0;
-        }
-
-        return clamp(rawProgress, 0, 1);
-    }
-
-    function calculatePageIndex(progress, pageCount) {
-        if (!pageCount || pageCount <= 0) {
-            return 0;
-        }
-
-        const clampedProgress = clamp(progress, 0, 1);
-        const pageProgress = 1 / pageCount;
-
-        if (pageProgress <= 0) {
-            return 0;
-        }
-
-        const rawPage = Math.floor((clampedProgress / pageProgress) + 1e-9);
-        return clamp(rawPage, 0, pageCount);
     }
 
     class BookEducationController {
         constructor(options = {}) {
-            if (typeof options === 'string') {
-                options = { sectionSelector: options };
-            }
-
             this.options = { ...DEFAULT_CONFIG, ...options };
-
             this.section = null;
             this.book = null;
-            this.pagesContainer = null;
             this.cover = null;
             this.pages = [];
-
-            this.state = {
-                progress: 0,
-                activePage: 0,
-                pageCount: 0,
-                initialized: false
-            };
-
-            this.scrollHandler = null;
-            this.resizeHandler = null;
-            this.rafId = null;
-            this.isTicking = false;
-
+            this.previousButton = null;
+            this.nextButton = null;
+            this.status = null;
+            this.state = { activePage: 0, pageCount: 0, initialized: false };
+            this.handlers = {};
             this.init();
         }
 
         init() {
             this.section = document.querySelector(this.options.sectionSelector);
-            if (!this.section) {
-                return false;
-            }
+            if (!this.section) return false;
 
-            this.book = this.section.querySelector(this.options.bookSelector)
-                || document.querySelector(this.options.bookSelector);
-            if (!this.book) {
-                return false;
-            }
+            this.book = this.section.querySelector(this.options.bookSelector);
+            this.cover = this.section.querySelector(this.options.coverSelector);
+            this.pages = Array.from(this.section.querySelectorAll(this.options.pageSelector));
+            this.previousButton = this.section.querySelector(this.options.previousSelector);
+            this.nextButton = this.section.querySelector(this.options.nextSelector);
+            this.status = this.section.querySelector(this.options.statusSelector);
 
-            this.cover = this.book.querySelector(this.options.coverSelector)
-                || this.section.querySelector(this.options.coverSelector);
+            if (!this.book || !this.cover || this.pages.length === 0 || this.section._bookEducationInitialized) return false;
 
-            this.pagesContainer = this.book.querySelector(this.options.pagesContainerSelector)
-                || this.book;
-
-            const discoveredPages = this.book.querySelectorAll(this.options.pageSelector);
-            if (!discoveredPages || discoveredPages.length === 0) {
-                return false;
-            }
-
-            this.pages = Array.from(discoveredPages);
-            this.state.pageCount = this.pages.length;
-
-            if (this.section._bookEducationInitialized) {
-                return true;
-            }
             this.section._bookEducationInitialized = true;
+            this.state.pageCount = this.pages.length;
+            this.book.setAttribute('tabindex', '0');
+            this.pages.forEach((page, index) => page.setAttribute('data-page-number', String(index + 1)));
 
-            this.pages.forEach((pageEl, index) => {
-                pageEl.setAttribute('data-page-index', String(index));
-                pageEl.setAttribute('data-page-number', String(index + 1));
-            });
+            this.handlers.open = () => this.setPage(1);
+            this.handlers.previous = () => this.previousPage();
+            this.handlers.next = () => this.nextPage();
+            this.handlers.bookClick = (event) => this.handleBookClick(event);
+            this.handlers.keydown = (event) => this.handleKeydown(event);
 
-            this.setupListeners();
+            this.cover.addEventListener('click', this.handlers.open);
+            this.previousButton?.addEventListener('click', this.handlers.previous);
+            this.nextButton?.addEventListener('click', this.handlers.next);
+            this.book.addEventListener('click', this.handlers.bookClick);
+            this.book.addEventListener('keydown', this.handlers.keydown);
 
-            this.updateState();
-
+            this.render();
             this.state.initialized = true;
             return true;
         }
 
-        setupListeners() {
-            this.scrollHandler = () => {
-                if (!this.isTicking) {
-                    this.rafId = window.requestAnimationFrame(() => {
-                        this.onScroll();
-                        this.isTicking = false;
-                    });
-                    this.isTicking = true;
-                }
-            };
+        handleBookClick(event) {
+            if (event.target.closest(this.options.coverSelector)) return;
+            if (this.state.activePage === 0) return this.setPage(1);
 
-            this.resizeHandler = () => {
-                if (!this.isTicking) {
-                    this.rafId = window.requestAnimationFrame(() => {
-                        this.onScroll();
-                        this.isTicking = false;
-                    });
-                    this.isTicking = true;
-                }
-            };
-
-            window.addEventListener('scroll', this.scrollHandler, { passive: true });
-            window.addEventListener('resize', this.resizeHandler, { passive: true });
+            const bounds = this.book.getBoundingClientRect();
+            const clickedRightSide = event.clientX >= bounds.left + (bounds.width / 2);
+            clickedRightSide ? this.nextPage() : this.previousPage();
         }
 
-        onScroll() {
-            this.updateState();
-        }
-
-        updateState() {
-            if (!this.section || !this.book || this.pages.length === 0) {
-                return;
-            }
-
-            const viewportHeight = window.innerHeight
-                || (document.documentElement && document.documentElement.clientHeight)
-                || 1;
-
-            const progress = calculateSectionProgress(this.section, viewportHeight);
-            this.state.progress = progress;
-
-            const newPage = calculatePageIndex(progress, this.state.pageCount);
-            const previousPage = this.state.activePage;
-            const pageChanged = (newPage !== previousPage);
-
-            this.state.activePage = newPage;
-
-            this.updateCssVariables(progress, newPage);
-
-            this.updateDomState(newPage, previousPage, pageChanged);
-
-            if (pageChanged && typeof this.options.onPageChange === 'function') {
-                const activeEl = newPage > 0 ? this.pages[newPage - 1] : null;
-                this.options.onPageChange(newPage, previousPage, activeEl);
-            }
-
-            if (typeof this.options.onProgress === 'function') {
-                this.options.onProgress(progress, newPage);
+        handleKeydown(event) {
+            if (event.key === 'ArrowRight' || event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                this.state.activePage === 0 ? this.setPage(1) : this.nextPage();
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                this.previousPage();
+            } else if (event.key === 'Home') {
+                event.preventDefault();
+                this.setPage(1);
+            } else if (event.key === 'End') {
+                event.preventDefault();
+                this.setPage(this.state.pageCount);
             }
         }
 
-        updateCssVariables(progress, activePage) {
-            const formattedProgress = progress.toFixed(4);
-            const pageProgress = this.state.pageCount > 0
-                ? ((progress * this.state.pageCount) % 1).toFixed(4)
-                : '0';
-
-            const targets = [this.section, this.book].filter(Boolean);
-
-            targets.forEach((el) => {
-                el.style.setProperty(this.options.cssVarProgress, formattedProgress);
-                el.style.setProperty(this.options.cssVarActivePage, String(activePage));
-                el.style.setProperty(this.options.cssVarPageCount, String(this.state.pageCount));
-                el.style.setProperty(this.options.cssVarPageProgress, String(pageProgress));
-            });
+        nextPage() {
+            this.setPage(Math.min(this.state.activePage + 1, this.state.pageCount));
         }
 
-        updateDomState(activePage, previousPage, pageChanged) {
-            const isBookOpen = (activePage > 0);
-
-            this.book.classList.toggle(this.options.bookOpenClass, isBookOpen);
-            this.book.classList.toggle(this.options.bookClosedClass, !isBookOpen);
-            this.book.classList.toggle(this.options.openClass, isBookOpen);
-            this.book.classList.toggle(this.options.closedClass, !isBookOpen);
-
-            this.book.setAttribute('data-state', isBookOpen ? 'open' : 'closed');
-            this.book.setAttribute('data-active-page', String(activePage));
-
-            if (this.cover) {
-                this.cover.classList.toggle('book-cover--open', isBookOpen);
-                this.cover.classList.toggle('book-cover--closed', !isBookOpen);
-                this.cover.classList.toggle(this.options.openClass, isBookOpen);
-                this.cover.classList.toggle(this.options.closedClass, !isBookOpen);
-                this.cover.setAttribute('data-state', isBookOpen ? 'open' : 'closed');
-            }
-
-            this.pages.forEach((pageEl, index) => {
-                const pageNumber = index + 1;
-
-                if (pageNumber === activePage) {
-                    pageEl.classList.add(this.options.pageActiveClass, this.options.activeClass);
-                    pageEl.classList.remove(this.options.pageFlippedClass, this.options.flippedClass);
-                    pageEl.setAttribute('data-state', 'active');
-                    pageEl.setAttribute('aria-current', 'page');
-                } else if (pageNumber < activePage) {
-                    pageEl.classList.remove(this.options.pageActiveClass, this.options.activeClass);
-                    pageEl.classList.add(this.options.pageFlippedClass, this.options.flippedClass);
-                    pageEl.setAttribute('data-state', 'flipped');
-                    pageEl.removeAttribute('aria-current');
-                } else {
-                    pageEl.classList.remove(
-                        this.options.pageActiveClass,
-                        this.options.activeClass,
-                        this.options.pageFlippedClass,
-                        this.options.flippedClass
-                    );
-                    pageEl.setAttribute('data-state', 'upcoming');
-                    pageEl.removeAttribute('aria-current');
-                }
-            });
+        previousPage() {
+            this.setPage(Math.max(this.state.activePage - 1, 0));
         }
 
         setPage(pageNumber) {
-            const targetPage = clamp(Math.round(pageNumber), 0, this.state.pageCount);
-            const pageProgress = this.state.pageCount > 0 ? (1 / this.state.pageCount) : 0;
-            const targetProgress = targetPage === 0 ? 0 : clamp(targetPage * pageProgress, 0, 1);
-
-            this.state.progress = targetProgress;
+            const nextPage = clamp(Math.round(pageNumber), 0, this.state.pageCount);
             const previousPage = this.state.activePage;
-            const pageChanged = (targetPage !== previousPage);
-            this.state.activePage = targetPage;
+            if (nextPage === previousPage) return;
 
-            this.updateCssVariables(targetProgress, targetPage);
-            this.updateDomState(targetPage, previousPage, pageChanged);
-
-            if (pageChanged && typeof this.options.onPageChange === 'function') {
-                const activeEl = targetPage > 0 ? this.pages[targetPage - 1] : null;
-                this.options.onPageChange(targetPage, previousPage, activeEl);
+            this.state.activePage = nextPage;
+            this.render();
+            if (typeof this.options.onPageChange === 'function') {
+                this.options.onPageChange(nextPage, previousPage, nextPage ? this.pages[nextPage - 1] : null);
             }
+        }
+
+        render() {
+            const { activePage, pageCount } = this.state;
+            const isOpen = activePage > 0;
+
+            this.book.classList.toggle(this.options.bookOpenClass, isOpen);
+            this.book.classList.toggle(this.options.bookClosedClass, !isOpen);
+            this.book.setAttribute('data-state', isOpen ? 'open' : 'closed');
+            this.book.setAttribute('aria-label', isOpen
+                ? `Education book, page ${activePage} of ${pageCount}`
+                : 'Education book, closed. Select to open.');
+            this.cover.setAttribute('aria-expanded', String(isOpen));
+
+            this.pages.forEach((page, index) => {
+                const pageNumber = index + 1;
+                const isActive = pageNumber === activePage;
+                page.classList.toggle(this.options.pageActiveClass, isActive);
+                page.classList.toggle(this.options.pageFlippedClass, pageNumber < activePage);
+                page.style.zIndex = String(isActive ? pageCount + 1 : pageCount - index);
+                page.setAttribute('aria-hidden', String(!isActive));
+            });
+
+            if (this.previousButton) this.previousButton.disabled = activePage === 0;
+            if (this.nextButton) this.nextButton.disabled = activePage === pageCount;
+            if (this.status) this.status.textContent = isOpen ? `Page ${activePage} of ${pageCount}` : 'Closed';
         }
 
         getState() {
@@ -292,25 +146,12 @@
         }
 
         destroy() {
-            if (this.scrollHandler) {
-                window.removeEventListener('scroll', this.scrollHandler);
-                this.scrollHandler = null;
-            }
-
-            if (this.resizeHandler) {
-                window.removeEventListener('resize', this.resizeHandler);
-                this.resizeHandler = null;
-            }
-
-            if (this.rafId) {
-                window.cancelAnimationFrame(this.rafId);
-                this.rafId = null;
-            }
-
-            if (this.section) {
-                delete this.section._bookEducationInitialized;
-            }
-
+            this.cover?.removeEventListener('click', this.handlers.open);
+            this.previousButton?.removeEventListener('click', this.handlers.previous);
+            this.nextButton?.removeEventListener('click', this.handlers.next);
+            this.book?.removeEventListener('click', this.handlers.bookClick);
+            this.book?.removeEventListener('keydown', this.handlers.keydown);
+            if (this.section) delete this.section._bookEducationInitialized;
             this.state.initialized = false;
         }
     }
@@ -326,13 +167,6 @@
     }
 
     if (typeof module !== 'undefined' && module.exports) {
-        module.exports = {
-            initBookEducation,
-            BookEducationController,
-            clamp,
-            calculateSectionProgress,
-            calculatePageIndex
-        };
+        module.exports = { initBookEducation, BookEducationController, clamp };
     }
-
 })(typeof window !== 'undefined' ? window : this);
