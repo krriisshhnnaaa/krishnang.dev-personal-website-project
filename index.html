@@ -16,94 +16,165 @@
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
-    
-    <!-- Tailwind CSS CDN Engine -->
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind CSS Configuration (Declared before CDN script engine loads) -->
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            bg: '#030712',
-                            surface: '#080e1e',
-                            card: 'rgba(13, 20, 36, 0.75)',
-                            border: 'rgba(255, 255, 255, 0.08)',
-                            glow: 'rgba(0, 242, 254, 0.35)',
+        tailwind = {
+            config: {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: {
+                                bg: '#0a1424',
+                                surface: '#0f1d33',
+                                card: 'rgba(16, 31, 56, 0.75)',
+                                border: 'rgba(166, 189, 223, 0.12)',
+                                glow: 'rgba(92, 157, 245, 0.35)',
+                                peach: '#eaccb6',
+                                'peach-glow': 'rgba(234, 204, 182, 0.35)',
+                            },
+                            slate: {
+                                50: '#f8fafc',
+                                100: '#f0f4fc',
+                                200: '#dbe6f8',
+                                300: '#b8cced',
+                                400: '#8ba8d4',
+                                500: '#5c82ba',
+                                600: '#3a639b',
+                                700: '#264a7c',
+                                800: '#19355b',
+                                900: '#10223a',
+                                950: '#0a1424',
+                            },
+                            cyan: {
+                                50: '#f0f7ff',
+                                100: '#e0effe',
+                                200: '#bae0fd',
+                                300: '#7ec4fc',
+                                400: '#5c9df5',
+                                500: '#3b82f6',
+                                600: '#2563eb',
+                                700: '#1d4ed8',
+                                800: '#1e40af',
+                                900: '#173660',
+                                950: '#0c1a2e',
+                            },
+                            purple: {
+                                50: '#fdf8f5',
+                                100: '#f9ede4',
+                                200: '#f3dac8',
+                                300: '#eaccb6',
+                                400: '#f0b892',
+                                500: '#e89a6c',
+                                600: '#d47c4b',
+                                700: '#b35f33',
+                                800: '#8f4a27',
+                                900: '#5c2e17',
+                                950: '#36190b',
+                            },
+                            pink: {
+                                50: '#fdf2f2',
+                                100: '#fde8e8',
+                                200: '#fbd5d5',
+                                300: '#f8b4b4',
+                                400: '#e5737d',
+                                500: '#e0535e',
+                                600: '#c53030',
+                                700: '#9b1c1c',
+                                800: '#771d1d',
+                                900: '#4f1717',
+                                950: '#2b0b0e',
+                            },
+                            cyber: {
+                                cyan: '#5c9df5',
+                                blue: '#3b82f6',
+                                neon: '#7ec4fc',
+                                purple: '#eaccb6',
+                                violet: '#f0b892',
+                                magenta: '#e89a6c',
+                                emerald: '#48bb78',
+                                amber: '#e89a6c',
+                                rose: '#e0535e',
+                            }
                         },
-                        cyber: {
-                            cyan: '#00f2fe',
-                            blue: '#38bdf8',
-                            neon: '#00ffff',
-                            purple: '#a855f7',
-                            violet: '#8b5cf6',
-                            magenta: '#ec4899',
-                            emerald: '#10b981',
-                            amber: '#f59e0b',
-                            rose: '#f43f5e',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace']
-                    },
-                    boxShadow: {
-                        'glow-cyan': '0 0 30px rgba(0, 242, 254, 0.25)',
-                        'glow-purple': '0 0 30px rgba(168, 85, 247, 0.25)',
-                        'glow-emerald': '0 0 25px rgba(16, 185, 129, 0.3)',
-                        'card-cyber': '0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                    },
-                    animation: {
-                        'levitate': 'levitate 4s ease-in-out infinite',
-                        'pulse-slow': 'pulse 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'conic-spin': 'conicSpin 6s linear infinite',
-                        'shimmer': 'shimmer 2.5s linear infinite',
-                        'radar-ping': 'radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite',
-                    },
-                    keyframes: {
-                        levitate: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-5px)' }
+                        fontFamily: {
+                            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+                            mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace']
                         },
-                        conicSpin: {
-                            'from': { transform: 'rotate(0deg)' },
-                            'to': { transform: 'rotate(360deg)' }
+                        boxShadow: {
+                            'glow-cyan': '0 0 30px rgba(92, 157, 245, 0.3)',
+                            'glow-purple': '0 0 30px rgba(234, 204, 182, 0.3)',
+                            'glow-emerald': '0 0 25px rgba(72, 187, 120, 0.3)',
+                            'card-cyber': '0 12px 36px rgba(5, 10, 20, 0.65), inset 0 1px 0 rgba(234, 204, 182, 0.12)',
                         },
-                        shimmer: {
-                            '0%': { transform: 'translateX(-100%)' },
-                            '100%': { transform: 'translateX(100%)' }
+                        animation: {
+                            'levitate': 'levitate 4s ease-in-out infinite',
+                            'pulse-slow': 'pulse 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                            'conic-spin': 'conicSpin 6s linear infinite',
+                            'shimmer': 'shimmer 2.5s linear infinite',
+                            'radar-ping': 'radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite',
                         },
-                        radarPing: {
-                            '75%, 100%': { transform: 'scale(2.2)', opacity: '0' }
+                        keyframes: {
+                            levitate: {
+                                '0%, 100%': { transform: 'translateY(0px)' },
+                                '50%': { transform: 'translateY(-5px)' }
+                            },
+                            conicSpin: {
+                                'from': { transform: 'rotate(0deg)' },
+                                'to': { transform: 'rotate(360deg)' }
+                            },
+                            shimmer: {
+                                '0%': { transform: 'translateX(-100%)' },
+                                '100%': { transform: 'translateX(100%)' }
+                            },
+                            radarPing: {
+                                '75%, 100%': { transform: 'scale(2.2)', opacity: '0' }
+                            }
                         }
                     }
                 }
             }
         };
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Compiled Local Tailwind Build & Component Overrides -->
-    <link rel="stylesheet" href="dist/output.css">
-    <link rel="stylesheet" href="CSS/logo-animation.css">
-    <link rel="stylesheet" href="CSS/style.css">
+    <!-- Compiled Local Tailwind Build & Component Overrides (Cache-Busted for Live Server) -->
+    <link rel="stylesheet" href="dist/output.css?v=skyart-3">
+    <link rel="stylesheet" href="CSS/logo-animation.css?v=skyart-3">
+    <link rel="stylesheet" href="CSS/style.css?v=skyart-3">
+
+    <style>
+        body {
+            background-color: #0a1424 !important;
+            background-image: 
+                linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)), 
+                url('jpg(1)') !important;
+            background-size: cover !important;
+            background-position: center top !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+        }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden">
+<body class="text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden"
+      style="background-color: #0a1424; background-image: linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)), url('jpg(1)'); background-size: cover; background-position: center top; background-attachment: fixed; background-repeat: no-repeat;">
 
     <!-- =====================================================
          BACKGROUND CANVAS & AMBIENT AURORA ORBS
          ===================================================== -->
     <canvas id="background-canvas" class="background-canvas fixed inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
 
-    <!-- Ambient Glowing Nebulae -->
-    <div class="fixed top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow"></div>
-    <div class="fixed top-1/2 right-12 w-[30rem] h-[30rem] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-    <div class="fixed bottom-10 left-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <!-- Ambient Atmospheric Cloud Glows (Inspired by the painting's celestial azure & sunlit peach illumination) -->
+    <div class="fixed top-0 left-1/4 w-[34rem] h-[34rem] bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none z-0 animate-pulse-slow"></div>
+    <div class="fixed top-1/3 right-8 w-[36rem] h-[36rem] bg-purple-400/20 rounded-full blur-[110px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-10 left-10 w-[38rem] h-[38rem] bg-blue-600/25 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
 
     <!-- =====================================================
          HEADER / QUANTUM KINETIC LOGO & NAVIGATION
          ===================================================== -->
+    <div id="root">
     <header class="fixed top-0 inset-x-0 z-50 h-20 backdrop-blur-xl bg-slate-950/75 border-b border-slate-800/60 transition-all duration-300 site-header">
         <div class="max-w-7xl mx-auto h-full px-6 sm:px-8 flex items-center justify-between header-inner">
 
@@ -173,7 +244,7 @@
                     </p>
 
                     <!-- Primary Heading / Name -->
-                    <h1 class="hero-name text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mt-2 mb-6 bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent hover:from-cyan-200 hover:via-white hover:to-blue-300 transition-all duration-500">
+                    <h1 class="hero-name text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mt-2 mb-6 bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text text-transparent hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500">
                         Krishnang Pandey.
                     </h1>
 
@@ -283,7 +354,7 @@
 
                 <!-- Header -->
                 <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
                         Activity
                     </p>
                     <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
@@ -351,7 +422,7 @@
 
                 <header class="section-header flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                     <div>
-                        <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
+                        <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
                             Writing
                         </p>
                         <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
@@ -419,7 +490,7 @@
             <div class="section-inner space-y-10">
 
                 <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
                         Freelancing
                     </p>
                     <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
@@ -512,7 +583,7 @@
             <div class="section-inner space-y-10">
 
                 <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
                         Education
                     </p>
                     <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
@@ -610,7 +681,7 @@
             <div class="section-inner space-y-8">
 
                 <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-cyan-400 mb-2">
+                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
                         Connect
                     </p>
                     <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
@@ -646,7 +717,7 @@
 
                     <!-- LinkedIn Card -->
                     <a
-                        href="https://linkedin.com/in/krishnang"
+                        href="https://www.linkedin.com/in/krishnang-pandey/"
                         class="social-link group p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all duration-300 flex items-center justify-between"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -708,6 +779,7 @@
             </div>
         </div>
     </footer>
+    </div>
 
 
     <!-- =====================================================
@@ -720,6 +792,9 @@
     <script src="Interactive-Elements/activity-blog.js"></script>
     <script src="Interactive-Elements/blog-horizontal-scroll.js"></script>
     <script src="Interactive-Elements/book-education.js"></script>
+
+    <!-- Plasma UI (React & WebGL Liquid Glass Panels) -->
+    <script src="dist/bundle.js" defer></script>
 
     <!-- Orchestration Bootstrap -->
     <script>

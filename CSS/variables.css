@@ -6,26 +6,27 @@
 :root {
 
     /* =========================================================
-       COLORS
+       COLORS (Artwork Theme: Midnight Sky, Azure Clouds & Sunlit Peach)
        ========================================================= */
 
-    --color-bg: #05070d;
-    --color-bg-secondary: #0a0e17;
-    --color-surface: #0d121c;
-    --color-surface-hover: #111927;
+    --color-bg: #0a1424;
+    --color-bg-secondary: #0f1d33;
+    --color-surface: #142742;
+    --color-surface-hover: #1a3458;
 
-    --color-text: #f2f5f8;
-    --color-text-secondary: #a7b0bd;
-    --color-text-muted: #687383;
+    --color-text: #f6f9fe;
+    --color-text-secondary: #a6bddf;
+    --color-text-muted: #6b87b0;
 
-    --color-border: rgba(255, 255, 255, 0.10);
-    --color-border-strong: rgba(255, 255, 255, 0.18);
+    --color-border: rgba(166, 189, 223, 0.12);
+    --color-border-strong: rgba(234, 204, 182, 0.28);
 
-    --color-accent: #8ab4ff;
-    --color-accent-secondary: #a78bfa;
+    --color-accent: #5c9df5;
+    --color-accent-secondary: #eaccb6;
+    --color-accent-peach: #f0b892;
 
-    --color-success: #75d99a;
-    --color-error: #ff7373;
+    --color-success: #48bb78;
+    --color-error: #e0535e;
 
 
     /* =========================================================
@@ -96,13 +97,13 @@
        ========================================================= */
 
     --shadow-sm:
-        0 2px 10px rgba(0, 0, 0, 0.20);
+        0 2px 10px rgba(5, 10, 20, 0.35);
 
     --shadow-md:
-        0 8px 30px rgba(0, 0, 0, 0.30);
+        0 8px 30px rgba(5, 10, 20, 0.50);
 
     --shadow-lg:
-        0 20px 60px rgba(0, 0, 0, 0.40);
+        0 20px 60px rgba(5, 10, 20, 0.65);
 
 
     /* =========================================================
@@ -136,7 +137,7 @@
 
     --terminal-radius: var(--radius-md);
     --terminal-border: var(--color-border);
-    --terminal-background: rgba(8, 12, 19, 0.92);
+    --terminal-background: rgba(12, 23, 40, 0.92);
 
     --terminal-header-height: 2.5rem;
 
@@ -161,5 +162,5 @@
        ========================================================= */
 
     --focus-ring:
-        0 0 0 3px rgba(138, 180, 255, 0.35);
+        0 0 0 3px rgba(92, 157, 245, 0.45);
 }
