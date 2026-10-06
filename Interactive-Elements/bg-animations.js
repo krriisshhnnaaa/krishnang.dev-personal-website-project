@@ -45,12 +45,12 @@
         },
 
         colors: [
-            'rgba(244, 244, 249, ',
-            'rgba(244, 244, 249, ', 
-            'rgba(244, 244, 249, ', 
-            'rgba(220, 226, 245, ',
-            'rgba(0, 242, 254, ',
-            'rgba(168, 85, 247, '
+            'rgba(246, 249, 254, ',
+            'rgba(246, 249, 254, ', 
+            'rgba(219, 230, 248, ', 
+            'rgba(166, 189, 223, ',
+            'rgba(92, 157, 245, ',
+            'rgba(234, 204, 182, '
         ],
 
         influenceRadius: 200,
@@ -445,7 +445,7 @@
                     ctx.beginPath();
                     ctx.moveTo(a.x, a.y);
                     ctx.lineTo(b.x, b.y);
-                    ctx.strokeStyle = `rgba(86, 207, 255, ${alpha.toFixed(3)})`;
+                    ctx.strokeStyle = `rgba(137, 175, 235, ${alpha.toFixed(3)})`;
                     ctx.lineWidth = 0.45;
                     ctx.stroke();
                 }

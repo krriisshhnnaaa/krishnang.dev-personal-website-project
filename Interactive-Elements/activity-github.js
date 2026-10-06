@@ -5,7 +5,7 @@
 
     const MAX_COMMITS = 6;
 
-    const MAX_REPOSITORIES_TO_CHECK = 5;
+    const MAX_REPOSITORIES_TO_CHECK = 3;
 
     const MAX_MESSAGE_LENGTH = 72;
 
@@ -196,7 +196,7 @@
 
         const label = document.createElement('p');
         label.className = 'activity-loading-text';
-        label.textContent = 'Fetching recent commits...';
+        label.textContent = 'Lemme Check for my commits real quick ';
 
         wrapper.appendChild(spinner);
         wrapper.appendChild(label);
@@ -297,7 +297,7 @@
 
         const message = document.createElement('p');
         message.className = 'activity-error-text';
-        message.textContent = "GitHub activity couldn't be loaded.";
+        message.textContent = "Your Internet Sucks (Probably)";
 
         const retryBtn = document.createElement('button');
         retryBtn.type = 'button';
