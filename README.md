@@ -1,84 +1,66 @@
+# krishnang.dev
 
-# krishnang.dev-personal-website-project
-hi everyone ! this is my personal website i will be using for all proffesional purposes, i aim to highlight all my strong points as a devloper as well as connect with employers, clients, seniors and fellow devlopers
-1. Purpose
-Personal portfolio : showing all work i have done in different companies
-Show projects : all projects made on github
-Resume replacement : common resume highlitghting everything i have.
-Contact point : gmail, instagram, facebook, linkedin, youtube, internshala, snapchat, naukri.com , freelancer, fiverr, upwork, indeed and github
-Blog post writing section
+Personal portfolio for Krishnang Pandey. The site is a static, client-rendered portfolio with interactive activity feeds, writing, freelance services, education timeline, and social links. It is built with React, Tailwind CSS, and custom browser scripts, and deployed to Vercel.
 
+## Site structure
 
-2. Domain Name : krishnang.dev
+The portfolio view is the default experience. Its sections are:
 
-3. Pages
- Home
-About
-Projects
-Contact
-Blog
-Resume
-Achievements
-a page that shows all posts and comments made by me on different social media
+- **Hero** — introduction, calls to action, and interactive terminal.
+- **Activity** — recent GitHub commits and recent writing activity.
+- **Writing** — horizontally browsable blog cards.
+- **Services** — freelance offerings and collaboration/contact details.
+- **Education** — interactive, page-turning education timeline.
+- **Connect** — GitHub, LinkedIn, and Instagram links.
 
+The navigation links scroll to these sections. The header also lets visitors switch to a floating **Workspace Grid** view. That view presents introduction, GitHub activity, services, collaboration, and social links in movable panels. Panel positions are saved in browser local storage.
 
-4. Content to Gather
+## Project layout
 
-Profile photo
-Resume PDF
-GitHub link
-LinkedIn link
-Email
-Project screenshots
-Certificates
-Skills list
-Introduction Video
+```text
+.
+├── index.html                  # HTML shell, metadata, and script/style references
+├── src/
+│   ├── main.jsx                # React entry point
+│   ├── App.jsx                 # Portfolio page and view switching
+│   ├── Workspace.jsx           # Workspace grid, panels, and header
+│   └── input.css               # Tailwind input and shared component styles
+├── Interactive-Elements/       # Canvas, terminal, GitHub, blog, logo, and book behavior
+├── CSS/                        # Site styles, variables, and logo animation
+├── blog/                       # Markdown blog posts
+├── blog-index.json             # Ordered list of posts shown by the blog feed
+├── dist/                       # Generated CSS and JavaScript bundles
+├── tailwind.config.js          # Tailwind theme and content paths
+├── vercel.json                 # Vercel build and output settings
+└── .env.example                # Documents that no environment variables are required
+```
 
+## Local development
 
-6. Tech Stack
+Install dependencies and build the generated assets:
 
-HTML
-CSS
-JavaScript
-Python
-Git/github actions
-Linux
+```sh
+npm install
+npm run build
+```
 
+Open `index.html` through a local static web server. The app loads local CSS, JavaScript, images, and blog files, so opening the HTML as a `file://` URL may prevent some browser fetches from working.
 
+Available scripts:
 
+- `npm run build` — builds Tailwind CSS and bundles the React app into `dist/`.
+- `npm run build:css` — builds `dist/output.css`.
+- `npm run build:js` — builds `dist/bundle.js`.
+- `npm run watch:css` — rebuilds Tailwind CSS when source styles change.
 
-7. Website Style
+## Content and implementation
 
-homepage :
+- Add blog posts as Markdown files under `blog/`, then add each post path to `blog-index.json`.
+- The GitHub activity feed reads public repository and commit data from the GitHub API. Its username is currently configured in `Interactive-Elements/activity-github.js`; no API token is used.
+- React page content and the Workspace Grid are in `src/App.jsx` and `src/Workspace.jsx`.
+- Browser interactions are implemented in `Interactive-Elements/` and initialized from the React app.
+- Styling is split between Tailwind classes, `src/input.css`, and the files in `CSS/`.
 
-video plays
-auto scroll
-<H1>Hi, I'm Krishnang. A first Year student at Chitkara University , Rajpure studying in B.Tech. CSE - AI/ML program.</H1>
+## Vercel deployment
 
-<p>im interested in coding,blogging, physics, astrophysics, politics, geopolitical analysis, tech, AI, Mathematics, teaching complex topics and making and breaking things
-I'm a freelancer, I have achieved 3 users within the first 2 weeks of joining freelance and have secured a overall 4.9 rating. as i continue to strive for more
- </p>
-<H2>SKILLS : </H2>
- <li>python</li>
- <li>mySQL </li>
- <l>mongoDB</li>
- <li>redis</li>
- <li>redux</li>
- <li>html</li>
- <li>css</li>
- <li>javascript</li>
- <li>node.js</li>
- <li>next.js</li>
- <li>linux</li>
- <li>github actions</li>
- <li>git</li>
-<H2>Projects: </H2>
- <li>Harry : a personal small local LLM linuix guide that works in your terminal</li>
- <li>Chitkara faculty website : took a publically acvailable PDF of all chitkara university faculty and used that to make a website where u can sort and search the faculty members by their stream, educatio,etc</li>
- <li>online document storage : a website that lets you upload important documents online </li>
-  <li>Research paper scroll : a website that uses arxiv API to take research papers and present to you in a form where you can scroll through each researh paper and read them when u need</li>
-<H2>LINKS TO PROJECTS :</H2>
-  <li>P1</li>
-  <li>P2</li>
-  <li>P3</li>
-  <li>P4</li>
+Vercel uses the settings in `vercel.json`: run `npm run build` and serve the project root as the static output. No environment variables are currently needed; `.env.example` is informational. If the project is linked in Vercel, use the repository root as the project root and let Vercel install dependencies from `package-lock.json`.
