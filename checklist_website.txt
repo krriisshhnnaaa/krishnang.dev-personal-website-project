@@ -1,0 +1,14 @@
+main page - 
+blogwriter CLI -
+web maker CLI - 
+pricing page -
+reviews page -
+live projects page -
+forms page for review -
+sep n number of pages for n number of blogs -
+
+UPDATES :
+[HERO SECTION] : let's collaborate - resume_download + highlight projects
+[HERO SECTION] : live client reviews
+[OBJECT] : book education.js ---> some good react library for book animations
+

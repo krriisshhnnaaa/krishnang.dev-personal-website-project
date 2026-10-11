@@ -1,0 +1,356 @@
+in this document : 
+
+ignore anything inside action done ()
+
+execute : action now ()
+
+rest : context to use : 
+
+
+===========FORMS PAGE===============
+
+modify forms.html file inside this repository inside the forms/ directory 
+
+
+
+#what to do  ? : 
+
+make a basic HTML file : 
+
+basic functionality : 
+
+choice : 
+
+contact -
+leave a review - 
+
+
+contact forms page : 
+
+
+input parameters (required) : name, phone no. , email ID.
+input parameters (optional) : reason to connect , attachments (if any) 
+
+accepted formats for attachments : pdf (1 to 100mb) , jpg (upto 25mb) , txt (upto 10mb) , pptx (upto 50mb).
+max size for "reason to connect" : 500 characters , use : tag (text area)
+
+
+directory structure : 
+krishnag.dev-personal-website-project /
+
+	forms /
+
+		choice page.html
+
+		connect.html
+
+		review.html
+	
+		styling / 
+		
+			bg_img_choice.jpg
+			bg_img_connect.jpg
+			bg_img_review.jpg
+			bg_img_choicepgae.jpg
+
+		
+			choice /	
+				base.css 
+				logo.css
+				animations.css
+
+			connect /
+				base.css	
+				logo.css
+				animations.css
+			
+			review /
+
+
+				base.css
+				logo.css
+				animations.css
+
+
+		tempc.html
+		tempr.html
+		tempe.html
+
+
+
+
+review.html structure : 
+
+form (
+
+input parameters (required) : name , review , rating 1 to 5 stars
+
+input parameters (optional) : contact info : phone no. , email ID , photo, attachments
+
+attachments accepted : jpg , pdf , mp4 , mp3 
+
+
+
+tech stack : tailwind , REACT.js , html5 , vanilla javascript , vanilla css3 , typescript (where needed) , mongoDB (for storing info)
+
+
+ 
+
+
+
+ 
+
+action DONE ( 
+
+make choice.html 
+do not make any new file or directory
+use given path : 
+forms/choicepage.html 
+
+
+choice page format : 
+
+h1 : HI ! what would you like to do ? connect with me or leave a review
+styling : glowintensity:55% ; colour : textcolor : black , glowcolor : reddish-pink , text-align:center
+
+forms (
+radio button { choices : leave a review ; connect with me} 
+)
+styling : txtcolor : black ; 
+
+button (
+submit ; buttonaction : open tempc.html if radio_choice : connect with me else if radio_choice = leave a review : open tempr.html ; else : open tempe.html)
+
+
+
+
+
+
+
+
+page styling : 
+
+bg-img = bg_img.jpg
+
+)
+action now ( 
+
+
+
+create : 
+
+
+tempc.html :
+
+tempc :
+temporary html page for choice descision.
+ 
+on submission with choice = connect with me 
+pop - tempc.html 
+
+page format : 
+
+pop window.notification  { do you wish to continue ?}
+
+page styling : white page 
+
+top-right : connecting you to krishnang
+
+
+
+on do you wish choices = {yes} . {no}
+
+if {yes} : open connect.html
+else : open index.html
+
+
+
+
+)
+
+
+
+	create tempr.html :
+temporary html page for leave a review descision.
+
+on submission with choice = leave a review
+pop - tempr.html
+
+page format : 
+pop window.notification {do you wish to continue ?}
+
+do you wish to continue choices = {yes) . {no}
+
+
+if {yes} : open review.html
+else : open index.html 
+page styling : white page 
+top right : let me take your review
+
+)
+
+
+=========== HOW TO TAKE INPUTS VIA HTML AND STORE IN LOCAL MONGODB ===========
+
+1. ARCHITECTURE OVERVIEW:
+   HTML Form (Client-Side) 
+       ---> HTTP POST (fetch / Form submit) 
+       ---> Node.js / Express Server (Backend API) 
+       ---> MongoDB (Local Database at mongodb://127.0.0.1:27017)
+
+   * Note: Web browsers cannot directly connect to MongoDB databases for security & network protocol reasons. 
+     A lightweight backend server (e.g., Express.js) acts as an intermediary to process, validate, and save data.
+
+2. LOCAL MONGODB SETUP ON YOUR SYSTEM:
+   - Check if MongoDB is installed and running:
+       mongosh --eval "db.version()"
+     or check system service:
+       sudo systemctl status mongod
+       sudo systemctl start mongod
+   - Default connection string for local instance:
+       mongodb://127.0.0.1:27017/portfolio_db
+
+3. BACKEND SERVER SETUP (Node.js + Express + Mongoose):
+   Step 3.1 - Initialize & install packages in backend directory:
+       npm install express mongoose cors dotenv multer
+
+   Step 3.2 - Server file (e.g., server.js):
+       const express = require('express');
+       const mongoose = require('mongoose');
+       const cors = require('cors');
+
+       const app = express();
+       app.use(cors());
+       app.use(express.json());
+       app.use(express.urlencoded({ extended: true }));
+
+       // Connect to local MongoDB instance
+       mongoose.connect('mongodb://127.0.0.1:27017/portfolio_db')
+         .then(() => console.log('Connected to local MongoDB successfully'))
+         .catch(err => console.error('MongoDB connection error:', err));
+
+       // Define Schema and Model for Form Input
+       const ContactSchema = new mongoose.Schema({
+         name: { type: String, required: true },
+         phone: { type: String, required: true },
+         email: { type: String, required: true },
+         reason: { type: String, maxlength: 500 },
+         submittedAt: { type: Date, default: Date.now }
+       });
+       const Contact = mongoose.model('Contact', ContactSchema);
+
+       // POST Endpoint to receive form submission
+       app.post('/api/contact', async (req, res) => {
+         try {
+           const { name, phone, email, reason } = req.body;
+           const newEntry = new Contact({ name, phone, email, reason });
+           await newEntry.save();
+           res.status(201).json({ success: true, message: 'Data saved to MongoDB successfully!' });
+         } catch (error) {
+           res.status(500).json({ success: false, error: error.message });
+         }
+       });
+
+       // Review Schema & Model
+       const ReviewSchema = new mongoose.Schema({
+         name: { type: String, required: true },
+         rating: { type: Number, min: 1, max: 5, required: true },
+         review: { type: String, required: true },
+         phone: String,
+         email: String,
+         submittedAt: { type: Date, default: Date.now }
+       });
+       const Review = mongoose.model('Review', ReviewSchema);
+
+       app.post('/api/review', async (req, res) => {
+         try {
+           const newReview = new Review(req.body);
+           await newReview.save();
+           res.status(201).json({ success: true, message: 'Review saved to MongoDB successfully!' });
+         } catch (error) {
+           res.status(500).json({ success: false, error: error.message });
+         }
+       });
+
+       const PORT = process.env.PORT || 5000;
+       app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+4. HTML FRONTEND IMPLEMENTATION:
+   Method A: Using JavaScript fetch() (Recommended - no page reload)
+   ------------------------------------------------------------
+   <!-- HTML Form -->
+   <form id="contactForm">
+     <input type="text" id="name" name="name" placeholder="Name" required />
+     <input type="tel" id="phone" name="phone" placeholder="Phone" required />
+     <input type="email" id="email" name="email" placeholder="Email" required />
+     <textarea id="reason" name="reason" maxlength="500" placeholder="Reason to connect"></textarea>
+     <button type="submit">Submit</button>
+   </form>
+
+   <script>
+     document.getElementById('contactForm').addEventListener('submit', async function(e) {
+       e.preventDefault();
+
+       const formData = {
+         name: document.getElementById('name').value,
+         phone: document.getElementById('phone').value,
+         email: document.getElementById('email').value,
+         reason: document.getElementById('reason').value
+       };
+
+       try {
+         const response = await fetch('http://localhost:5000/api/contact', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify(formData)
+         });
+
+         const result = await response.json();
+         if (result.success) {
+           alert('Submitted successfully!');
+           document.getElementById('contactForm').reset();
+         } else {
+           alert('Error: ' + result.error);
+         }
+       } catch (err) {
+         console.error('Fetch error:', err);
+         alert('Failed to connect to backend server');
+       }
+     });
+   </script>
+
+   Method B: Direct HTML Form Action POST (Traditional form submission)
+   ---------------------------------------------------------------------
+   <form action="http://localhost:5000/api/contact" method="POST">
+     <input type="text" name="name" required />
+     <input type="tel" name="phone" required />
+     <input type="email" name="email" required />
+     <textarea name="reason" maxlength="500"></textarea>
+     <button type="submit">Submit</button>
+   </form>
+
+5. HANDLING FILE ATTACHMENTS (FOR PDF / JPG / ETC.):
+   If the form contains attachments, use multipart/form-data with multer:
+   - Frontend:
+     const form = document.getElementById('contactForm');
+     const formData = new FormData(form);
+     fetch('http://localhost:5000/api/contact', { method: 'POST', body: formData });
+   - Backend:
+     const upload = multer({ dest: 'uploads/' });
+     app.post('/api/contact', upload.single('attachment'), async (req, res) => {
+       const filePath = req.file ? req.file.path : null;
+       const newEntry = new Contact({ ...req.body, attachmentPath: filePath });
+       await newEntry.save();
+       res.json({ success: true });
+     });
+
+6. VERIFYING SAVED DATA IN MONGODB:
+   - Open terminal and launch MongoDB shell:
+       mongosh
+   - Switch database and query collections:
+       use portfolio_db
+       show collections
+       db.contacts.find().pretty()
+       db.reviews.find().pretty()
+
+

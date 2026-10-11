@@ -445,7 +445,7 @@
                     this.element.classList.remove(this.config.classReducedMotion);
                 }
             }
-        }
+!!q        }
 
         _init() {
             const hasElement = this._setupElement();

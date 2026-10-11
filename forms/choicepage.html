@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Action — Krishnang</title>
+    <style>
+        :root {
+            --glow-color: rgba(255, 45, 85, 0.55); /* reddish-pink with 55% glow intensity */
+            --text-color: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            /* Page styling: bg-img = bg_img.jpg */
+            background-color: #f7f9fc;
+            background-image: url('bg_img.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* H1 styling:
+           glowintensity: 55%; colour: textcolor: black, glowcolor: reddish-pink, text-align: center
+        */
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color), 0 0 35px var(--glow-color);
+        }
+
+        /* Form styling: txtcolor: black */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            color: var(--text-color);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .radio-label:hover {
+            border-color: #ff2d55;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(255, 45, 85, 0.15);
+        }
+
+        .radio-label input[type="radio"] {
+            appearance: auto;
+            width: 20px;
+            height: 20px;
+            accent-color: #ff2d55;
+            cursor: pointer;
+        }
+
+        .radio-label:has(input[type="radio"]:checked) {
+            border-color: #ff2d55;
+            background: rgba(255, 45, 85, 0.05);
+            box-shadow: 0 0 12px rgba(255, 45, 85, 0.25);
+        }
+
+        button[type="submit"] {
+            background-color: #ff2d55;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(255, 45, 85, 0.4);
+            align-self: center;
+            min-width: 160px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #e02449;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(255, 45, 85, 0.5);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>HI ! what would you like to do ? connect with me or leave a review</h1>
+
+        <form id="choiceForm" onsubmit="handleChoiceSubmit(event)">
+            <div class="options-group">
+                <label class="radio-label">
+                    <input type="radio" name="radio_choice" value="leave a review">
+                    <span>leave a review</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="radio_choice" value="connect with me">
+                    <span>connect with me</span>
+                </label>
+            </div>
+
+            <button type="submit" id="submitbutt-on">Submit</button>
+        </form>
+    </main>
+
+    <script>
+        function handleChoiceSubmit(event) {
+            event.preventDefault();
+
+            const selectedOption = document.querySelector('input[name="radio_choice"]:checked');
+            const choice = selectedOption ? selectedOption.value : null;
+
+            if (choice === 'connect with me') {
+                window.location.href = 'tempc.html';
+            } else if (choice === 'leave a review') {
+                window.location.href = 'tempr.html';
+            } else {
+                window.location.href = 'tempe.html';
+            }
+        }
+    </script>
+</body>
+</html>

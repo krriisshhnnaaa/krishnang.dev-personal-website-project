@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Decision — Krishnang</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Page styling: white page */
+        body {
+            background-color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #111827;
+        }
+
+        /* Top right: let me take your review */
+        .top-right {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #374151;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ff2d55;
+            border-radius: 50%;
+            animation: pulse 1.8s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.85);
+            }
+        }
+
+        /* Pop notification */
+        .pop-notification {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 40px 36px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+            animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .pop-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 28px;
+        }
+
+        .choices {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .choice-btn {
+            flex: 1;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-yes {
+            background-color: #ff2d55;
+            color: #ffffff;
+            border: 1px solid #ff2d55;
+            box-shadow: 0 4px 12px rgba(255, 45, 85, 0.3);
+        }
+
+        .btn-yes:hover {
+            background-color: #e02449;
+            box-shadow: 0 6px 16px rgba(255, 45, 85, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-no {
+            background-color: #ffffff;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-no:hover {
+            background-color: #f9fafb;
+            color: #111827;
+            border-color: #9ca3af;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="top-right">
+        <span class="status-dot"></span>
+        <span>let me take your review</span>
+    </div>
+
+    <div class="pop-notification window-notification" id="windowNotification" role="dialog" aria-modal="true" aria-labelledby="popQuestion">
+        <h2 id="popQuestion" class="pop-title">do you wish to continue ?</h2>
+        <div class="choices">
+            <button type="button" class="choice-btn btn-yes" onclick="handleDecision('yes')">yes</button>
+            <button type="button" class="choice-btn btn-no" onclick="handleDecision('no')">no</button>
+        </div>
+    </div>
+
+    <script>
+        function handleDecision(choice) {
+            if (choice === 'yes') {
+                window.location.href = 'review.html';
+            } else {
+                window.location.href = '../index.html';
+            }
+        }
+
+        window.notification = function(promptText = "do you wish to continue ?") {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                try {
+                    new Notification(promptText);
+                } catch (e) {}
+            }
+
+            const confirmed = window.confirm(promptText);
+            if (confirmed) {
+                handleDecision('yes');
+            } else {
+                handleDecision('no');
+            }
+            return confirmed;
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().catch(() => {});
+            }
+
+            setTimeout(() => {
+                window.notification("do you wish to continue ?");
+            }, 100);
+        });
+    </script>
+</body>
+</html>
