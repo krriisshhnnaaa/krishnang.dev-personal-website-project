@@ -1,0 +1,30 @@
+/* Animations for review page */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 16px 36px rgba(0, 49, 83, 0.5), inset 0 0 25px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.review-card-3d {
+    animation: fadeIn 0.4s ease-out forwards;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.review-card-3d:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45), inset 0 0 25px rgba(255, 255, 255, 0.2);
+}

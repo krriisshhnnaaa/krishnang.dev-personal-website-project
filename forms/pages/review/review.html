@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave a Review — Krishnang</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="logo.css">
+    <style>
+        :root {
+            --prussian-blue: #003153;
+            --white: #ffffff;
+            --text-dark: #111827;
+            --bg-page: #f8fafc;
+            --accent-pink: #ff2d55;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 32px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav-back-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .nav-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .nav-back-link:hover {
+            color: var(--accent-pink);
+        }
+
+        /* text align.center == display_text = {name.txt} : file location = same directory */
+        .name-banner-container {
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+            padding: 20px 12px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .name-banner-container marquee {
+            display: block;
+            width: 100%;
+        }
+
+        .name-banner {
+            display: inline-block;
+            text-align: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: clamp(8px, 1.1vw, 12px);
+            line-height: 1.15;
+            color: #38bdf8;
+            text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+            white-space: pre;
+            margin: 0 auto;
+        }
+
+        /* Form Card */
+        .form-card {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 36px 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .form-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #374151;
+            align-self: flex-start;
+            padding-left: 4px;
+        }
+
+        /* Comment boxes */
+        .comment-box {
+            width: 100%;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #1e293b;
+            background: #f8fafc;
+            transition: all 0.2s ease-in-out;
+            resize: vertical;
+        }
+
+        .comment-box:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.15);
+        }
+
+        /* comment-box : {text area} -> dimesions l=60,b=10 -- ratio - l:b = 6:1 placeholder = {"What should we call you ?"} */
+        .name-box {
+            max-width: 600px;
+            min-height: 100px;
+            aspect-ratio: 6 / 1;
+        }
+
+        /* comment-box : {text area} -> dimensions l=120,b=20 -- ratio - l:b = 6:1 placeholder = {"Leave a review !"} */
+        .review-box {
+            max-width: 860px;
+            min-height: 160px;
+            aspect-ratio: 6 / 1;
+        }
+
+        /* Rating Stars (1 to 5 stars) */
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 6px;
+        }
+
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: color 0.15s ease, transform 0.15s ease;
+            line-height: 1;
+        }
+
+        .star-btn:hover,
+        .star-btn.active {
+            color: #fbbf24;
+            transform: scale(1.1);
+        }
+
+        /* Optional fields */
+        .optional-fields {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #f8fafc;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: #ffffff;
+        }
+
+        .file-upload-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .file-upload-hint {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: var(--accent-pink);
+            color: var(--white);
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(255, 45, 85, 0.35);
+            transition: all 0.2s ease-in-out;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #e02449;
+            box-shadow: 0 6px 20px rgba(255, 45, 85, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .status-msg {
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        .status-success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* H2 = { "This is what others think" } */
+        h2.others-think-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        /* hero section : Reviews */
+        .hero-reviews-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .hero-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            background: #e2e8f0;
+            color: #334155;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 9999px;
+        }
+
+        /* Review Cards Container */
+        .reviews-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 36px;
+        }
+
+        /*
+           hero section name : "review"
+           bgcolor = prussian blue
+           txt = white
+           border style = 3D 
+           border width = 50
+           border length = 60
+           display == 
+           {
+           -----txt---from----
+           ---file----
+           	- "name"
+           }
+        */
+        .review-card-3d {
+            width: 100%;
+            max-width: 840px;
+            background-color: var(--prussian-blue);
+            color: var(--white);
+            border-style: ridge;
+            border-width: 50px 60px;
+            border-color: #004b80 #00223b #00192b #005a99;
+            box-shadow: 
+                0 14px 32px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 30px 36px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            word-break: break-word;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .review-content {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--white);
+            font-style: italic;
+            white-space: pre-wrap;
+        }
+
+        .review-rating-stars {
+            color: #fbbf24;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .review-author {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #93c5fd;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .review-card-3d {
+                border-width: 25px 30px;
+                padding: 20px 22px;
+            }
+            .name-box, .review-box {
+                aspect-ratio: auto;
+            }
+            h2.others-think-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Navigation Back -->
+        <div class="nav-back-container">
+            <a href="../../choicepage.html" class="nav-back-link">
+                &larr; Back to Choice
+            </a>
+        </div>
+
+        <!-- text align.center == display_text = {name.txt} : file location = same directory -->
+        <div class="name-banner-container" id="nameBannerContainer">
+            <marquee behavior="scroll" direction="left" scrollamount="13" onmouseover="this.stop();" onmouseout="this.start();">
+                <pre class="name-banner" id="nameBanner">
+╒════╗  ╒═══╗ ╒══════════╗ ╒══════╗ ╒═════════╗ ╒════╗╒════╗  ╒════╗   ╒════╗  ╒════════╗   ╒════╗   ╒════╗ ╒════════╗      ╒═════════╗  ╒═════════╗ ╒════╗    ╒════╗     
+└┐  ╓╜ ╒╛ ╓─╜ └┐  ╓───┐  ║ └─┐  ╓─╜ │  ╓────┐ ║ └┐  ╓╜└┐  ╓╜  │    ╚╗  └┐  ╓╜  │  ╓──┐  ║   │    ╚╗  └┐  ╓╜ │  ╓───┐ ║      └┐  ╓───┐ ╚╗ └┐  ╓───┐ ║ └┐  ╓╜    └┐  ╓╜     
+ │  ║ ╒╛ ╓╜    │  ║   │  ║   │  ║   │  ║    └─╜  │  ║  │  ║   │  ╟┐ ╚╗  │  ║   │  ║  │  ║   │  ╟┐ ╚╗  │  ║  │  ║   └─╜       │  ║   │  ║  │  ║   └─╜  └┐ ╚╗    ╒╛ ╓╜      
+ │  ╚═╛  ╚═╗   │  ╚═══╛  ║   │  ║   │  ╚══════╗  │  ╚══╛  ║   │  ║└┐ ╚╗ │  ║   │  ╚══╛  ║   │  ║└┐ ╚╗ │  ║  │  ║             │  ║   │  ║  │  ╚══╗      └┐ ╚╗  ╒╛ ╓╜       
+ │  ╓───┐  ║   │  ╓┐  ╓──╜   │  ║   └──────┐  ║  │  ╓──┐  ║   │  ║ └┐ ╚╗│  ║   │  ╓──┐  ║   │  ║ └┐ ╚╗│  ║  │  ║ ╒════╗      │  ║   │  ║  │  ╓──╜       └┐ ╚╗╒╛ ╓╜        
+ │  ║   │  ║   │  ║└┐ ╚╗     │  ║   ╒═╗    │  ║  │  ║  │  ║   │  ║  └┐ ╚╡  ║   │  ║  │  ║   │  ║  └┐ ╚╡  ║  │  ║ └┐  ╓╜      │  ║   │  ║  │  ║   ╒═╗     └┐ ╚╛ ╓╜         
+╒╛  ╚╗ ╒╛  ╚╗ ╒╛  ╚╗└┐ ╚═╗ ╒═╛  ╚═╗ │ ╚════╛  ║ ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  │  ╚══╛  ║  ╒═╗ ╒╛  ╚═══╛ ╓╜ ╒╛  ╚═══╛ ║      └┐  ╓╜          
+└────╜ └────╜ └────╜ └───╜ └──────╜ └─────────╜ └────╜└────╜ └────╜   └────╜  └────╜└────╜ └────╜   └────╜  └────────╜  └─╜ └─────────╜  └─────────╜       └──╜           
+                </pre>
+            </marquee>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-card">
+            <h1 class="form-title">Leave a Review</h1>
+            <form id="reviewForm" class="review-form">
+                <!-- Name textarea: dimensions l=60, b=10, ratio 6:1 -->
+                <div class="form-group">
+                    <label for="reviewerName" class="form-label">Your Name *</label>
+                    <textarea 
+                        id="reviewerName" 
+                        name="name" 
+                        cols="60" 
+                        rows="10" 
+                        class="comment-box name-box" 
+                        placeholder="What should we call you ?" 
+                        required></textarea>
+                </div>
+
+                <!-- Review textarea: dimensions l=120, b=20, ratio 6:1 -->
+                <div class="form-group">
+                    <label for="reviewContent" class="form-label">Your Review *</label>
+                    <textarea 
+                        id="reviewContent" 
+                        name="review" 
+                        cols="120" 
+                        rows="20" 
+                        class="comment-box review-box" 
+                        placeholder="Leave a review !" 
+                        required></textarea>
+                </div>
+
+                <!-- Rating: 1 to 5 stars -->
+                <div class="form-group">
+                    <label class="form-label">Rating (1 to 5 Stars) *</label>
+                    <div class="rating-container">
+                        <div class="rating-stars" id="starRating">
+                            <button type="button" class="star-btn active" data-rating="1">&#9733;</button>
+                            <button type="button" class="star-btn active" data-rating="2">&#9733;</button>
+                            <button type="button" class="star-btn active" data-rating="3">&#9733;</button>
+                            <button type="button" class="star-btn active" data-rating="4">&#9733;</button>
+                            <button type="button" class="star-btn active" data-rating="5">&#9733;</button>
+                        </div>
+                        <input type="hidden" id="ratingInput" name="rating" value="5">
+                    </div>
+                </div>
+
+                <!-- Optional parameters: contact info & attachments -->
+                <div class="optional-fields">
+                    <div class="form-group">
+                        <label for="phoneInput" class="form-label">Phone Number (optional)</label>
+                        <input type="tel" id="phoneInput" name="phone" class="input-field" placeholder="+1 (555) 000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailInput" class="form-label">Email ID (optional)</label>
+                        <input type="email" id="emailInput" name="email" class="input-field" placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <div class="file-upload-container">
+                    <label for="attachmentInput" class="form-label">Attachments / Photo (optional)</label>
+                    <input type="file" id="attachmentInput" name="attachments" class="input-field" accept=".jpg,.jpeg,.pdf,.mp4,.mp3">
+                    <span class="file-upload-hint">Accepted formats: jpg, pdf, mp4, mp3</span>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Submit Review</button>
+                <div class="status-msg status-success" id="statusMessage">Thank you! Your review has been saved successfully.</div>
+            </form>
+        </div>
+
+        <!-- H2 = { "This is what others think" } -->
+        <h2 class="others-think-title">This is what others think</h2>
+
+        <!-- hero section : Reviews -->
+        <section class="hero-reviews-section" id="heroReviewsSection">
+            <div class="hero-header">
+                <span class="hero-tag">review</span>
+            </div>
+
+            <!-- Review items dynamically fetched/rendered -->
+            <div id="reviewsContainer" class="reviews-container">
+                <!-- Rendered dynamically -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Fetch and display name.txt if loaded over HTTP/local server
+        fetch('../../name.txt')
+            .then(res => res.ok ? res.text() : null)
+            .then(text => {
+                if (text && text.trim()) {
+                    document.getElementById('nameBanner').textContent = text;
+                }
+            })
+            .catch(() => {
+                // Static embedded content is already present as fallback
+            });
+
+        // Rating Stars Interaction
+        const starButtons = document.querySelectorAll('#starRating .star-btn');
+        const ratingInput = document.getElementById('ratingInput');
+        let currentRating = 5;
+
+        starButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentRating = parseInt(btn.getAttribute('data-rating'), 10);
+                ratingInput.value = currentRating;
+                updateStarDisplay(currentRating);
+            });
+        });
+
+        function updateStarDisplay(rating) {
+            starButtons.forEach(btn => {
+                const btnVal = parseInt(btn.getAttribute('data-rating'), 10);
+                if (btnVal <= rating) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Local & MongoDB Reviews Storage Handling
+        const defaultReviews = [
+            {
+                name: "Alex Vance",
+                content: "Krishnang is an exceptionally detail-oriented developer. The architecture and user interface built for the platform exceeded all our expectations!",
+                rating: 5
+            },
+            {
+                name: "Sarah Chen",
+                content: "Fast communication, innovative ideas, and clean modern code. An absolute pleasure to collaborate with.",
+                rating: 5
+            }
+        ];
+
+        function getStoredReviews() {
+            try {
+                const data = localStorage.getItem('krishnang_reviews');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        return parsed;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not read from localStorage', e);
+            }
+            return defaultReviews;
+        }
+
+        function saveStoredReviews(reviews) {
+            try {
+                localStorage.setItem('krishnang_reviews', JSON.stringify(reviews));
+            } catch (e) {
+                console.warn('Could not save to localStorage', e);
+            }
+        }
+
+        /*
+           hero section name : "review"
+           bgcolor = prussian blue
+           txt = white
+           border style = 3D 
+           border width = 50
+           border length = 60
+           display == 
+           {
+           -----txt---from----
+           ---file----
+           	- "name"
+           }
+        */
+        function renderReviewCard(review) {
+            const card = document.createElement('div');
+            card.className = 'review-card-3d';
+
+            // Star icons
+            const starCount = review.rating ? parseInt(review.rating, 10) : 5;
+            const starsText = '★'.repeat(starCount) + '☆'.repeat(Math.max(0, 5 - starCount));
+
+            const ratingElem = document.createElement('div');
+            ratingElem.className = 'review-rating-stars';
+            ratingElem.textContent = starsText;
+
+            const contentElem = document.createElement('div');
+            contentElem.className = 'review-content';
+            contentElem.textContent = review.content || '';
+
+            const authorElem = document.createElement('div');
+            authorElem.className = 'review-author';
+            authorElem.textContent = `- "${review.name || 'Anonymous'}"`;
+
+            card.appendChild(ratingElem);
+            card.appendChild(contentElem);
+            card.appendChild(authorElem);
+
+            return card;
+        }
+
+        function renderAllReviews(reviewsList) {
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+            reviewsList.forEach(review => {
+                const card = renderReviewCard(review);
+                container.appendChild(card);
+            });
+        }
+
+        // Fetch from MongoDB backend endpoint (if available) with local fallback
+        async function fetchReviews() {
+            try {
+                const res = await fetch('/api/reviews', { method: 'GET' });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        renderAllReviews(data);
+                        return;
+                    }
+                }
+            } catch (err) {
+                // Backend not connected; fallback to local storage
+            }
+
+            const localList = getStoredReviews();
+            renderAllReviews(localList);
+        }
+
+        // Handle Review Form Submission
+        const reviewForm = document.getElementById('reviewForm');
+        const statusMessage = document.getElementById('statusMessage');
+
+        reviewForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('reviewerName').value.trim();
+            const review = document.getElementById('reviewContent').value.trim();
+            const rating = parseInt(document.getElementById('ratingInput').value, 10) || 5;
+            const phone = document.getElementById('phoneInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+
+            if (!name || !review) {
+                alert('Please fill in both name and review.');
+                return;
+            }
+
+            const newReview = {
+                name: name,
+                content: review,
+                rating: rating,
+                phone: phone,
+                email: email,
+                timestamp: new Date().toISOString()
+            };
+
+            // 1. Save to local storage
+            const currentList = getStoredReviews();
+            currentList.unshift(newReview);
+            saveStoredReviews(currentList);
+
+            // 2. Prepend card immediately to hero section
+            const container = document.getElementById('reviewsContainer');
+            const card = renderReviewCard(newReview);
+            container.insertBefore(card, container.firstChild);
+
+            // 3. Post to MongoDB API if available
+            try {
+                await fetch('/api/reviews', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newReview)
+                });
+            } catch (e) {
+                // Local copy already saved
+            }
+
+            // Show confirmation & reset form
+            statusMessage.style.display = 'block';
+            reviewForm.reset();
+            updateStarDisplay(5);
+            document.getElementById('ratingInput').value = 5;
+
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 4000);
+        });
+
+        // Initialize on load
+        fetchReviews();
+    </script>
+</body>
+</html>

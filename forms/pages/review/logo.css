@@ -1,0 +1,10 @@
+/* Logo & ASCII banner styling */
+.name-banner-container {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+}
+
+.name-banner {
+    color: #38bdf8;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
