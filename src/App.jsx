@@ -1,18 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { PlasmaProvider, Plasma } from "@cruxgarden/plasma-ui";
+import DriftWall from "./DriftWall";
+import HoldToConfirm from "./HoldToConfirm";
+import useScramble from "./useScramble";
+import RadialMenu from "./RadialMenu";
 import {
   Workspace,
   PanelContent,
-  HeaderContent,
   defaultHeroPanels,
   loadSavedPositions,
   persistPositions
 } from "./Workspace";
 
+const driftWallItems = [
+  { image: 'https://picsum.photos/id/1015/600/400', title: 'Peaks', href: 'https://example.com/one' },
+  { image: 'https://picsum.photos/id/1025/600/400', title: 'Pup', href: 'https://example.com/two' },
+  { image: 'https://picsum.photos/id/1039/600/400', title: 'Falls', href: 'https://example.com/three' },
+  { image: 'https://picsum.photos/id/1043/600/400', title: 'Forest', href: 'https://example.com/four' },
+  { image: 'https://picsum.photos/id/1044/600/400', title: 'Coast', href: 'https://example.com/five' },
+  { image: 'https://picsum.photos/id/1050/600/400', title: 'Mountain', href: 'https://example.com/six' },
+  { image: 'https://picsum.photos/id/1062/600/400', title: 'Ocean', href: 'https://example.com/seven' },
+  { image: 'https://picsum.photos/id/1069/600/400', title: 'Valley', href: 'https://example.com/eight' },
+  { image: 'https://picsum.photos/id/1074/600/400', title: 'Canyon', href: 'https://example.com/nine' },
+  { image: 'https://picsum.photos/id/1080/600/400', title: 'Sky', href: 'https://example.com/ten' },
+  { image: 'https://picsum.photos/id/1084/600/400', title: 'Sunrise', href: 'https://example.com/eleven' },
+  { image: 'https://picsum.photos/id/106/600/400', title: 'Flower', href: 'https://example.com/twelve' }
+];
+
 export function App() {
   const [positions, setPositions] = useState(() => loadSavedPositions());
   const [mood, setMood] = useState("tidal");
   const [viewMode, setViewMode] = useState("page"); // "page" | "workspace"
+  const [scrambleName, playScramble] = useScramble("KRISHNANG PANDEY");
+
+  useEffect(() => {
+    playScramble();
+  }, [playScramble]);
 
   const savePosition = (id, offset) => {
     setPositions((prev) => {
@@ -29,6 +52,15 @@ export function App() {
     } catch (e) {}
   };
 
+  const handleDownloadResume = () => {
+    const link = document.createElement("a");
+    link.href = "resume.pdf";
+    link.download = "resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // Re-bind interactive controllers whenever the view is mounted/switched
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -37,33 +69,23 @@ export function App() {
         window.initBackgroundAnimations();
       }
 
-      // 2. Interactive Quantum Kinetic Logo
-      if (typeof window.initLogoAnimation === "function") {
-        window.initLogoAnimation();
-      }
-
-      // 3. Hero Developer Terminal (EXCEPTED from plasma, standalone)
+      // 2. Hero Developer Terminal (EXCEPTED from plasma, standalone)
       if (typeof window.initTerminal === "function") {
         window.initTerminal();
       }
 
-      // 4. GitHub activity feed
+      // 3. GitHub activity feed
       if (typeof window.initGitHubActivity === "function") {
         window.initGitHubActivity();
       }
 
-      // 5. Blog Activity & Horizontal Carousel (EXCEPTED from plasma, standalone)
+      // 4. Blog Activity & Horizontal Carousel (EXCEPTED from plasma, standalone)
       const blogActivity = typeof window.initBlogActivity === "function"
         ? window.initBlogActivity()
         : null;
 
       if (typeof window.initBlogHorizontalScroll === "function") {
         window.initBlogHorizontalScroll({ activityController: blogActivity });
-      }
-
-      // 6. 3D Flipbook Education Timeline (EXCEPTED from plasma, standalone)
-      if (typeof window.initBookEducation === "function") {
-        window.initBookEducation();
       }
     }, 100);
 
@@ -79,36 +101,22 @@ export function App() {
           viewMode={viewMode}
           setViewMode={setViewMode}
         />
+        <RadialMenu />
       </div>
     );
   }
 
-  // Portfolio Page View with Plasma UI on all hero sections EXCEPT terminal, blogs, and education book
-  const heroIntroPanel = defaultHeroPanels.find((p) => p.id === "hero-intro");
+  // Portfolio Page View with Plasma UI on all hero sections EXCEPT terminal and blogs
   const githubPanel = defaultHeroPanels.find((p) => p.id === "github-activity");
   const freelanceServicesPanel = defaultHeroPanels.find((p) => p.id === "freelance-services");
   const freelanceContactPanel = defaultHeroPanels.find((p) => p.id === "freelance-contact");
-  const connectPanel = defaultHeroPanels.find((p) => p.id === "connect");
 
   return (
     <>
-      {/* =====================================================
-           HEADER / SITE NAVIGATION (Standard HTML Header - No Plasma UI)
-           ===================================================== */}
-      <header className="fixed top-0 inset-x-0 z-50 h-20 backdrop-blur-xl bg-slate-950/75 border-b border-slate-800/60 transition-all duration-300 site-header">
-        <HeaderContent
-          mood={mood}
-          setMood={setMood}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          onResetLayout={handleResetLayout}
-        />
-      </header>
-
       <PlasmaProvider
         mood={mood}
         ground="clear"
-        background="jpg(1).jpg"
+        background="bg.jpg"
         zIndex={1}
         theme="dark"
         radius={22}
@@ -119,77 +127,60 @@ export function App() {
       >
 
       {/* =====================================================
+           DRIFT WALL (React Bits - Positioned above all other elements)
+           ===================================================== */}
+      <section id="drift-wall-showcase" className="relative z-30 w-full overflow-hidden border-b border-slate-800/60 shadow-2xl bg-slate-950/40">
+        <div style={{ height: 600 }}>
+          <DriftWall
+            items={driftWallItems}
+            columns={4}
+            tileWidth={200}
+            tileHeight={132}
+            gap={18}
+            tilt={16}
+            turn={-14}
+            perspective={1200}
+            depth={120}
+            speed={42}
+            direction="up"
+            variance={0.45}
+            parallax={0.6}
+            lift={64}
+            fade={0.6}
+            dim={0.55}
+            overlayColor="#060010"
+          />
+        </div>
+      </section>
+
+      {/* =====================================================
            MAIN CONTENT
            ===================================================== */}
-      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col gap-24 sm:gap-32 pt-28 pb-20">
+      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
 
         {/* =================================================
-             HERO SECTION:
-             - Left: Hero Intro Panel (PLASMA UI, DRAGGABLE)
-             - Right: Terminal (EXCEPTED: STANDALONE DOM)
+             STANDALONE DECODED SCRAMBLE & RESUME BUTTON
+             No section ID hero, No Plasma UI elements
+             Text align - 8px from right as per agy.info
              ================================================= */}
-        <section id="hero" className="hero min-h-[calc(100vh-7rem)] flex items-center">
-          <div className="hero-inner w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
-            {/* Left Column: Hero Intro as Liquid Plasma Panel */}
-            <Plasma
-              key="hero-intro"
-              draggable
-              padding={20}
-              offset={positions["hero-intro"] || { x: 0, y: 0 }}
-              onDragEnd={(o) => savePosition("hero-intro", o)}
-              className="hero-intro lg:col-span-7 flex flex-col items-start plasma-hero-panel rounded-2xl border border-slate-800/60 backdrop-blur-md transition-shadow duration-300"
+        <div className="w-full flex flex-col gap-10">
+          <div className="w-full" style={{ textAlign: "right", paddingRight: "8px" }}>
+            <h1
+              className="scramble text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500"
+              style={{ textAlign: "right", paddingRight: "8px" }}
+              onClick={playScramble}
+              onMouseEnter={playScramble}
+              title="Click or hover to decode"
             >
-              <PanelContent panel={heroIntroPanel} />
-            </Plasma>
-
-            {/* Right Column: Interactive Terminal (EXCEPTED FROM PLASMA) */}
-            <div className="hero-terminal lg:col-span-5 w-full max-w-lg mx-auto lg:max-w-none">
-              <div
-                id="terminal"
-                className="terminal terminal-card"
-                aria-label="Interactive terminal"
-              >
-                <div className="terminal-header">
-                  <span className="terminal-title">krishnang.dev ~ zsh</span>
-                </div>
-
-                <div className="terminal-body">
-                  <div
-                    id="terminal-output"
-                    className="terminal-output"
-                    aria-live="polite"
-                    aria-atomic="false"
-                  ></div>
-
-                  <form
-                    id="terminal-form"
-                    className="terminal-input-line"
-                  >
-                    <span
-                      className="terminal-prompt terminal-prompt-text"
-                      aria-hidden="true"
-                    >
-                      &gt;
-                    </span>
-
-                    <input
-                      id="terminal-input"
-                      className="terminal-input"
-                      type="text"
-                      autoComplete="off"
-                      autoCapitalize="off"
-                      spellCheck="false"
-                      aria-label="Terminal command"
-                      placeholder="Type 'help'..."
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-
+              {scrambleName}
+            </h1>
           </div>
-        </section>
+
+          {/* Standalone circular hold-to-confirm button above activity hero */}
+          <div className="flex justify-center">
+            <HoldToConfirm onConfirm={handleDownloadResume} ms={800} />
+          </div>
+        </div>
 
         {/* =================================================
              ACTIVITY SECTION:
@@ -359,125 +350,6 @@ export function App() {
           </div>
         </section>
 
-        {/* =================================================
-             EDUCATION SECTION: (EXCEPTED FROM PLASMA UI)
-             Scroll-Driven 3D Interactive Flipbook (book-education.js)
-             ================================================= */}
-        <section
-          id="education"
-          className="education education-section scroll-mt-24 pt-8"
-          data-education-section
-        >
-          <div className="section-inner space-y-10">
-
-            <header className="section-header">
-              <p className="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                Education
-              </p>
-              <h2 className="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                The road so far.
-              </h2>
-            </header>
-
-            <div
-              className="education-book"
-              data-education-book
-              aria-label="Education timeline"
-            >
-              <div className="book" role="group" aria-label="Interactive education book">
-
-                <button className="book-cover" data-book-cover type="button" aria-expanded="false" aria-label="Open education book"></button>
-
-                <div className="book-pages" data-book-pages>
-
-                  {/* Page 1: Class 10 */}
-                  <article
-                    className="book-page education-page"
-                    data-page="1"
-                    data-education-page="1"
-                  >
-                    <div className="book-page-content text-left space-y-2">
-                      <span className="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Foundation</span>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white">Class 10</h3>
-                      <p className="text-sm text-slate-300">Secondary School Education</p>
-                      <p className="text-xs text-slate-400 mt-2">Built foundations in mathematics, physical sciences, and introductory computational logic.</p>
-                    </div>
-                  </article>
-
-                  {/* Page 2: Class 12 */}
-                  <article
-                    className="book-page education-page"
-                    data-page="2"
-                    data-education-page="2"
-                  >
-                    <div className="book-page-content text-left space-y-2">
-                      <span className="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Senior School</span>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white">Class 12</h3>
-                      <p className="text-sm text-slate-300">Senior Secondary Education</p>
-                      <p className="text-xs text-slate-400 mt-2">Non-Medical Sciences (PCM) with Computer Science. Deep focus on algorithms, problem-solving, and calculus.</p>
-                    </div>
-                  </article>
-
-                  {/* Page 3: Chitkara University */}
-                  <article
-                    className="book-page education-page"
-                    data-page="3"
-                    data-education-page="3"
-                  >
-                    <div className="book-page-content text-left space-y-2">
-                      <span className="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Undergraduate</span>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white">Chitkara University</h3>
-                      <p className="text-sm text-slate-300">B.Tech. CSE — AI &amp; ML Program</p>
-                      <p className="text-xs text-slate-400 mt-2">Core study in data structures, algorithms, neural architectures, distributed computing, and machine learning models.</p>
-                    </div>
-                  </article>
-
-                  {/* Page 4: Technical Specializations */}
-                  <article
-                    className="book-page education-page"
-                    data-page="4"
-                    data-education-page="4"
-                  >
-                    <div className="book-page-content text-left space-y-2">
-                      <span className="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Focus Areas</span>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white">Specializations</h3>
-                      <p className="text-sm text-slate-300">Systems &amp; Agentic AI</p>
-                      <p className="text-xs text-slate-400 mt-2">High-performance tooling in Rust and Go, local LLM orchestration, Linux system tuning, and modern web architectures.</p>
-                    </div>
-                  </article>
-
-                </div>
-
-              </div>
-
-              <div className="book-controls" data-book-controls>
-                <button className="book-control" type="button" data-book-previous aria-label="Previous page">← Previous</button>
-                <span className="book-status" data-book-status aria-live="polite">Closed</span>
-                <button className="book-control" type="button" data-book-next aria-label="Next page">Next →</button>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* =================================================
-             CONNECT / SOCIAL SECTION: (PLASMA UI, DRAGGABLE)
-             ================================================= */}
-        <section id="connect" className="connect scroll-mt-24 pt-8">
-          <div className="section-inner space-y-8">
-            <Plasma
-              key="connect"
-              draggable
-              padding={20}
-              offset={positions["connect"] || { x: 0, y: 0 }}
-              onDragEnd={(o) => savePosition("connect", o)}
-              className="connect-card-plasma plasma-hero-panel rounded-2xl border border-slate-800/60 backdrop-blur-md shadow-xl"
-            >
-              <PanelContent panel={connectPanel} />
-            </Plasma>
-          </div>
-        </section>
-
       </main>
 
       {/* =====================================================
@@ -492,13 +364,14 @@ export function App() {
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
               Plasma UI Enabled
             </span>
-            <a href="#hero" className="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors">
+            <a href="#main-content" className="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors">
               Back to top ↑
             </a>
           </div>
         </div>
       </footer>
     </PlasmaProvider>
+    <RadialMenu />
   </>
   );
 }

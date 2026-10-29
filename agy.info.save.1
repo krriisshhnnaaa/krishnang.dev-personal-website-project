@@ -1,0 +1,2365 @@
+in this document : 
+
+ignore anything inside action done ()
+
+execute : action now ()
+
+rest : context to use : 
+
+
+===========FORMS PAGE===============
+
+modify forms.html file inside this repository inside the forms/ directory 
+
+
+
+#what to do  ? : 
+
+make a basic HTML file : 
+
+basic functionality : 
+
+choice : 
+
+contact -
+leave a review - 
+
+
+contact forms page : 
+
+
+input parameters (required) : name, phone no. , email ID.
+input parameters (optional) : reason to connect , attachments (if any) 
+
+accepted formats for attachments : pdf (1 to 100mb) , jpg (upto 25mb) , txt (upto 10mb) , pptx (upto 50mb).
+max size for "reason to connect" : 500 characters , use : tag (text area)
+
+
+directory structure : 
+krishnag.dev-personal-website-project /
+
+	forms /
+
+		
+
+		
+
+		
+	
+		pages / 
+		
+			bg_img_choice.jpg
+			bg_img_connect.jpg
+			bg_img_review.jpg
+			bg_img_choicepgae.jpg
+
+		
+			choice /	
+				base.css 
+				logo.css
+				animations.css
+				choice page.html
+			connect /
+				base.css	
+				logo.css
+				animations.css
+				connect.html	
+			review /
+
+				review.html
+				base.css
+				logo.css
+				animations.css
+
+
+		tempc.html
+		tempr.html
+		tempe.html
+
+
+
+
+review.html structure : 
+
+form (
+
+input parameters (required) : name , review , rating 1 to 5 stars
+
+input parameters (optional) : contact info : phone no. , email ID , photo, attachments
+
+attachments accepted : jpg , pdf , mp4 , mp3 
+
+
+
+tech stack : tailwind , REACT.js , html5 , vanilla javascript , vanilla css3 , typescript (where needed) , mongoDB (for storing info)
+
+
+ 
+
+
+
+ 
+
+action DONE ( 
+
+make choice.html 
+do not make any new file or directory
+use given path : 
+forms/choicepage.html 
+
+
+choice page format : 
+
+h1 : HI ! what would you like to do ? connect with me or leave a review
+styling : glowintensity:55% ; colour : textcolor : black , glowcolor : reddish-pink , text-align:center
+
+forms (
+radio button { choices : leave a review ; connect with me} 
+)
+styling : txtcolor : black ; 
+
+button (
+submit ; buttonaction : open tempc.html if radio_choice : connect with me else if radio_choice = leave a review : open tempr.html ; else : open tempe.html)
+
+
+
+
+
+
+
+
+page styling : 
+
+bg-img = bg_img.jpg
+
+)
+action now ( 
+
+
+
+create : 
+
+
+tempc.html :
+
+tempc :
+temporary html page for choice descision.
+ 
+on submission with choice = connect with me 
+pop - tempc.html 
+
+page format : 
+
+pop window.notification  { do you wish to continue ?}
+
+page styling : white page 
+
+top-right : connecting you to krishnang
+
+
+
+on do you wish choices = {yes} . {no}
+
+if {yes} : open connect.html
+else : open index.html
+
+
+
+
+)
+
+
+
+	create tempr.html :
+temporary html page for leave a review descision.
+
+on submission with choice = leave a review
+pop - tempr.html
+
+page format : 
+pop window.notification {do you wish to continue ?}
+
+do you wish to continue choices = {yes) . {no}
+
+
+if {yes} : open review.html
+else : open index.html 
+page styling : white page 
+top right : let me take your review
+
+)
+
+action DONE (
+
+
+  edit review.html according and strictly according to the instructions provided below :
+
+
+
+
+comment-box : {text area} -> dimensions l=120,b=20 -- ratio - l:b = 6:1 placeholder = {"Leave a review !"}
+comment-box : {text area} -> dimesions l=60,b=10 -- ratio - l:b = 6:1 placeholder = {"What should we call you ?"}
+
+
+text align.center == display_text = {name.txt} : file location = same directory. 
+
+
+H2 = { "This is what others think" }
+
+
+hero section : Reviews 
+
+review = from local mongodb dbs name = "reviews" fetch files as :
+
+fetch ALL FILES 1 to n.
+
+fetch 1 : 
+{
+
+
+content = "txt from file"
+name = "txt from file"
+
+display :
+
+
+hero section name : "review"
+
+
+bgcolor = prussian blue
+txt = white
+
+border style = 3D 
+border width = 50
+border length = 60
+display == 
+{
+-----txt---from----
+---file----
+	- "name"
+
+}
+
+do not add : email, phone no. , attachments , etc input parameters.
+
+page layout : 
+
+
+{
+
+
+		size = h1 (	{center} {marquee} [text from name.txt] }
+
+
+
+
+                    --------------------------------------------|
+		    |	Leave a review				|
+		    |						|
+		    |						|
+		    |						|
+		    |						|
+		    |						|
+		    |						|
+		    |						|
+		    |						|
+		    |						|
+		    --------------------------------------------		    
+
+
+ ------------------------------------------------
+ |	What's your goodname ?			|
+ |				          	|
+ |						|						| 						|	
+ ------------------------------------------------		    
+
+
+
+
+review hero 1 ----review2
+review3------review4
+|
+|
+|
+|
+review hero n-1 ------review n
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+if ambiguity 
+ask user
+
+
+
+
+)
+
+
+
+
+
+action DONE (
+
+
+edit connect.html at /forms/pages/connect according to instructions below, and strictly only according to the given instructuions, do no add new files or make new files. 
+
+div {
+h1 = [LET'S CONNECT]
+txtcolor = yellow
+glow = yes , color = lime
+font = isometra
+italic = no
+bold = yes
+}
+div {
+marquee { scroll speed = 10 txt = "Full Stack | AI | ML Scripts | Intern | Freelancer | Student"}
+
+
+use following template for all social media hero sections :
+
+hero {
+________________________________
+| [icon]    social media name	|		
+|				|
+|	connect btn		|
+|	btn {href = link}	|
+|				|
+--------------------------------
+}
+
+hero1 {
+icon = wp.jpg
+social media name = whatsapp
+link = 
+}
+
+hero2 {
+icon = inst.jpg 
+social media name = Instagram
+link = 
+
+}
+hero3 {
+
+icon = intern.jpg
+social media name = internshala
+link = 
+}
+hero4 {
+
+icon = nkri.jpg
+social media name = naukri.com
+link = 
+}
+
+hero5 {
+
+icon = freelancer.jpg
+social media name = freelancer 
+link = 
+}
+hero6 {
+
+icon = fiverr.jpg
+social media name = fiverr
+link = 
+}
+
+hero7 {
+
+icon = crsera.jpg
+social media name = coursera 
+link = 
+}
+
+hero8 {
+
+icon = fb.jpg
+social media name = facebook
+link = 
+}
+hero9 {
+
+icon = hrst.jpg
+social media name = hirist.tech 
+link = 
+}
+hero10 {
+
+icon = gsdr.jpg
+social media name = glassdoor.jpg 
+link = 
+}
+
+hero11 {
+
+icon = indd.jpg
+social media name = indeed 
+link = 
+}
+
+hero12 {
+
+icon = lnkdn.jpg
+social media name = LinkedIn
+link = 
+}
+hero13 {
+
+icon = ltcd.jpg
+social media name = leetcode 
+link = 
+}
+
+hero14 {
+
+icon = x.jpg
+social media name = X 
+link = 
+}
+
+hero15 {
+
+icon = ustp.jpg
+social media name = unstop 
+link = 
+}
+hero16 {
+
+icon = upwork
+social media name = 
+link = 
+}
+
+hero17 {
+
+icon = wkindi.jpg
+social media name = work india 
+link = 
+}
+hero18 {
+
+icon = mdm.jpg
+social media name = medium 
+link = 
+}
+
+hero19 {
+
+icon = yt.jpg
+social media name = Youtube 
+link =  
+}
+hero20 {
+
+icon = ddev.jpg
+social media name = daily.dev 
+link = 
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+action DONE {
+
+
+
+redesign main page such that navbar is removed remove logo animation.js as well
+
+inside terminal.js update it such that all commands are visible before user types anything
+
+
+remove book education.js 
+remove connect hero section
+
+}
+
+
+action 	DONE {
+
+
+
+
+## Integrate the <DriftWall /> component from React Bits
+
+You are helping integrate an open-source React component into index.html (main page of this website).Your task is to make the following be positioned above all other elements of the website/
+
+
+### Component: DriftWall
+### Variant: JavaScript + CSS
+
+
+---
+
+### Usage Example
+```jsx
+import DriftWall from './DriftWall';
+
+const items = [
+  { image: 'https://picsum.photos/id/1015/600/400', title: 'Peaks', href: 'https://example.com/one' },
+  { image: 'https://picsum.photos/id/1025/600/400', title: 'Pup', href: 'https://example.com/two' },
+  { image: 'https://picsum.photos/id/1039/600/400', title: 'Falls', href: 'https://example.com/three' },
+];
+
+<div style={{ height: 600 }}>
+  <DriftWall
+    items={items}
+    columns={4}
+    tileWidth={200}
+    tileHeight={132}
+    gap={18}
+    tilt={16}
+    turn={-14}
+    perspective={1200}
+    depth={120}
+    speed={42}
+    direction="up"
+    variance={0.45}
+    parallax={0.6}
+    lift={64}
+    fade={0.6}
+    dim={0.55}
+    overlayColor="#060010"
+  />
+</div>
+
+```
+
+### Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| items | array | 15 demo tiles | Tiles to display. Each item has { image, title?, href? }. |
+| columns | number | 5 | Number of drifting columns. |
+| tileWidth | number | 200 | Width of each tile in pixels. |
+| tileHeight | number | 132 | Height of each tile in pixels. |
+| gap | number | 18 | Spacing between tiles and columns in pixels. |
+| radius | number | 14 | Corner radius of each tile in pixels. |
+| tilt | number | 16 | Perspective pitch of the wall (rotateX, degrees). |
+| turn | number | -14 | Perspective yaw of the wall (rotateY, degrees). |
+| roll | number | 0 | In-plane rotation of the wall (rotateZ, degrees). |
+| perspective | number | 1200 | Perspective distance in pixels — smaller is more dramatic. |
+| depth | number | 120 | How far the wall sits back from the viewer in pixels. |
+| speed | number | 42 | Base drift speed in pixels per second. |
+| direction | "up" | "down" | "up" | Primary drift direction; columns alternate around it. |
+| variance | number | 0.45 | How much column speeds differ from each other (0–1). |
+| parallax | number | 0.6 | Pointer-follow tilt strength (0 disables it). |
+| pauseOnHover | boolean | false | Pause the whole wall while the pointer is over it. |
+| lift | number | 64 | How far a hovered tile lifts toward the viewer in pixels. |
+| fade | number | 0.6 | Strength of the edge and depth dissolve (0–1). |
+| dim | number | 0.55 | Resting opacity of unhovered tiles (0–1). |
+| grayscale | boolean | false | Desaturate resting tiles; hover restores colour. |
+| overlayColor | string | "#060010" | Tint laid over resting tiles, cleared on hover. |
+
+### Full Component Source
+```jsx
+'use client';
+
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import './DriftWall.css';
+
+const DEFAULT_ITEMS = Array.from({ length: 15 }, (_, i) => {
+  const ids = [1015, 1025, 1039, 1043, 1044, 1050, 1062, 1069, 1074, 1080, 1084, 106, 110, 133, 164];
+  return {
+    image: `https://picsum.photos/id/${ids[i % ids.length]}/600/400`,
+    title: `Tile ${i + 1}`,
+    href: undefined
+  };
+});
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const columnFactor = (index, variance) => {
+  const pseudo = ((index * 0.6180339887 + 0.35) % 1) * 2 - 1;
+  return 1 + variance * pseudo;
+};
+
+const DriftWall = ({
+  items = DEFAULT_ITEMS,
+  columns = 5,
+  tileWidth = 200,
+  tileHeight = 132,
+  gap = 18,
+  radius = 14,
+  tilt = 16,
+  turn = -14,
+  roll = 0,
+  perspective = 1200,
+  depth = 120,
+  speed = 42,
+  direction = 'up',
+  variance = 0.45,
+  parallax = 0.6,
+  pauseOnHover = false,
+  lift = 64,
+  fade = 0.6,
+  dim = 0.55,
+  grayscale = false,
+  overlayColor = '#060010',
+  className = '',
+  style
+}) => {
+  const containerRef = useRef(null);
+  const planeRef = useRef(null);
+  const trackRefs = useRef([]);
+  const rafRef = useRef(null);
+
+  const offsetsRef = useRef([]);
+  const velocitiesRef = useRef([]);
+  const hoveredColRef = useRef(-1);
+  const wallHoveredRef = useRef(false);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const pointerDampedRef = useRef({ x: 0, y: 0 });
+  const lastTsRef = useRef(null);
+
+  const [containerHeight, setContainerHeight] = useState(600);
+  const [activeId, setActiveId] = useState(null);
+  const activeIdRef = useRef(null);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    setReduced(prefersReducedMotion());
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = e => setReduced(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  const columnItems = useMemo(() => {
+    const cols = Array.from({ length: columns }, () => []);
+    items.forEach((item, i) => cols[i % columns].push(item));
+    return cols.map(col => (col.length ? col : items.slice(0, 1)));
+  }, [items, columns]);
+
+  const columnMeta = useMemo(() => {
+    const unit = tileHeight + gap;
+    return columnItems.map(col => {
+      const copyHeight = Math.max(unit, col.length * unit);
+      const copies = Math.max(2, Math.ceil((containerHeight * 1.6) / copyHeight) + 1);
+      return { copyHeight, copies };
+    });
+  }, [columnItems, tileHeight, gap, containerHeight]);
+
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setContainerHeight(entry.contentRect.height || 600);
+    });
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const baseVelocities = useMemo(() => {
+    const dirSign = direction === 'up' ? 1 : -1;
+    return columnItems.map((_, c) => {
+      const altSign = c % 2 === 0 ? 1 : -1;
+      return speed * columnFactor(c, variance) * dirSign * altSign;
+    });
+  }, [columnItems, speed, direction, variance]);
+
+  useEffect(() => {
+    offsetsRef.current = columnMeta.map((meta, c) => meta.copyHeight * ((c * 0.37) % 1));
+    velocitiesRef.current = columnItems.map(() => 0);
+  }, [columnMeta, columnItems]);
+
+  const applyPlaneTransform = useCallback(
+    (px, py) => {
+      const plane = planeRef.current;
+      if (!plane) return;
+      plane.style.transform =
+        `translate(-50%, -50%) scale(1.18) ` +
+        `rotateX(${tilt + py}deg) rotateY(${turn + px}deg) rotateZ(${roll}deg) ` +
+        `translateZ(${-depth}px)`;
+    },
+    [tilt, turn, roll, depth]
+  );
+
+  useEffect(() => {
+    const animate = ts => {
+      if (lastTsRef.current === null) lastTsRef.current = ts;
+      const dt = Math.min(0.05, Math.max(0, ts - lastTsRef.current) / 1000);
+      lastTsRef.current = ts;
+
+      const maxTilt = parallax * 8;
+      const targetX = pointerRef.current.x * maxTilt;
+      const targetY = -pointerRef.current.y * maxTilt;
+      const damp = 1 - Math.exp(-dt / 0.12);
+      pointerDampedRef.current.x += (targetX - pointerDampedRef.current.x) * damp;
+      pointerDampedRef.current.y += (targetY - pointerDampedRef.current.y) * damp;
+      applyPlaneTransform(pointerDampedRef.current.x, pointerDampedRef.current.y);
+
+      if (!reduced) {
+        for (let c = 0; c < trackRefs.current.length; c++) {
+          const meta = columnMeta[c];
+          if (!meta) continue;
+          const paused = wallHoveredRef.current && pauseOnHover;
+          const factor = paused || hoveredColRef.current === c ? 0 : 1;
+          const target = baseVelocities[c] * factor;
+
+          const ease = 1 - Math.exp(-dt / (target === 0 ? 0.16 : 0.28));
+          velocitiesRef.current[c] += (target - velocitiesRef.current[c]) * ease;
+          let next = (offsetsRef.current[c] ?? 0) + velocitiesRef.current[c] * dt;
+          next = ((next % meta.copyHeight) + meta.copyHeight) % meta.copyHeight;
+          offsetsRef.current[c] = next;
+
+          const el = trackRefs.current[c];
+          if (el) el.style.transform = `translate3d(0, ${-next}px, 0)`;
+        }
+      } else {
+        for (let c = 0; c < trackRefs.current.length; c++) {
+          const el = trackRefs.current[c];
+          const meta = columnMeta[c];
+          if (el && meta) el.style.transform = `translate3d(0, ${-(offsetsRef.current[c] ?? 0)}px, 0)`;
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+      lastTsRef.current = null;
+    };
+  }, [baseVelocities, columnMeta, pauseOnHover, parallax, reduced, applyPlaneTransform]);
+
+  const activate = useCallback((id, index) => {
+    activeIdRef.current = id;
+    hoveredColRef.current = index;
+    setActiveId(id);
+  }, []);
+  const release = useCallback(() => {
+    activeIdRef.current = null;
+    hoveredColRef.current = -1;
+    setActiveId(null);
+  }, []);
+
+  const handlePointerMove = useCallback(
+    e => {
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      if (parallax > 0 && !reduced) {
+        pointerRef.current = {
+          x: (e.clientX - rect.left) / rect.width - 0.5,
+          y: (e.clientY - rect.top) / rect.height - 0.5
+        };
+      }
+      const hit = document.elementFromPoint(e.clientX, e.clientY);
+      const tile = hit && hit.closest ? hit.closest('[data-tile-id]') : null;
+      if (!tile) return;
+      const id = tile.dataset.tileId;
+      if (id === activeIdRef.current) return;
+      activeIdRef.current = id;
+      hoveredColRef.current = Number(tile.dataset.col);
+      setActiveId(id);
+    },
+    [parallax, reduced]
+  );
+
+  const handlePointerLeaveWall = useCallback(() => {
+    wallHoveredRef.current = false;
+    pointerRef.current = { x: 0, y: 0 };
+    release();
+  }, [release]);
+
+  const cssVars = useMemo(
+    () => ({
+      '--dw-tile-w': `${tileWidth}px`,
+      '--dw-tile-h': `${tileHeight}px`,
+      '--dw-gap': `${gap}px`,
+      '--dw-radius': `${radius}px`,
+      '--dw-perspective': `${perspective}px`,
+      '--dw-lift': `${lift}px`,
+      '--dw-dim': dim,
+      '--dw-gray': grayscale ? 1 : 0,
+      '--dw-overlay': overlayColor,
+      '--dw-edge': `${Math.max(0, (1 - fade) * 100)}%`,
+      ...style
+    }),
+    [tileWidth, tileHeight, gap, radius, perspective, lift, dim, grayscale, overlayColor, fade, style]
+  );
+
+  const renderTile = (item, id, colIndex) => {
+    const inner = (
+      <span className="drift-wall__inner">
+        <img src={item.image} alt={item.title ?? ''} loading="lazy" decoding="async" draggable={false} />
+        <span className="drift-wall__overlay" aria-hidden="true" />
+      </span>
+    );
+    const commonProps = {
+      className: `drift-wall__tile${activeId === id ? ' is-active' : ''}`,
+      'data-tile-id': id,
+      'data-col': colIndex,
+      onFocus: () => activate(id, colIndex),
+      onBlur: release
+    };
+    if (item.href) {
+      return (
+        <a key={id} href={item.href} target="_blank" rel="noreferrer noopener" {...commonProps}>
+          {inner}
+        </a>
+      );
+    }
+    return (
+      <div key={id} tabIndex={0} role="button" aria-label={item.title ?? 'tile'} {...commonProps}>
+        {inner}
+      </div>
+    );
+  };
+
+  const rootClass = ['drift-wall', reduced ? 'drift-wall--reduced' : '', className].filter(Boolean).join(' ');
+
+  return (
+    <div
+      ref={containerRef}
+      className={rootClass}
+      style={cssVars}
+      onPointerMove={handlePointerMove}
+      onPointerEnter={() => {
+        wallHoveredRef.current = true;
+      }}
+      onPointerLeave={handlePointerLeaveWall}
+      role="group"
+      aria-label="Drifting wall of tiles"
+    >
+      <div ref={planeRef} className="drift-wall__plane">
+        {columnItems.map((col, c) => {
+          const meta = columnMeta[c];
+          const copies = Array.from({ length: meta.copies });
+          return (
+            <div className="drift-wall__col" key={`col-${c}`}>
+              <div className="drift-wall__track" ref={el => (trackRefs.current[c] = el)}>
+                {copies.map((_, copyIndex) =>
+                  col.map((item, itemIndex) => renderTile(item, `${c}-${copyIndex}-${itemIndex}`, c))
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default DriftWall;
+
+```
+
+### Component CSS
+```css
+.drift-wall {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  perspective: var(--dw-perspective, 1200px);
+  perspective-origin: 50% 50%;
+  --dw-tile-w: 200px;
+  --dw-tile-h: 132px;
+  --dw-gap: 18px;
+  --dw-radius: 14px;
+  --dw-lift: 64px;
+  --dw-dim: 0.55;
+  --dw-gray: 0;
+  --dw-overlay: #060010;
+  --dw-edge: 40%;
+  -webkit-mask-image:
+    radial-gradient(ellipse 78% 82% at 50% 46%, #000 var(--dw-edge), transparent 100%),
+    linear-gradient(to top, #000 var(--dw-edge), transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse 78% 82% at 50% 46%, #000 var(--dw-edge), transparent 100%),
+    linear-gradient(to top, #000 var(--dw-edge), transparent 100%);
+  mask-composite: intersect;
+}
+
+.drift-wall__plane {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: row;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.drift-wall__col {
+  position: relative;
+  width: calc(var(--dw-tile-w) + var(--dw-gap));
+  transform-style: preserve-3d;
+}
+
+.drift-wall__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.drift-wall__tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: calc(var(--dw-tile-h) + var(--dw-gap));
+  flex: 0 0 auto;
+  outline: none;
+  transform-style: preserve-3d;
+}
+
+.drift-wall__inner {
+  position: absolute;
+  inset: calc(var(--dw-gap) / 2);
+  display: block;
+  border-radius: var(--dw-radius);
+  overflow: hidden;
+  background: #0b0b12;
+  opacity: var(--dw-dim);
+  transform: translateZ(0);
+  pointer-events: none;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.drift-wall__tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(var(--dw-gray)) saturate(0.92);
+  transition: filter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.drift-wall__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--dw-overlay);
+  opacity: 0.42;
+  pointer-events: none;
+  transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.drift-wall__tile.is-active .drift-wall__inner,
+.drift-wall__tile:focus-visible .drift-wall__inner {
+  opacity: 1;
+  transform: translateZ(var(--dw-lift));
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.7);
+}
+
+.drift-wall__tile.is-active img,
+.drift-wall__tile:focus-visible img {
+  filter: grayscale(0) saturate(1.05);
+}
+
+.drift-wall__tile.is-active .drift-wall__overlay,
+.drift-wall__tile:focus-visible .drift-wall__overlay {
+  opacity: 0;
+}
+
+.drift-wall__tile:focus-visible .drift-wall__inner {
+  box-shadow:
+    0 24px 60px -18px rgba(0, 0, 0, 0.7),
+    0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift-wall__plane,
+  .drift-wall__track {
+    will-change: auto;
+  }
+}
+
+```
+
+### Integration Instructions
+1. Install any listed dependencies.
+2. Copy the component source into the appropriate directory in the project.
+3. Import the CSS file alongside the component.
+4. Import and render the component using the usage example above as a starting point.
+5. Adjust props as needed for the specific use case — refer to the props table for all available options.
+
+### More from React Bits
+The full library index, including everything reactbits.dev offers, is at https://reactbits.dev/llms.txt — fetch it if this component is not the right fit or the project needs more pieces.
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+action DONE {
+
+
+in main page , below terminal and above activity hero build {
+
+Build a circular 'hold to confirm' button with an SVG progress ring. On pointerdown animate the ring's stroke-dashoffset from full to 0 over 800ms linear; if held the whole time fire confirm and flash a success state, otherwise cancel and snap the ring back on early release.
+
+
+REACT code {
+
+function HoldToConfirm({ onConfirm, ms = 800 }) {
+  const [holding, setHolding] = useState(false);
+  const timer = useRef(null);
+
+  const start = () => {
+    setHolding(true);
+    timer.current = setTimeout(() => { setHolding(false); onConfirm(); }, ms);
+  };
+  const cancel = () => { clearTimeout(timer.current); setHolding(false); };
+
+  return (
+    <button
+      className={holding ? 'hold-btn holding' : 'hold-btn'}
+      onPointerDown={start}
+      onPointerUp={cancel}
+      onPointerLeave={cancel}
+    >
+      <svg className="ring" viewBox="0 0 72 72">
+        <circle className="track" cx="36" cy="36" r="33" />
+        <circle className="prog" cx="36" cy="36" r="33" />
+      </svg>
+      <span>Hold</span>
+    </button>
+  );
+}
+
+
+}
+
+
+}
+
+CSS code {
+
+.hold-btn .prog {
+  stroke-dasharray: 207;
+  stroke-dashoffset: 207;            /* empty ring */
+  transition: stroke-dashoffset 0.2s ease-out;
+}
+.hold-btn.holding .prog {
+  stroke-dashoffset: 0;              /* fill over the hold */
+  transition: stroke-dashoffset 0.8s linear;
+}
+/* JS adds .holding on pointerdown, and a 800ms timer
+   promotes it to .done (or cancels on early release). */
+
+
+}
+
+
+
+
+js { 
+onClick : download resume.pdf 
+
+
+resume.pdf path : in main directory 
+
+
+}
+
+
+align button - center 
+
+remove borders from the button
+
+
+
+
+
+
+
+
+
+remove "hi, myself krishnang pandey" section
+
+apply following text : 
+
+KRISHNANG PANDEY
+ text align - 8px from right
+Build text that decodes from random glyphs into the final string, left to right. On trigger run an interval (~35ms) that swaps each not-yet-settled character for a random symbol, locking characters progressively based on frame count minus their index, then clear the interval and show the final text.
+REACT CODE {
+const CHARS = '!<>-_/[]{}=+*^?#';
+
+function useScramble(text) {
+  const [display, setDisplay] = useState(text);
+  const play = () => {
+    let frame = 0;
+    const total = 24;
+    const id = setInterval(() => {
+      frame++;
+      setDisplay(text.split('').map((c, i) => {
+        if (c === ' ') return ' ';
+        const progress = frame - i * 1.2;
+        return progress > total * 0.6
+          ? c
+          : CHARS[Math.floor(Math.random() * CHARS.length)];
+      }).join(''));
+      if (frame > total + text.length) {
+        clearInterval(id);
+        setDisplay(text);
+      }
+    }, 35);
+  };
+  return [display, play];
+}
+
+
+
+
+}
+
+CSS code {
+
+
+
+/* Mostly JS-driven: interval swaps each character
+   for a random glyph, then locks left-to-right
+   once a per-character frame threshold is passed. */
+.scramble {
+  font-family: monospace;
+  letter-spacing: 0.02em;
+}
+
+}
+
+action DONE {
+
+
+in fun in game in game mechanics inside L1 {
+
+HTML canvas {
+
+canvas container : height = 1000 ; width = 800
+
+}
+
+L1.js {
+
+
+game design : 
+main = player
+available actions {
+
+space = jump 
+D - move forward 
+A - move backward
+W - no action
+S  - give small lower mobility
+
+
+allowed motion : 2D 
+
+assets : ground use repeating groud assets 
+length : 5*width
+
+end of ground : goal_envelope 
+on end : pop menu : {SUCCESS ! YOUR RESUME MADE IT TO THE HR ! 
+                     go to SELECTION ROUND ? }
+player{
+
+player asset = resume assets
+
+player Hp = 3 hearts
+
+onhitwith enemy : hp -=1
+
+}
+enemy{
+
+enemies = ATS assets 
+
+enemy movement = random (forward/backward)
+
+onEnemy hitting player = hurt player
+}
+
+
+
+
+
+
+
+}
+
+
+for this game, make physics engine in path : /fun/game/'game backend'
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+Build a compact radial action menu.{
+
+
+ A dark circular + button anchors the centre; four tiny actions begin stacked behind it, then orbit outward in cardinal directions on hover. Use independent translate transforms with a slightly overshooting spring so the menu feels magnetic rather than mechanically radial.
+CSS code :
+.menu:hover .action-n { transform: translateY(-52px); opacity: 1; }
+.menu:hover .action-e { transform: translateX(52px); opacity: 1; }
+
+/* give each action a different translate vector and spring transition */
+
+action A = open connect.html 
+
+action B = open choicepage.html
+
+action C = open game.html
+
+action D = 
+}
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+action NOW {
+
+task {using phaser.js game engine in the game
+
+in main webpage html doc file : index.html : use {
+<script src="//cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.js"></script>
+<script src="//cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js"></script>
+}
+inside fun inside game {
+
+
+use phaser.js game engine for the game
+
+COMNANDS {
+npm create @phaserjs/game@latest
+npx @phaserjs/create-game@latest
+yarn create @phaserjs/game
+pnpm create @phaserjs/game@latest
+bun create @phaserjs/game@latest
+}
+
+use agent skills { 
+
+action and utilities {
+
+---
+name: actions-and-utilities
+description: "Use this skill when working with Phaser 4 utility functions, actions, alignment, grid layout, or batch operations on game objects. Triggers on: align, grid layout, actions, set operations on groups of game objects."
+---
+
+# Phaser 4 -- Actions & Utility Functions
+
+> Phaser.Actions namespace for batch operations on Game Object arrays, plus Phaser.Utils.Array, Phaser.Utils.Objects, and Phaser.Utils.String helper functions.
+
+**Related skills:** ../groups-and-containers/SKILL.md, ../sprites-and-images/SKILL.md
+
+---
+
+## Quick Start
+
+```js
+// Create 20 sprites and batch-position them in a grid
+const sprites = [];
+for (let i = 0; i < 20; i++) {
+    sprites.push(this.add.sprite(0, 0, 'gem'));
+}
+
+// Arrange into a 5x4 grid
+Phaser.Actions.GridAlign(sprites, {
+    width: 5,
+    height: 4,
+    cellWidth: 64,
+    cellHeight: 64,
+    x: 100,
+    y: 100
+});
+
+// Fade alpha from 0 to 1 across all sprites
+Phaser.Actions.Spread(sprites, 'alpha', 0, 1);
+
+// Offset each sprite's x by 10, with a step of 2 per item
+Phaser.Actions.IncX(sprites, 10, 2);
+
+// Works with Groups too
+const group = this.add.group({ key: 'star', repeat: 11 });
+Phaser.Actions.PlaceOnCircle(group.getChildren(), new Phaser.Geom.Circle(400, 300, 200));
+```
+
+---
+
+## Core Concepts
+
+### The Actions Pattern
+
+Every Action in `Phaser.Actions` follows the same pattern:
+
+1. **First argument is always an array** of Game Objects (or any objects with the required public properties like `x`, `y`, `alpha`, etc.).
+2. **Returns the same array**, enabling chaining or pass-through.
+3. **Works with Groups** by passing `group.getChildren()`.
+4. Actions do NOT store state. They are one-shot batch operations.
+
+### PropertyValueSet and PropertyValueInc
+
+Most Set/Inc actions delegate to two core functions:
+
+- **`PropertyValueSet(items, key, value, step, index, direction)`** -- Sets `items[i][key] = value + (i * step)`.
+- **`PropertyValueInc(items, key, value, step, index, direction)`** -- Adds `items[i][key] += value + (i * step)`.
+
+The `step` parameter adds an incremental offset per item. The `index` and `direction` parameters control iteration start point and order (1 = forward, -1 = backward).
+
+### Geometry-Based Placement
+
+Actions like `PlaceOnCircle`, `PlaceOnLine`, `RandomRectangle`, etc. accept Phaser geometry objects (`Phaser.Geom.Circle`, `Phaser.Geom.Line`, etc.), NOT Game Object shapes. If using a `Phaser.GameObjects.Circle`, pass its `.geom` property instead.
+
+---
+
+## All Actions
+
+### Property Setters
+
+| Action | Signature | Description |
+|---|---|---|
+| `SetX` | `(items, value, step?, index?, direction?)` | Set `x` property |
+| `SetY` | `(items, value, step?, index?, direction?)` | Set `y` property |
+| `SetXY` | `(items, x, y?, stepX?, stepY?, index?, direction?)` | Set both `x` and `y`; `y` defaults to `x` |
+| `SetAlpha` | `(items, value, step?, index?, direction?)` | Set `alpha` |
+| `SetBlendMode` | `(items, value, index?, direction?)` | Set blend mode |
+| `SetDepth` | `(items, value, step?, index?, direction?)` | Set render depth |
+| `SetHitArea` | `(items, hitArea?, callback?)` | Set interactive hit area |
+| `SetOrigin` | `(items, originX, originY?, stepX?, stepY?, index?, direction?)` | Set origin point |
+| `SetRotation` | `(items, value, step?, index?, direction?)` | Set rotation (radians) |
+| `SetScale` | `(items, scaleX, scaleY?, stepX?, stepY?, index?, direction?)` | Set both scale axes |
+| `SetScaleX` | `(items, value, step?, index?, direction?)` | Set `scaleX` |
+| `SetScaleY` | `(items, value, step?, index?, direction?)` | Set `scaleY` |
+| `SetScrollFactor` | `(items, x, y?, stepX?, stepY?, index?, direction?)` | Set scroll factor |
+| `SetScrollFactorX` | `(items, value, step?, index?, direction?)` | Set horizontal scroll factor |
+| `SetScrollFactorY` | `(items, value, step?, index?, direction?)` | Set vertical scroll factor |
+| `SetTint` | `(items, topLeft, topRight?, bottomLeft?, bottomRight?)` | Set tint color(s) |
+| `SetVisible` | `(items, value, index?, direction?)` | Set visibility |
+| `PropertyValueSet` | `(items, key, value, step?, index?, direction?)` | Generic: set any named property |
+
+### Property Incrementers
+
+| Action | Signature | Description |
+|---|---|---|
+| `IncX` | `(items, value, step?, index?, direction?)` | Add to `x` |
+| `IncXY` | `(items, x, y?, stepX?, stepY?, index?, direction?)` | Add to `x` and `y` |
+| `IncY` | `(items, value, step?, index?, direction?)` | Add to `y` |
+| `IncAlpha` | `(items, value, step?, index?, direction?)` | Add to `alpha` |
+| `Angle` | `(items, value, step?, index?, direction?)` | Add to `angle` (degrees) |
+| `Rotate` | `(items, value, step?, index?, direction?)` | Add to `rotation` (radians) |
+| `ScaleX` | `(items, value, step?, index?, direction?)` | Add to `scaleX` |
+| `ScaleXY` | `(items, scaleX, scaleY?, stepX?, stepY?, index?, direction?)` | Add to both scale axes |
+| `ScaleY` | `(items, value, step?, index?, direction?)` | Add to `scaleY` |
+| `PropertyValueInc` | `(items, key, value, step?, index?, direction?)` | Generic: increment any named property |
+
+### Placement on Geometry
+
+| Action | Signature | Description |
+|---|---|---|
+| `PlaceOnCircle` | `(items, circle, startAngle?, endAngle?)` | Evenly space on circle perimeter |
+| `PlaceOnEllipse` | `(items, ellipse, startAngle?, endAngle?)` | Evenly space on ellipse perimeter |
+| `PlaceOnLine` | `(items, line)` | Evenly space along a line |
+| `PlaceOnRectangle` | `(items, rect, shift?)` | Evenly space on rectangle perimeter |
+| `PlaceOnTriangle` | `(items, triangle, stepRate?)` | Evenly space on triangle perimeter |
+| `RandomCircle` | `(items, circle)` | Random positions within a circle |
+| `RandomEllipse` | `(items, ellipse)` | Random positions within an ellipse |
+| `RandomLine` | `(items, line)` | Random positions along a line |
+| `RandomRectangle` | `(items, rect)` | Random positions within a rectangle |
+| `RandomTriangle` | `(items, triangle)` | Random positions within a triangle |
+
+### Layout and Alignment
+
+| Action | Signature | Description |
+|---|---|---|
+| `GridAlign` | `(items, config)` | Arrange in grid; config: `{ width, height, cellWidth, cellHeight, position, x, y }` |
+| `AlignTo` | `(items, position, offsetX?, offsetY?)` | Chain-align each item next to the previous one using `Phaser.Display.Align` constants |
+| `FitToRegion` | `(items, scaleMode?, region?, itemCoverage?)` | Scale/position each GO to fill a rectangle (v4.0.0+). scaleMode: 0=stretch, -1=fit inside, 1=cover outside |
+
+### Distribution and Interpolation
+
+| Action | Signature | Description |
+|---|---|---|
+| `Spread` | `(items, property, min, max, inc?)` | Linearly distribute a property from `min` to `max` across all items |
+| `SmoothStep` | `(items, property, min, max, inc?)` | Distribute using Hermite smoothstep interpolation |
+| `SmootherStep` | `(items, property, min, max, inc?)` | Distribute using Ken Perlin's smootherstep |
+
+### Rotation and Movement
+
+| Action | Signature | Description |
+|---|---|---|
+| `RotateAround` | `(items, point, angle)` | Rotate all items around a point (radians) |
+| `RotateAroundDistance` | `(items, point, angle, distance)` | Rotate around a point at a fixed distance |
+| `ShiftPosition` | `(items, x, y, direction?, output?)` | Snake-like: move head to x/y, each item takes position of the previous |
+| `WrapInRectangle` | `(items, rect, padding?)` | Wrap x/y to stay within rectangle bounds |
+
+### Queries and Iteration
+
+| Action | Signature | Description |
+|---|---|---|
+| `GetFirst` | `(items, compare, index?)` | Find first item matching all properties in `compare` object |
+| `GetLast` | `(items, compare, index?)` | Find last item matching all properties in `compare` object |
+| `Call` | `(items, callback, context)` | Invoke callback for each item |
+| `Shuffle` | `(items)` | Randomly reorder the array (Fisher-Yates) |
+| `ToggleVisible` | `(items)` | Toggle `visible` on each item |
+| `PlayAnimation` | `(items, key, ignoreIfPlaying?)` | Play animation on all items with an `anims` component |
+
+### Effects (v4.0.0+)
+
+| Action | Signature | Description |
+|---|---|---|
+| `AddEffectBloom` | `(items, config?)` | Add Bloom filter effect to a Camera or GO. Returns `{ parallelFilters, threshold, blur }[]` |
+| `AddEffectShine` | `(items, config?)` | Add Shine filter effect |
+| `AddMaskShape` | `(items, config?)` | Apply a shape-based mask (circle, square, rectangle, ellipse) with optional blur |
+
+---
+
+## Array Utilities
+
+Namespace: `Phaser.Utils.Array`
+
+| Function | Signature | Description |
+|---|---|---|
+| `Add` | `(array, item, limit?, callback?, context?)` | Add item(s) if not already present; optional size limit |
+| `AddAt` | `(array, item, index?, limit?, callback?, context?)` | Insert item(s) at index |
+| `BringToTop` | `(array, item)` | Move item to end of array |
+| `CountAllMatching` | `(array, property, value, startIndex?, endIndex?)` | Count items where property equals value |
+| `Each` | `(array, callback, context, ...args)` | Iterate with callback; passes item + extra args |
+| `EachInRange` | `(array, callback, context, startIndex, endIndex, ...args)` | Iterate a slice with callback |
+| `FindClosestInSorted` | `(value, array, key?)` | Binary-search style closest match in sorted array |
+| `Flatten` | `(array, output?)` | Flatten nested arrays into a single array |
+| `GetAll` | `(array, property?, value?, startIndex?, endIndex?)` | Filter items matching property/value |
+| `GetFirst` | `(array, property?, value?, startIndex?, endIndex?)` | First item matching property/value |
+| `GetRandom` | `(array, startIndex?, length?)` | Return a random element |
+| `MoveAbove` | `(array, item1, item2)` | Move item2 directly above item1 |
+| `MoveBelow` | `(array, item1, item2)` | Move item2 directly below item1 |
+| `MoveDown` | `(array, item)` | Move item one position toward index 0 |
+| `MoveTo` | `(array, item, index)` | Move item to specific index |
+| `MoveUp` | `(array, item)` | Move item one position toward end |
+| `NumberArray` | `(start, end, prefix?, suffix?)` | Generate `[start..end]` range; optional string prefix/suffix |
+| `NumberArrayStep` | `(start?, end?, step?)` | Generate range with custom step size |
+| `QuickSelect` | `(array, k, left?, right?, compare?)` | Partial sort: kth smallest element in-place |
+| `Range` | `(a, b, options?)` | Generate array from range config |
+| `Remove` | `(array, item, callback?, context?)` | Remove item(s) from array |
+| `RemoveAt` | `(array, index, callback?, context?)` | Remove item at index |
+| `RemoveBetween` | `(array, startIndex, endIndex, callback?, context?)` | Remove items in range |
+| `RemoveRandomElement` | `(array, startIndex?, length?)` | Remove and return a random element |
+| `Replace` | `(array, oldItem, newItem)` | Swap one item for another |
+| `RotateLeft` | `(array, total?)` | Shift elements left; last wraps to front |
+| `RotateRight` | `(array, total?)` | Shift elements right; first wraps to end |
+| `SafeRange` | `(array, startIndex, endIndex, throwError?)` | Validate index range is within bounds |
+| `SendToBack` | `(array, item)` | Move item to index 0 |
+| `SetAll` | `(array, property, value, startIndex?, endIndex?)` | Set a property on all items in range |
+| `Shuffle` | `(array)` | Fisher-Yates shuffle; modifies in-place |
+| `SortByDigits` | `(array)` | Sort strings by embedded numeric values |
+| `SpliceOne` | `(array, index)` | Fast single-element splice |
+| `StableSort` | `(array, compare?)` | Guaranteed stable sort (merge sort fallback for engines without native stable sort) |
+| `Swap` | `(array, item1, item2)` | Swap two items in-place |
+
+Also includes `Phaser.Utils.Array.Matrix` sub-namespace for 2D matrix operations.
+
+---
+
+## Object Utilities
+
+Namespace: `Phaser.Utils.Objects`
+
+| Function | Signature | Description |
+|---|---|---|
+| `Clone` | `(obj)` | Shallow clone of object |
+| `DeepCopy` | `(obj)` | Recursive deep copy of object or array |
+| `Extend` | `(target, ...sources)` | jQuery-style extend; copies properties from sources to target |
+| `GetAdvancedValue` | `(source, key, defaultValue)` | Like `GetValue` but resolves random/callback config values |
+| `GetFastValue` | `(source, key, defaultValue?)` | Top-level-only property lookup; no dot-path support. Faster than `GetValue` |
+| `GetMinMaxValue` | `(source, key, min, max, defaultValue)` | Get value clamped between min and max |
+| `GetValue` | `(source, key, defaultValue, altSource?)` | Dot-path property lookup (e.g. `'render.screen.width'`). Falls back to altSource then defaultValue |
+| `HasAll` | `(source, keys)` | True if source has ALL listed keys |
+| `HasAny` | `(source, keys)` | True if source has ANY listed key |
+| `HasValue` | `(source, key)` | True if source has the key |
+| `IsPlainObject` | `(obj)` | True if obj is a plain `{}` object (not DOM, not window) |
+| `Merge` | `(obj1, obj2)` | Merge obj2 into a clone of obj1 |
+| `MergeRight` | `(obj1, obj2)` | Merge obj1 into a clone of obj2 |
+| `Pick` | `(source, keys)` | Return new object with only the specified keys |
+| `SetValue` | `(source, key, value)` | Set a dot-path property value |
+
+---
+
+## String Utilities
+
+Namespace: `Phaser.Utils.String`
+
+| Function | Signature | Description |
+|---|---|---|
+| `Format` | `(string, values)` | Replace `%1`, `%2`, etc. markers with array values |
+| `Pad` | `(str, len?, pad?, dir?)` | Pad string to length. dir: 1=left, 2=right, default=both |
+| `RemoveAt` | `(string, index)` | Remove character at index |
+| `Reverse` | `(string)` | Reverse the string |
+| `UppercaseFirst` | `(string)` | Capitalize first character |
+| `UUID` | `()` | Generate RFC4122 v4 UUID string |
+
+---
+
+## Common Patterns
+
+### Using Actions with Groups
+
+```js
+const enemies = this.add.group({ key: 'enemy', repeat: 9 });
+
+// Position all children in a grid
+Phaser.Actions.GridAlign(enemies.getChildren(), {
+    width: 5, height: 2,
+    cellWidth: 80, cellHeight: 80,
+    x: 100, y: 50
+});
+
+// Fan out alpha across all enemies
+Phaser.Actions.Spread(enemies.getChildren(), 'alpha', 0.3, 1);
+```
+
+### Step Parameter for Staggered Values
+
+```js
+// Place sprites starting at x=100, each one 50px further right
+Phaser.Actions.SetX(sprites, 100, 50);
+// Result: items[0].x=100, items[1].x=150, items[2].x=200, ...
+
+// Increment rotation with increasing step
+Phaser.Actions.Rotate(sprites, 0.1, 0.05);
+// Result: items[0].rotation += 0.1, items[1].rotation += 0.15, items[2].rotation += 0.2, ...
+```
+
+### Scatter Then Constrain
+
+```js
+const bounds = new Phaser.Geom.Rectangle(0, 0, 800, 600);
+// Random scatter
+Phaser.Actions.RandomRectangle(sprites, bounds);
+// Keep wrapped in bounds during update
+Phaser.Actions.WrapInRectangle(sprites, bounds);
+```
+
+### GetValue for Config Parsing
+
+```js
+// Deep property access with fallback
+const width = Phaser.Utils.Objects.GetValue(config, 'render.screen.width', 800);
+
+// Fast top-level lookup (no dot-path, better performance)
+const speed = Phaser.Utils.Objects.GetFastValue(config, 'speed', 100);
+```
+
+### NumberArray for Asset Keys
+
+```js
+// Generate frame key strings
+const keys = Phaser.Utils.Array.NumberArray(1, 10, 'frame_', '.png');
+// Result: ['frame_1.png', 'frame_2.png', ..., 'frame_10.png']
+```
+
+---
+
+## Gotchas
+
+- **Actions operate on plain arrays, not Groups directly.** Always call `group.getChildren()` to get the array.
+- **PlaceOn/Random geometry actions need `Phaser.Geom` objects**, not Game Object shapes. For a `Phaser.GameObjects.Circle`, pass `circle.geom`.
+- **`SetXY` defaults `y` to `x`** if `y` is `undefined` or `null`. Pass `0` explicitly if you want y=0 and x=something else.
+- **`Spread` with a single item** places it at the midpoint `(min + max) / 2`, not at `min`.
+- **`step` is multiplied by iteration index**, not added cumulatively. Item 0 gets `value + 0*step`, item 1 gets `value + 1*step`, etc.
+- **`StableSort` uses native `Array.sort` when the engine supports stable sorting**, falling back to merge sort only when needed.
+- **`Shuffle` (both Actions and Utils.Array) modifies the array in-place** and returns it.
+- **`GetValue` vs `GetFastValue`**: Use `GetFastValue` when the key is always top-level (no dots). It skips dot-path parsing and is faster in hot loops.
+- **`AddEffectBloom` / `AddEffectShine` / `AddMaskShape` are v4-only** filter-based effects. They return arrays of created effects instead of the input.
+
+
+input-keyboard-mouse {
+
+---
+name: actions-and-utilities
+description: "Use this skill when working with Phaser 4 utility functions, actions, alignment, grid layout, or batch operations on game objects. Triggers on: align, grid layout, actions, set operations on groups of game objects."
+---
+
+# Phaser 4 -- Actions & Utility Functions
+
+> Phaser.Actions namespace for batch operations on Game Object arrays, plus Phaser.Utils.Array, Phaser.Utils.Objects, and Phaser.Utils.String helper functions.
+
+**Related skills:** ../groups-and-containers/SKILL.md, ../sprites-and-images/SKILL.md
+
+---
+
+## Quick Start
+
+```js
+// Create 20 sprites and batch-position them in a grid
+const sprites = [];
+for (let i = 0; i < 20; i++) {
+    sprites.push(this.add.sprite(0, 0, 'gem'));
+}
+
+// Arrange into a 5x4 grid
+Phaser.Actions.GridAlign(sprites, {
+    width: 5,
+    height: 4,
+    cellWidth: 64,
+    cellHeight: 64,
+    x: 100,
+    y: 100
+});
+
+// Fade alpha from 0 to 1 across all sprites
+Phaser.Actions.Spread(sprites, 'alpha', 0, 1);
+
+// Offset each sprite's x by 10, with a step of 2 per item
+Phaser.Actions.IncX(sprites, 10, 2);
+
+// Works with Groups too
+const group = this.add.group({ key: 'star', repeat: 11 });
+Phaser.Actions.PlaceOnCircle(group.getChildren(), new Phaser.Geom.Circle(400, 300, 200));
+```
+
+---
+
+## Core Concepts
+
+### The Actions Pattern
+
+Every Action in `Phaser.Actions` follows the same pattern:
+
+1. **First argument is always an array** of Game Objects (or any objects with the required public properties like `x`, `y`, `alpha`, etc.).
+2. **Returns the same array**, enabling chaining or pass-through.
+3. **Works with Groups** by passing `group.getChildren()`.
+4. Actions do NOT store state. They are one-shot batch operations.
+
+### PropertyValueSet and PropertyValueInc
+
+Most Set/Inc actions delegate to two core functions:
+
+- **`PropertyValueSet(items, key, value, step, index, direction)`** -- Sets `items[i][key] = value + (i * step)`.
+- **`PropertyValueInc(items, key, value, step, index, direction)`** -- Adds `items[i][key] += value + (i * step)`.
+
+The `step` parameter adds an incremental offset per item. The `index` and `direction` parameters control iteration start point and order (1 = forward, -1 = backward).
+
+### Geometry-Based Placement
+
+Actions like `PlaceOnCircle`, `PlaceOnLine`, `RandomRectangle`, etc. accept Phaser geometry objects (`Phaser.Geom.Circle`, `Phaser.Geom.Line`, etc.), NOT Game Object shapes. If using a `Phaser.GameObjects.Circle`, pass its `.geom` property instead.
+
+---
+
+## All Actions
+
+### Property Setters
+
+| Action | Signature | Description |
+|---|---|---|
+| `SetX` | `(items, value, step?, index?, direction?)` | Set `x` property |
+| `SetY` | `(items, value, step?, index?, direction?)` | Set `y` property |
+| `SetXY` | `(items, x, y?, stepX?, stepY?, index?, direction?)` | Set both `x` and `y`; `y` defaults to `x` |
+| `SetAlpha` | `(items, value, step?, index?, direction?)` | Set `alpha` |
+| `SetBlendMode` | `(items, value, index?, direction?)` | Set blend mode |
+| `SetDepth` | `(items, value, step?, index?, direction?)` | Set render depth |
+| `SetHitArea` | `(items, hitArea?, callback?)` | Set interactive hit area |
+| `SetOrigin` | `(items, originX, originY?, stepX?, stepY?, index?, direction?)` | Set origin point |
+| `SetRotation` | `(items, value, step?, index?, direction?)` | Set rotation (radians) |
+| `SetScale` | `(items, scaleX, scaleY?, stepX?, stepY?, index?, direction?)` | Set both scale axes |
+| `SetScaleX` | `(items, value, step?, index?, direction?)` | Set `scaleX` |
+| `SetScaleY` | `(items, value, step?, index?, direction?)` | Set `scaleY` |
+| `SetScrollFactor` | `(items, x, y?, stepX?, stepY?, index?, direction?)` | Set scroll factor |
+| `SetScrollFactorX` | `(items, value, step?, index?, direction?)` | Set horizontal scroll factor |
+| `SetScrollFactorY` | `(items, value, step?, index?, direction?)` | Set vertical scroll factor |
+| `SetTint` | `(items, topLeft, topRight?, bottomLeft?, bottomRight?)` | Set tint color(s) |
+| `SetVisible` | `(items, value, index?, direction?)` | Set visibility |
+| `PropertyValueSet` | `(items, key, value, step?, index?, direction?)` | Generic: set any named property |
+
+### Property Incrementers
+
+| Action | Signature | Description |
+|---|---|---|
+| `IncX` | `(items, value, step?, index?, direction?)` | Add to `x` |
+| `IncXY` | `(items, x, y?, stepX?, stepY?, index?, direction?)` | Add to `x` and `y` |
+| `IncY` | `(items, value, step?, index?, direction?)` | Add to `y` |
+| `IncAlpha` | `(items, value, step?, index?, direction?)` | Add to `alpha` |
+| `Angle` | `(items, value, step?, index?, direction?)` | Add to `angle` (degrees) |
+| `Rotate` | `(items, value, step?, index?, direction?)` | Add to `rotation` (radians) |
+| `ScaleX` | `(items, value, step?, index?, direction?)` | Add to `scaleX` |
+| `ScaleXY` | `(items, scaleX, scaleY?, stepX?, stepY?, index?, direction?)` | Add to both scale axes |
+| `ScaleY` | `(items, value, step?, index?, direction?)` | Add to `scaleY` |
+| `PropertyValueInc` | `(items, key, value, step?, index?, direction?)` | Generic: increment any named property |
+
+### Placement on Geometry
+
+| Action | Signature | Description |
+|---|---|---|
+| `PlaceOnCircle` | `(items, circle, startAngle?, endAngle?)` | Evenly space on circle perimeter |
+| `PlaceOnEllipse` | `(items, ellipse, startAngle?, endAngle?)` | Evenly space on ellipse perimeter |
+| `PlaceOnLine` | `(items, line)` | Evenly space along a line |
+| `PlaceOnRectangle` | `(items, rect, shift?)` | Evenly space on rectangle perimeter |
+| `PlaceOnTriangle` | `(items, triangle, stepRate?)` | Evenly space on triangle perimeter |
+| `RandomCircle` | `(items, circle)` | Random positions within a circle |
+| `RandomEllipse` | `(items, ellipse)` | Random positions within an ellipse |
+| `RandomLine` | `(items, line)` | Random positions along a line |
+| `RandomRectangle` | `(items, rect)` | Random positions within a rectangle |
+| `RandomTriangle` | `(items, triangle)` | Random positions within a triangle |
+
+### Layout and Alignment
+
+| Action | Signature | Description |
+|---|---|---|
+| `GridAlign` | `(items, config)` | Arrange in grid; config: `{ width, height, cellWidth, cellHeight, position, x, y }` |
+| `AlignTo` | `(items, position, offsetX?, offsetY?)` | Chain-align each item next to the previous one using `Phaser.Display.Align` constants |
+| `FitToRegion` | `(items, scaleMode?, region?, itemCoverage?)` | Scale/position each GO to fill a rectangle (v4.0.0+). scaleMode: 0=stretch, -1=fit inside, 1=cover outside |
+
+### Distribution and Interpolation
+
+| Action | Signature | Description |
+|---|---|---|
+| `Spread` | `(items, property, min, max, inc?)` | Linearly distribute a property from `min` to `max` across all items |
+| `SmoothStep` | `(items, property, min, max, inc?)` | Distribute using Hermite smoothstep interpolation |
+| `SmootherStep` | `(items, property, min, max, inc?)` | Distribute using Ken Perlin's smootherstep |
+
+### Rotation and Movement
+
+| Action | Signature | Description |
+|---|---|---|
+| `RotateAround` | `(items, point, angle)` | Rotate all items around a point (radians) |
+| `RotateAroundDistance` | `(items, point, angle, distance)` | Rotate around a point at a fixed distance |
+| `ShiftPosition` | `(items, x, y, direction?, output?)` | Snake-like: move head to x/y, each item takes position of the previous |
+| `WrapInRectangle` | `(items, rect, padding?)` | Wrap x/y to stay within rectangle bounds |
+
+### Queries and Iteration
+
+| Action | Signature | Description |
+|---|---|---|
+| `GetFirst` | `(items, compare, index?)` | Find first item matching all properties in `compare` object |
+| `GetLast` | `(items, compare, index?)` | Find last item matching all properties in `compare` object |
+| `Call` | `(items, callback, context)` | Invoke callback for each item |
+| `Shuffle` | `(items)` | Randomly reorder the array (Fisher-Yates) |
+| `ToggleVisible` | `(items)` | Toggle `visible` on each item |
+| `PlayAnimation` | `(items, key, ignoreIfPlaying?)` | Play animation on all items with an `anims` component |
+
+### Effects (v4.0.0+)
+
+| Action | Signature | Description |
+|---|---|---|
+| `AddEffectBloom` | `(items, config?)` | Add Bloom filter effect to a Camera or GO. Returns `{ parallelFilters, threshold, blur }[]` |
+| `AddEffectShine` | `(items, config?)` | Add Shine filter effect |
+| `AddMaskShape` | `(items, config?)` | Apply a shape-based mask (circle, square, rectangle, ellipse) with optional blur |
+
+---
+
+## Array Utilities
+
+Namespace: `Phaser.Utils.Array`
+
+| Function | Signature | Description |
+|---|---|---|
+| `Add` | `(array, item, limit?, callback?, context?)` | Add item(s) if not already present; optional size limit |
+| `AddAt` | `(array, item, index?, limit?, callback?, context?)` | Insert item(s) at index |
+| `BringToTop` | `(array, item)` | Move item to end of array |
+| `CountAllMatching` | `(array, property, value, startIndex?, endIndex?)` | Count items where property equals value |
+| `Each` | `(array, callback, context, ...args)` | Iterate with callback; passes item + extra args |
+| `EachInRange` | `(array, callback, context, startIndex, endIndex, ...args)` | Iterate a slice with callback |
+| `FindClosestInSorted` | `(value, array, key?)` | Binary-search style closest match in sorted array |
+| `Flatten` | `(array, output?)` | Flatten nested arrays into a single array |
+| `GetAll` | `(array, property?, value?, startIndex?, endIndex?)` | Filter items matching property/value |
+| `GetFirst` | `(array, property?, value?, startIndex?, endIndex?)` | First item matching property/value |
+| `GetRandom` | `(array, startIndex?, length?)` | Return a random element |
+| `MoveAbove` | `(array, item1, item2)` | Move item2 directly above item1 |
+| `MoveBelow` | `(array, item1, item2)` | Move item2 directly below item1 |
+| `MoveDown` | `(array, item)` | Move item one position toward index 0 |
+| `MoveTo` | `(array, item, index)` | Move item to specific index |
+| `MoveUp` | `(array, item)` | Move item one position toward end |
+| `NumberArray` | `(start, end, prefix?, suffix?)` | Generate `[start..end]` range; optional string prefix/suffix |
+| `NumberArrayStep` | `(start?, end?, step?)` | Generate range with custom step size |
+| `QuickSelect` | `(array, k, left?, right?, compare?)` | Partial sort: kth smallest element in-place |
+| `Range` | `(a, b, options?)` | Generate array from range config |
+| `Remove` | `(array, item, callback?, context?)` | Remove item(s) from array |
+| `RemoveAt` | `(array, index, callback?, context?)` | Remove item at index |
+| `RemoveBetween` | `(array, startIndex, endIndex, callback?, context?)` | Remove items in range |
+| `RemoveRandomElement` | `(array, startIndex?, length?)` | Remove and return a random element |
+| `Replace` | `(array, oldItem, newItem)` | Swap one item for another |
+| `RotateLeft` | `(array, total?)` | Shift elements left; last wraps to front |
+| `RotateRight` | `(array, total?)` | Shift elements right; first wraps to end |
+| `SafeRange` | `(array, startIndex, endIndex, throwError?)` | Validate index range is within bounds |
+| `SendToBack` | `(array, item)` | Move item to index 0 |
+| `SetAll` | `(array, property, value, startIndex?, endIndex?)` | Set a property on all items in range |
+| `Shuffle` | `(array)` | Fisher-Yates shuffle; modifies in-place |
+| `SortByDigits` | `(array)` | Sort strings by embedded numeric values |
+| `SpliceOne` | `(array, index)` | Fast single-element splice |
+| `StableSort` | `(array, compare?)` | Guaranteed stable sort (merge sort fallback for engines without native stable sort) |
+| `Swap` | `(array, item1, item2)` | Swap two items in-place |
+
+Also includes `Phaser.Utils.Array.Matrix` sub-namespace for 2D matrix operations.
+
+---
+
+## Object Utilities
+
+Namespace: `Phaser.Utils.Objects`
+
+| Function | Signature | Description |
+|---|---|---|
+| `Clone` | `(obj)` | Shallow clone of object |
+| `DeepCopy` | `(obj)` | Recursive deep copy of object or array |
+| `Extend` | `(target, ...sources)` | jQuery-style extend; copies properties from sources to target |
+| `GetAdvancedValue` | `(source, key, defaultValue)` | Like `GetValue` but resolves random/callback config values |
+| `GetFastValue` | `(source, key, defaultValue?)` | Top-level-only property lookup; no dot-path support. Faster than `GetValue` |
+| `GetMinMaxValue` | `(source, key, min, max, defaultValue)` | Get value clamped between min and max |
+| `GetValue` | `(source, key, defaultValue, altSource?)` | Dot-path property lookup (e.g. `'render.screen.width'`). Falls back to altSource then defaultValue |
+| `HasAll` | `(source, keys)` | True if source has ALL listed keys |
+| `HasAny` | `(source, keys)` | True if source has ANY listed key |
+| `HasValue` | `(source, key)` | True if source has the key |
+| `IsPlainObject` | `(obj)` | True if obj is a plain `{}` object (not DOM, not window) |
+| `Merge` | `(obj1, obj2)` | Merge obj2 into a clone of obj1 |
+| `MergeRight` | `(obj1, obj2)` | Merge obj1 into a clone of obj2 |
+| `Pick` | `(source, keys)` | Return new object with only the specified keys |
+| `SetValue` | `(source, key, value)` | Set a dot-path property value |
+
+---
+
+## String Utilities
+
+Namespace: `Phaser.Utils.String`
+
+| Function | Signature | Description |
+|---|---|---|
+| `Format` | `(string, values)` | Replace `%1`, `%2`, etc. markers with array values |
+| `Pad` | `(str, len?, pad?, dir?)` | Pad string to length. dir: 1=left, 2=right, default=both |
+| `RemoveAt` | `(string, index)` | Remove character at index |
+| `Reverse` | `(string)` | Reverse the string |
+| `UppercaseFirst` | `(string)` | Capitalize first character |
+| `UUID` | `()` | Generate RFC4122 v4 UUID string |
+
+---
+
+## Common Patterns
+
+### Using Actions with Groups
+
+```js
+const enemies = this.add.group({ key: 'enemy', repeat: 9 });
+
+// Position all children in a grid
+Phaser.Actions.GridAlign(enemies.getChildren(), {
+    width: 5, height: 2,
+    cellWidth: 80, cellHeight: 80,
+    x: 100, y: 50
+});
+
+// Fan out alpha across all enemies
+Phaser.Actions.Spread(enemies.getChildren(), 'alpha', 0.3, 1);
+```
+
+### Step Parameter for Staggered Values
+
+```js
+// Place sprites starting at x=100, each one 50px further right
+Phaser.Actions.SetX(sprites, 100, 50);
+// Result: items[0].x=100, items[1].x=150, items[2].x=200, ...
+
+// Increment rotation with increasing step
+Phaser.Actions.Rotate(sprites, 0.1, 0.05);
+// Result: items[0].rotation += 0.1, items[1].rotation += 0.15, items[2].rotation += 0.2, ...
+```
+
+### Scatter Then Constrain
+
+```js
+const bounds = new Phaser.Geom.Rectangle(0, 0, 800, 600);
+// Random scatter
+Phaser.Actions.RandomRectangle(sprites, bounds);
+// Keep wrapped in bounds during update
+Phaser.Actions.WrapInRectangle(sprites, bounds);
+```
+
+### GetValue for Config Parsing
+
+```js
+// Deep property access with fallback
+const width = Phaser.Utils.Objects.GetValue(config, 'render.screen.width', 800);
+
+// Fast top-level lookup (no dot-path, better performance)
+const speed = Phaser.Utils.Objects.GetFastValue(config, 'speed', 100);
+```
+
+### NumberArray for Asset Keys
+
+```js
+// Generate frame key strings
+const keys = Phaser.Utils.Array.NumberArray(1, 10, 'frame_', '.png');
+// Result: ['frame_1.png', 'frame_2.png', ..., 'frame_10.png']
+```
+
+---
+
+## Gotchas
+
+- **Actions operate on plain arrays, not Groups directly.** Always call `group.getChildren()` to get the array.
+- **PlaceOn/Random geometry actions need `Phaser.Geom` objects**, not Game Object shapes. For a `Phaser.GameObjects.Circle`, pass `circle.geom`.
+- **`SetXY` defaults `y` to `x`** if `y` is `undefined` or `null`. Pass `0` explicitly if you want y=0 and x=something else.
+- **`Spread` with a single item** places it at the midpoint `(min + max) / 2`, not at `min`.
+- **`step` is multiplied by iteration index**, not added cumulatively. Item 0 gets `value + 0*step`, item 1 gets `value + 1*step`, etc.
+- **`StableSort` uses native `Array.sort` when the engine supports stable sorting**, falling back to merge sort only when needed.
+- **`Shuffle` (both Actions and Utils.Array) modifies the array in-place** and returns it.
+- **`GetValue` vs `GetFastValue`**: Use `GetFastValue` when the key is always top-level (no dots). It skips dot-path parsing and is faster in hot loops.
+- **`AddEffectBloom` / `AddEffectShine` / `AddMaskShape` are v4-only** filter-based effects. They return arrays of created effects instead of the input.
+
+---
+
+REFERENCES {
+
+
+
+# Input Keyboard Mouse Touch — Reference
+
+> Detailed configuration, API tables, and source file maps for the input-keyboard-mouse-touch skill.
+
+## Events (input events with callback signatures)
+
+### Keyboard Events (on `this.input.keyboard`)
+
+| Event String | Callback Signature | Description |
+|---|---|---|
+| `'keydown'` | `(event: KeyboardEvent)` | Any key pressed |
+| `'keyup'` | `(event: KeyboardEvent)` | Any key released |
+| `'keydown-KEY'` | `(event: KeyboardEvent)` | Specific key pressed (e.g. `'keydown-SPACE'`, `'keydown-A'`) |
+| `'keyup-KEY'` | `(event: KeyboardEvent)` | Specific key released |
+| `'keycombomatch'` | `(keyCombo: KeyCombo, event: KeyboardEvent)` | A key combo was matched |
+
+### Key Object Events (on a Key instance)
+
+| Event String | Callback Signature | Description |
+|---|---|---|
+| `'down'` | `(key: Key, event: KeyboardEvent)` | This key was pressed |
+| `'up'` | `(key: Key, event: KeyboardEvent)` | This key was released |
+
+### Pointer Events (on `this.input`)
+
+| Event String | Callback Signature | Description |
+|---|---|---|
+| `'pointerdown'` | `(pointer, currentlyOver: GameObject[])` | Pointer pressed anywhere |
+| `'pointerup'` | `(pointer, currentlyOver: GameObject[])` | Pointer released anywhere |
+| `'pointermove'` | `(pointer, currentlyOver: GameObject[])` | Pointer moved anywhere |
+| `'pointerdownoutside'` | `(pointer)` | Pointer pressed outside the game canvas |
+| `'pointerupoutside'` | `(pointer)` | Pointer released outside the game canvas |
+| `'wheel'` | `(pointer, currentlyOver: GameObject[], deltaX, deltaY, deltaZ)` | Mouse wheel scrolled |
+| `'gameout'` | `(event)` | Pointer left the game canvas |
+| `'gameover'` | `(event)` | Pointer entered the game canvas |
+| `'pointerlockchange'` | `(event, locked: boolean)` | Pointer lock state changed |
+
+### Game Object Pointer Events (on an interactive Game Object)
+
+| Event String | Callback Signature | Description |
+|---|---|---|
+| `'pointerdown'` | `(pointer, localX, localY, event)` | Pointer pressed on this object |
+| `'pointerup'` | `(pointer, localX, localY, event)` | Pointer released on this object |
+| `'pointermove'` | `(pointer, localX, localY, event)` | Pointer moved over this object |
+| `'pointerover'` | `(pointer, localX, localY, event)` | Pointer entered this object |
+| `'pointerout'` | `(pointer, event)` | Pointer left this object |
+| `'wheel'` | `(pointer, deltaX, deltaY, deltaZ, event)` | Mouse wheel over this object |
+
+All Game Object events provide `event.stopPropagation()` to halt further event flow.
+
+### Scene Per-Object Pointer Events (on `this.input`, Level 2)
+
+| Event String | Callback Signature | Description |
+|---|---|---|
+| `'gameobjectdown'` | `(pointer, gameObject, event)` | Pointer pressed on any interactive object |
+| `'gameobjectup'` | `(pointer, gameObject, event)` | Pointer released on any interactive object |
+| `'gameobjectmove'` | `(pointer, gameObject, event)` | Pointer moved over any interactive object |
+| `'gameobjectover'` | `(pointer, gameObject, event)` | Pointer entered any interactive object |
+| `'gameobjectout'` | `(pointer, gameObject, event)` | Pointer left any interactive object |
+| `'gameobjectwheel'` | `(pointer, gameObject, dx, dy, dz, event)` | Mouse wheel over any interactive object |
+
+### Game Object Drag Events (on an interactive, draggable Game Object)
+
+| Event String | Callback Signature | Description |
+|---|---|---|
+| `'dragstart'` | `(pointer, dragX, dragY)` | Drag started on this object |
+| `'drag'` | `(pointer, dragX, dragY)` | Object is being dragged |
+| `'dragend'` | `(pointer, dragX, dragY, dropped)` | Drag ended (`dropped` is boolean) |
+| `'drop'` | `(pointer, target)` | Dropped on a drop zone |
+| `'dragenter'` | `(pointer, target)` | Dragged into a drop zone |
+| `'dragleave'` | `(pointer, target)` | Dragged out of a drop zone |
+
+### Drag Events (on `this.input`)
+
+| Event String | Callback Signature |
+|---|---|
+| `'dragstart'` | `(pointer, gameObject)` |
+| `'drag'` | `(pointer, gameObject, dragX, dragY)` |
+| `'dragend'` | `(pointer, gameObject)` |
+| `'dragenter'` | `(pointer, gameObject, dropZone)` |
+| `'dragleave'` | `(pointer, gameObject, dropZone)` |
+| `'dragover'` | `(pointer, gameObject, dropZone)` |
+| `'drop'` | `(pointer, gameObject, target)` |
+
+### Gamepad Events (on `this.input.gamepad`)
+
+| Event String | Callback Signature |
+|---|---|
+| `'connected'` | `(pad: Gamepad, event: Event)` |
+| `'disconnected'` | `(pad: Gamepad, event: Event)` |
+| `'down'` | `(pad: Gamepad, button: Button, value: number)` |
+| `'up'` | `(pad: Gamepad, button: Button, value: number)` |
+
+### Event Dispatch Order (pointer events)
+
+For down/up/move events, the dispatch order is:
+1. `GAMEOBJECT_POINTER_DOWN` (on the Game Object itself)
+2. `GAMEOBJECT_DOWN` (on `this.input` with Game Object as param)
+3. `POINTER_DOWN` (on `this.input`, scene-wide)
+
+Higher-priority handlers can call `event.stopPropagation()` to prevent lower ones from firing.
+
+## API Quick Reference
+
+### InputPlugin (this.input)
+
+| Method / Property | Signature | Returns |
+|---|---|---|
+| `on(event, fn, context)` | Event listener | this |
+| `addPointer(quantity)` | `(number)` | Pointer[] |
+| `setDraggable(gameObjects, value)` | `(GameObject[], boolean)` | this |
+| `makePixelPerfect(alphaTolerance)` | `(number)` | Function |
+| `setHitArea(gameObjects, hitArea, callback)` | `(GameObject[], any, Function)` | this |
+| `setHitAreaCircle(go, x, y, r, cb)` | | this |
+| `setHitAreaRectangle(go, x, y, w, h, cb)` | | this |
+| `setHitAreaFromTexture(go, cb)` | | this |
+| `activePointer` | | Pointer |
+| `mousePointer` | | Pointer |
+| `keyboard` | | KeyboardPlugin |
+| `gamepad` | | GamepadPlugin |
+
+### KeyboardPlugin (this.input.keyboard)
+
+| Method / Property | Signature | Returns |
+|---|---|---|
+| `createCursorKeys()` | | CursorKeys (`{up, down, left, right, space, shift}`) |
+| `addKey(key, capture, emitOnRepeat)` | `(Key\|string\|number, boolean?, boolean?)` | Key |
+| `addKeys(keys, capture, emitOnRepeat)` | `(object\|string, boolean?, boolean?)` | object |
+| `removeKey(key, destroy)` | `(Key\|string\|number, boolean?)` | this |
+| `createCombo(keys, config)` | `(string\|number[]\|object[], object?)` | KeyCombo |
+| `checkDown(key, duration)` | `(Key, number?)` | boolean |
+| `addCapture(keycode)` | `(string\|number\|number[])` | this |
+| `removeCapture(keycode)` | `(string\|number\|number[])` | this |
+| `enabled` | boolean | |
+
+### Keyboard Utility Functions
+
+| Function | Signature | Returns |
+|---|---|---|
+| `Phaser.Input.Keyboard.JustDown(key)` | `(Key)` | boolean (true once per press) |
+| `Phaser.Input.Keyboard.JustUp(key)` | `(Key)` | boolean (true once per release) |
+
+### Pointer
+
+| Property | Type | Description |
+|---|---|---|
+| `x`, `y` | number | Screen-space position |
+| `worldX`, `worldY` | number | Camera-translated position |
+| `isDown` | boolean | Any button held |
+| `primaryDown` | boolean | Primary button held |
+| `button` | number | Button that triggered last event |
+| `wasTouch` | boolean | Last event was touch |
+| `velocity` | Vector2 | Smoothed movement velocity |
+| `deltaX/Y/Z` | number | Wheel scroll amounts |
+
+| Method | Returns | Description |
+|---|---|---|
+| `leftButtonDown()` | boolean | Left button held |
+| `rightButtonDown()` | boolean | Right button held |
+| `getDistance()` | number | Distance from down to current/up |
+| `getDuration()` | number | Ms from down to current/up |
+| `updateWorldPoint(camera)` | this | Recalculate world coords |
+
+### Gamepad
+
+| Property | Type | Description |
+|---|---|---|
+| `leftStick` | Vector2 | Left analog stick (x,y from -1 to 1) |
+| `rightStick` | Vector2 | Right analog stick |
+| `A`, `B`, `X`, `Y` | boolean | Face buttons |
+| `up`, `down`, `left`, `right` | boolean | D-pad |
+| `L1`, `L2`, `R1`, `R2` | number | Shoulder buttons (0-1) |
+| `id` | string | Controller identifier string |
+| `connected` | boolean | Connection state |
+
+## Three Levels of Pointer Events
+
+Phaser dispatches pointer events at three levels, in this order:
+
+**Level 1 — Game Object events** (most specific, require `setInteractive()`):
+
+```js
+gameObject.on('pointerdown', (pointer, localX, localY, event) => {});
+gameObject.on('pointerup', (pointer, localX, localY, event) => {});
+gameObject.on('pointermove', (pointer, localX, localY, event) => {});
+gameObject.on('pointerover', (pointer, localX, localY, event) => {});
+gameObject.on('pointerout', (pointer, event) => {});
+gameObject.on('wheel', (pointer, dx, dy, dz, event) => {});
+```
+
+**Level 2 — Scene input per-object events** (fires with the Game Object as a parameter):
+
+```js
+this.input.on('gameobjectdown', (pointer, gameObject, event) => {});
+this.input.on('gameobjectup', (pointer, gameObject, event) => {});
+this.input.on('gameobjectmove', (pointer, gameObject, event) => {});
+this.input.on('gameobjectover', (pointer, gameObject, event) => {});
+this.input.on('gameobjectout', (pointer, gameObject, event) => {});
+this.input.on('gameobjectwheel', (pointer, gameObject, dx, dy, dz, event) => {});
+```
+
+**Level 3 — Scene input global events** (fires regardless of what is under the pointer):
+
+```js
+this.input.on('pointerdown', (pointer, currentlyOver) => {});
+this.input.on('pointerup', (pointer, currentlyOver) => {});
+this.input.on('pointermove', (pointer, currentlyOver) => {});
+this.input.on('wheel', (pointer, currentlyOver, dx, dy, dz, event) => {});
+```
+
+At any level, call `event.stopPropagation()` to prevent the event from reaching the next level.
+
+## Hit Area Shapes (All Geometry Types)
+
+```js
+// Default (rectangle from texture)
+gameObject.setInteractive();
+
+// Circle
+gameObject.setInteractive(new Phaser.Geom.Circle(x, y, radius), Phaser.Geom.Circle.Contains);
+
+// Ellipse
+gameObject.setInteractive(new Phaser.Geom.Ellipse(x, y, w, h), Phaser.Geom.Ellipse.Contains);
+
+// Rectangle
+gameObject.setInteractive(new Phaser.Geom.Rectangle(x, y, w, h), Phaser.Geom.Rectangle.Contains);
+
+// Triangle
+gameObject.setInteractive(new Phaser.Geom.Triangle(x1, y1, x2, y2, x3, y3), Phaser.Geom.Triangle.Contains);
+
+// Polygon (array of {x,y} points or flat [x1,y1,x2,y2,...] array)
+gameObject.setInteractive(new Phaser.Geom.Polygon(points), Phaser.Geom.Polygon.Contains);
+
+// Pixel-perfect (expensive — only use where needed)
+gameObject.setInteractive({ pixelPerfect: true, alphaTolerance: 1 });
+```
+
+## Full setInteractive Config Object
+
+```js
+gameObject.setInteractive({
+    hitArea: shape,              // Geom shape (Circle, Rectangle, etc.)
+    hitAreaCallback: callback,   // Contains function for the shape
+    draggable: false,            // Enable drag-and-drop
+    dropZone: false,             // Mark as a drop zone
+    useHandCursor: false,        // Show hand cursor on hover
+    cursor: 'pointer',           // CSS cursor string
+    pixelPerfect: false,         // Use pixel-perfect hit testing
+    alphaTolerance: 1            // Alpha threshold for pixel-perfect (0-255)
+});
+```
+
+## Input Debug Mode
+
+Visualize hit areas for debugging interactive objects:
+
+```js
+// Enable debug overlay (default green outline)
+this.input.enableDebug(gameObject);
+
+// Custom color
+this.input.enableDebug(gameObject, 0xff00ff);
+
+// Remove debug overlay
+this.input.removeDebug(gameObject);
+```
+
+## Multi-touch Configuration
+
+By default, Phaser creates 2 pointers (mouse + 1 touch). Configure more at startup or runtime:
+
+```js
+// At startup via game config
+const config = {
+    input: {
+        activePointers: 4  // reserve 4 pointer slots
+    }
+};
+
+// At runtime
+this.input.addPointer(3); // add 3 more pointers (up to 10 total)
+
+// Access individual pointers
+this.input.pointer1; // first touch pointer
+this.input.pointer2; // second touch pointer
+// ... through this.input.pointer10
+this.input.mousePointer; // the mouse (always pointer index 0)
+```
+
+## Keyboard Combos (String Array Form)
+
+```js
+// Using key name strings
+const combo = this.input.keyboard.createCombo(['UP', 'UP', 'DOWN', 'DOWN'], {
+    resetOnWrongKey: true,
+    maxKeyDelay: 0,
+    resetOnMatch: false
+});
+
+this.input.keyboard.on('keycombomatch', (keyCombo, event) => {
+    console.log('Combo matched:', keyCombo);
+});
+```
+
+## Gamepad Additional Methods
+
+```js
+// Get all connected gamepads as an array
+const pads = this.input.gamepad.getAll();
+
+// Get a specific gamepad by index
+const pad = this.input.gamepad.getPad(0);
+
+// Gamepad instance events (different callback signature from plugin-level)
+// Plugin-level: (gamepad, button, value)
+pad.on('down', (buttonIndex, value, button) => {});
+pad.on('up', (buttonIndex, value, button) => {});
+```
+
+## Gotchas and Common Mistakes
+
+1. **Must call setInteractive() before listening for Game Object events.** Without it, `pointerdown` etc. will never fire on that object.
+
+2. **Containers need a size for hit testing.** Call `container.setSize(w, h)` or pass a shape to `setInteractive()`. Pixel-perfect testing does not work on Containers.
+
+3. **JustDown/JustUp only return true once per check.** They consume the flag on read, so calling `JustDown(key)` twice in the same frame gives true then false. Store the result in a variable if needed in multiple places.
+
+4. **Keyboard captures are global.** Calling `addCapture('SPACE')` in one Scene prevents the browser default for all Scenes, not just the calling Scene.
+
+5. **Browser extensions can interfere with keyboard input.** Extensions like Vimium can intercept keys (e.g. D key). Check extensions when debugging missing key events.
+
+6. **Pointer worldX/worldY are only accurate inside input handlers.** Outside of event callbacks, call `pointer.updateWorldPoint(camera)` first to get correct camera-translated coordinates.
+
+7. **topOnly defaults to true.** Only the top-most interactive Game Object under the pointer receives events. Set `this.input.topOnly = false` to emit to all objects below the pointer.
+
+8. **Gamepad requires SSL in modern browsers.** Chrome and others block the Gamepad API on non-HTTPS pages. The browser may also require a button press before exposing the gamepad.
+
+9. **Gamepad may already be connected.** The `'connected'` event only fires on new connections. Check `this.input.gamepad.total` on Scene start and use `pad1`-`pad4` if already present.
+
+10. **Drag events require both setInteractive and setDraggable.** Just calling `setInteractive()` is not enough; you must also call `this.input.setDraggable(sprite)` or use the `{ draggable: true }` config.
+
+11. **Pointer lock must be requested from a user gesture.** Call `this.input.mouse.requestPointerLock()` from inside a `pointerdown` or `pointerup` handler.
+
+12. **Key.emitOnRepeat defaults to false.** By default, holding a key only emits one `'down'` event. Set `emitOnRepeat` to true in `addKey()` or on the Key to get continuous events.
+
+13. **Pixel-perfect hit testing is expensive.** It checks every pixel under the pointer against the texture alpha. Only use `pixelPerfect: true` where irregular shapes truly require it; prefer geometric hit areas (Circle, Polygon) for performance.
+
+14. **No touch input events during the preload stage.** Touch/pointer events are not dispatched while the Scene is in the `preload` phase. Wait for `create` to set up interactive objects.
+
+15. **In multi-camera scenes, check `pointer.camera`.** When a Scene has multiple cameras, the pointer event includes which camera received it via `pointer.camera`. Use this to determine which camera viewport was clicked.
+
+16. **Gamepad callback signatures differ between plugin and instance.** Plugin-level events use `(gamepad, button, value)` while per-gamepad instance events use `(buttonIndex, value, button)`. Mixing these up is a common source of bugs.
+
+}
+
+
+
+
+}
+
+
+
+
+
+} 
+}
+
+
+use game assets : assets path {
+
+/fun / game / game mechanics / L1 / L1 assets
+
+}
+
+
+per platform y coordinate spacing = 70
+
+update game.html , L1.css , L1.js accordingly
+
+
+WIN CONDITION {
+
+reach invitation message
+
+}
+
+number of ATS enemy entities = 7 
+
+full game logic {
+
+mario style game with a long path at end of which there is a message icon player must reach that to end game 
+
+
+
+
+}
+
+
+}

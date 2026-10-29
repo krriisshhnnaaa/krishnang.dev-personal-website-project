@@ -35,7 +35,7 @@
     background-color: #0a1424;
     background-image: 
       linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)),
-      url('../jpg(1)');
+      url('../bg.jpg');
     background-size: cover;
     background-position: center top;
     background-attachment: fixed;
@@ -766,4 +766,262 @@ header.site-header {
 /* Workspace Stage */
 .workspace-panels-grid {
   min-height: calc(100vh - 12rem);
+}
+
+/* ==========================================================================
+   DriftWall — React Bits Dynamic Wall Component
+   ========================================================================== */
+.drift-wall {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  perspective: var(--dw-perspective, 1200px);
+  perspective-origin: 50% 50%;
+  --dw-tile-w: 200px;
+  --dw-tile-h: 132px;
+  --dw-gap: 18px;
+  --dw-radius: 14px;
+  --dw-lift: 64px;
+  --dw-dim: 0.55;
+  --dw-gray: 0;
+  --dw-overlay: #060010;
+  --dw-edge: 40%;
+  -webkit-mask-image:
+    radial-gradient(ellipse 78% 82% at 50% 46%, #000 var(--dw-edge), transparent 100%),
+    linear-gradient(to top, #000 var(--dw-edge), transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse 78% 82% at 50% 46%, #000 var(--dw-edge), transparent 100%),
+    linear-gradient(to top, #000 var(--dw-edge), transparent 100%);
+  mask-composite: intersect;
+}
+
+.drift-wall__plane {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: row;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.drift-wall__col {
+  position: relative;
+  width: calc(var(--dw-tile-w) + var(--dw-gap));
+  transform-style: preserve-3d;
+}
+
+.drift-wall__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.drift-wall__tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: calc(var(--dw-tile-h) + var(--dw-gap));
+  flex: 0 0 auto;
+  outline: none;
+  transform-style: preserve-3d;
+}
+
+.drift-wall__inner {
+  position: absolute;
+  inset: calc(var(--dw-gap) / 2);
+  display: block;
+  border-radius: var(--dw-radius);
+  overflow: hidden;
+  background: #0b0b12;
+  opacity: var(--dw-dim);
+  transform: translateZ(0);
+  pointer-events: none;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.drift-wall__tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(var(--dw-gray)) saturate(0.92);
+  transition: filter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.drift-wall__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--dw-overlay);
+  opacity: 0.42;
+  pointer-events: none;
+  transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.drift-wall__tile.is-active .drift-wall__inner,
+.drift-wall__tile:focus-visible .drift-wall__inner {
+  opacity: 1;
+  transform: translateZ(var(--dw-lift));
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.7);
+}
+
+.drift-wall__tile.is-active img,
+.drift-wall__tile:focus-visible img {
+  filter: grayscale(0) saturate(1.05);
+}
+
+.drift-wall__tile.is-active .drift-wall__overlay,
+.drift-wall__tile:focus-visible .drift-wall__overlay {
+  opacity: 0;
+}
+
+.drift-wall__tile:focus-visible .drift-wall__inner {
+  box-shadow:
+    0 24px 60px -18px rgba(0, 0, 0, 0.7),
+    0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift-wall__plane,
+  .drift-wall__track {
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
+   Circular 'Hold to Confirm' Button with SVG Progress Ring
+   ========================================================================== */
+
+.hold-btn {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  border-radius: 50%;
+  background: rgba(15, 29, 51, 0.85);
+  border: none !important;
+  box-shadow: 0 8px 24px -4px rgba(3, 7, 18, 0.6), inset 0 1px 0 rgba(234, 204, 182, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  outline: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.hold-btn:hover {
+  transform: scale(1.06);
+  border: none !important;
+  box-shadow: 0 12px 28px -4px rgba(3, 7, 18, 0.75), 0 0 20px rgba(92, 157, 245, 0.25);
+}
+
+.hold-btn:active {
+  transform: scale(0.97);
+  border: none !important;
+}
+
+.hold-btn .ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.hold-btn .track {
+  fill: none;
+  stroke: rgba(166, 189, 223, 0.15);
+  stroke-width: 4;
+}
+
+.hold-btn .prog {
+  fill: none;
+  stroke: #5c9df5;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 207;
+  stroke-dashoffset: 207;            /* empty ring */
+  transition: stroke-dashoffset 0.2s ease-out;
+}
+
+.hold-btn.holding .prog {
+  stroke-dashoffset: 0;              /* fill over the hold */
+  transition: stroke-dashoffset 0.8s linear;
+}
+
+.hold-btn.holding {
+  border: none !important;
+  box-shadow: 0 0 25px rgba(92, 157, 245, 0.45);
+}
+
+.hold-btn.done {
+  border: none !important;
+  box-shadow: 0 0 30px rgba(72, 187, 120, 0.6);
+  background: rgba(16, 185, 129, 0.15);
+  animation: holdConfirmFlash 0.5s ease-out;
+}
+
+.hold-btn.done .prog {
+  stroke: #48bb78;
+  stroke-dashoffset: 0;
+  transition: stroke 0.25s ease;
+}
+
+.hold-btn span {
+  position: relative;
+  z-index: 2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #f0f4fc;
+  pointer-events: none;
+  padding: 0 4px;
+  white-space: nowrap;
+  transition: color 0.2s ease, font-size 0.2s ease;
+}
+
+.hold-btn.done span {
+  color: #48bb78;
+  font-size: 14px;
+}
+
+@keyframes holdConfirmFlash {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.hold-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: #a6bddf;
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+/* Mostly JS-driven: interval swaps each character
+   for a random glyph, then locks left-to-right
+   once a per-character frame threshold is passed. */
+.scramble {
+  font-family: monospace;
+  letter-spacing: 0.02em;
 }

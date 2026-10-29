@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave a Review — Krishnang</title>
+    <link rel="stylesheet" href="pages/review/base.css">
+    <link rel="stylesheet" href="pages/review/animations.css">
+    <link rel="stylesheet" href="pages/review/logo.css">
+    <link rel="stylesheet" href="../CSS/radial-menu.css">
+    <style>
+        :root {
+            --prussian-blue: #003153;
+            --white: #ffffff;
+            --text-dark: #111827;
+            --bg-page: #f8fafc;
+            --accent-pink: #ff2d55;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 32px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav-back-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .nav-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .nav-back-link:hover {
+            color: var(--accent-pink);
+        }
+
+        /* size = h1 ( {center} {marquee} [text from name.txt] } */
+        .name-banner-container {
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+            padding: 20px 12px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .name-banner-container marquee {
+            display: block;
+            width: 100%;
+        }
+
+        .name-banner-h1 {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .name-banner {
+            display: inline-block;
+            text-align: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: clamp(9px, 1.2vw, 13px);
+            line-height: 1.15;
+            color: #38bdf8;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            white-space: pre;
+            margin: 0 auto;
+        }
+
+        /* Form Card */
+        .form-card {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 36px 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* Comment boxes */
+        .comment-box {
+            width: 100%;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 16px 20px;
+            font-family: inherit;
+            font-size: 1.05rem;
+            color: #1e293b;
+            background: #f8fafc;
+            transition: all 0.2s ease-in-out;
+            resize: vertical;
+        }
+
+        .comment-box:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.15);
+        }
+
+        /* Top Box: comment-box : {text area} -> dimensions l=120,b=20 -- ratio - l:b = 6:1 placeholder = {"Leave a review !"} */
+        .review-box {
+            max-width: 860px;
+            min-height: 160px;
+            aspect-ratio: 6 / 1;
+        }
+
+        /* Bottom Box: comment-box : {text area} -> dimesions l=60,b=10 -- ratio - l:b = 6:1 placeholder = {"What's your goodname ?"} */
+        .name-box {
+            max-width: 600px;
+            min-height: 100px;
+            aspect-ratio: 6 / 1;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: var(--accent-pink);
+            color: var(--white);
+            border: none;
+            padding: 14px 44px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(255, 45, 85, 0.35);
+            transition: all 0.2s ease-in-out;
+            margin-top: 4px;
+        }
+
+        .submit-btn:hover {
+            background-color: #e02449;
+            box-shadow: 0 6px 20px rgba(255, 45, 85, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .status-msg {
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        .status-success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* H2 = { "This is what others think" } */
+        h2.others-think-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        /* hero section : Reviews */
+        .hero-reviews-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .hero-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            background: #e2e8f0;
+            color: #334155;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 9999px;
+        }
+
+        /* Review Cards Container: 2-column layout (review 1 ---- review 2, review 3 ---- review 4) */
+        .reviews-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        /*
+           hero section name : "review"
+           bgcolor = prussian blue
+           txt = white
+           border style = 3D 
+           border width = 50
+           border length = 60
+           display == 
+           {
+           -----txt---from----
+           ---file----
+           	- "name"
+           }
+        */
+        .review-card-3d {
+            width: 100%;
+            background-color: var(--prussian-blue);
+            color: var(--white);
+            border-style: ridge;
+            border-width: 50px 60px;
+            border-color: #004b80 #00223b #00192b #005a99;
+            box-shadow: 
+                0 14px 32px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 26px 28px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 18px;
+            word-break: break-word;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .review-content {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--white);
+            font-style: italic;
+            white-space: pre-wrap;
+        }
+
+        .review-author {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #93c5fd;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 992px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+            .review-card-3d {
+                border-width: 35px 40px;
+                padding: 22px 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+            .review-card-3d {
+                border-width: 25px 30px;
+                padding: 20px 22px;
+            }
+            .name-box, .review-box {
+                aspect-ratio: auto;
+            }
+            h2.others-think-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Navigation Back -->
+        <div class="nav-back-container">
+            <a href="choicepage.html" class="nav-back-link">
+                &larr; Back to Choice
+            </a>
+        </div>
+
+        <!-- size = h1 ( {center} {marquee} [text from name.txt] } -->
+        <div class="name-banner-container" id="nameBannerContainer">
+            <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
+                <h1 class="name-banner-h1">
+                    <pre class="name-banner" id="nameBanner">
+╒════╗  ╒═══╗ ╒══════════╗ ╒══════╗ ╒═════════╗ ╒════╗╒════╗  ╒════╗   ╒════╗  ╒════════╗   ╒════╗   ╒════╗ ╒════════╗      ╒═════════╗  ╒═════════╗ ╒════╗    ╒════╗     
+└┐  ╓╜ ╒╛ ╓─╜ └┐  ╓───┐  ║ └─┐  ╓─╜ │  ╓────┐ ║ └┐  ╓╜└┐  ╓╜  │    ╚╗  └┐  ╓╜  │  ╓──┐  ║   │    ╚╗  └┐  ╓╜ │  ╓───┐ ║      └┐  ╓───┐ ╚╗ └┐  ╓───┐ ║ └┐  ╓╜    └┐  ╓╜     
+ │  ║ ╒╛ ╓╜    │  ║   │  ║   │  ║   │  ║    └─╜  │  ║  │  ║   │  ╟┐ ╚╗  │  ║   │  ║  │  ║   │  ╟┐ ╚╗  │  ║  │  ║   └─╜       │  ║   │  ║  │  ║   └─╜  └┐ ╚╗    ╒╛ ╓╜      
+ │  ╚═╛  ╚═╗   │  ╚═══╛  ║   │  ║   │  ╚══════╗  │  ╚══╛  ║   │  ║└┐ ╚╗ │  ║   │  ╚══╛  ║   │  ║└┐ ╚╗ │  ║  │  ║             │  ║   │  ║  │  ╚══╗      └┐ ╚╗  ╒╛ ╓╜       
+ │  ╓───┐  ║   │  ╓┐  ╓──╜   │  ║   └──────┐  ║  │  ╓──┐  ║   │  ║ └┐ ╚╗│  ║   │  ╓──┐  ║   │  ║ └┐ ╚╗│  ║  │  ║ ╒════╗      │  ║   │  ║  │  ╓──╜       └┐ ╚╗╒╛ ╓╜        
+ │  ║   │  ║   │  ║└┐ ╚╗     │  ║   ╒═╗    │  ║  │  ║  │  ║   │  ║  └┐ ╚╡  ║   │  ║  │  ║   │  ║  └┐ ╚╡  ║  │  ║ └┐  ╓╜      │  ║   │  ║  │  ║   ╒═╗     └┐ ╚╛ ╓╜         
+╒╛  ╚╗ ╒╛  ╚╗ ╒╛  ╚╗└┐ ╚═╗ ╒═╛  ╚═╗ │ ╚════╛  ║ ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  │  ╚══╛  ║  ╒═╗ ╒╛  ╚═══╛ ╓╜ ╒╛  ╚═══╛ ║      └┐  ╓╜          
+└────╜ └────╜ └────╜ └───╜ └──────╜ └─────────╜ └────╜└────╜ └────╜   └────╜  └────╜└────╜ └────╜   └────╜  └────────╜  └─╜ └─────────╜  └─────────╜       └──╜           
+                    </pre>
+                </h1>
+            </marquee>
+        </div>
+
+        <!-- Form Section: Only Leave a review and What's your goodname ? -->
+        <div class="form-card">
+            <form id="reviewForm" class="review-form">
+                <!-- Top box: Leave a review (dimensions l=120,b=20, ratio 6:1) -->
+                <div class="form-group">
+                    <textarea 
+                        id="reviewContent" 
+                        name="review" 
+                        cols="120" 
+                        rows="20" 
+                        class="comment-box review-box" 
+                        placeholder="Leave a review !" 
+                        required></textarea>
+                </div>
+
+                <!-- Bottom box: What's your goodname ? (dimensions l=60,b=10, ratio 6:1) -->
+                <div class="form-group">
+                    <textarea 
+                        id="reviewerName" 
+                        name="name" 
+                        cols="60" 
+                        rows="10" 
+                        class="comment-box name-box" 
+                        placeholder="What's your goodname ?" 
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Submit Review</button>
+                <div class="status-msg status-success" id="statusMessage">Thank you! Your review has been saved successfully.</div>
+            </form>
+        </div>
+
+        <!-- H2 = { "This is what others think" } -->
+        <h2 class="others-think-title">This is what others think</h2>
+
+        <!-- hero section : Reviews -->
+        <section class="hero-reviews-section" id="heroReviewsSection">
+            <div class="hero-header">
+                <span class="hero-tag">review</span>
+            </div>
+
+            <!-- Review items dynamically fetched/rendered: review hero 1 to n -->
+            <div id="reviewsContainer" class="reviews-container">
+                <!-- Rendered dynamically -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Fetch and display name.txt if loaded over HTTP/local server
+        fetch('name.txt')
+            .then(res => res.ok ? res.text() : null)
+            .then(text => {
+                if (text && text.trim()) {
+                    document.getElementById('nameBanner').textContent = text;
+                }
+            })
+            .catch(() => {
+                // Static embedded content is already present as fallback
+            });
+
+        // Local & MongoDB Reviews Storage Handling
+        const defaultReviews = [
+            {
+                name: "Alex Vance",
+                content: "Krishnang is an exceptionally detail-oriented developer. The architecture and user interface built for the platform exceeded all our expectations!"
+            },
+            {
+                name: "Sarah Chen",
+                content: "Fast communication, innovative ideas, and clean modern code. An absolute pleasure to collaborate with."
+            },
+            {
+                name: "Marcus Brody",
+                content: "Incredible attention to styling details, rock-solid responsiveness, and rapid turnaround time."
+            },
+            {
+                name: "Elena Rostova",
+                content: "Intuitive workflows, creative layout solutions, and smooth end-to-end integration."
+            }
+        ];
+
+        function getStoredReviews() {
+            try {
+                const data = localStorage.getItem('krishnang_reviews');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        if (parsed.length < 2) {
+                            return [...parsed, ...defaultReviews.slice(parsed.length)];
+                        }
+                        return parsed;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not read from localStorage', e);
+            }
+            return defaultReviews;
+        }
+
+        function saveStoredReviews(reviews) {
+            try {
+                localStorage.setItem('krishnang_reviews', JSON.stringify(reviews));
+            } catch (e) {
+                console.warn('Could not save to localStorage', e);
+            }
+        }
+
+        /*
+           hero section name : "review"
+           bgcolor = prussian blue
+           txt = white
+           border style = 3D 
+           border width = 50
+           border length = 60
+           display == 
+           {
+           -----txt---from----
+           ---file----
+           	- "name"
+           }
+        */
+        function renderReviewCard(review) {
+            const card = document.createElement('div');
+            card.className = 'review-card-3d';
+
+            const contentElem = document.createElement('div');
+            contentElem.className = 'review-content';
+            contentElem.textContent = review.content || '';
+
+            const authorElem = document.createElement('div');
+            authorElem.className = 'review-author';
+            authorElem.textContent = `- "${review.name || 'Anonymous'}"`;
+
+            card.appendChild(contentElem);
+            card.appendChild(authorElem);
+
+            return card;
+        }
+
+        function renderAllReviews(reviewsList) {
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+            reviewsList.forEach(review => {
+                const card = renderReviewCard(review);
+                container.appendChild(card);
+            });
+        }
+
+        // Fetch from MongoDB backend endpoint (if available) with local fallback
+        async function fetchReviews() {
+            try {
+                const res = await fetch('/api/reviews', { method: 'GET' });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        renderAllReviews(data);
+                        return;
+                    }
+                }
+            } catch (err) {
+                // Backend not connected; fallback to local storage
+            }
+
+            const localList = getStoredReviews();
+            renderAllReviews(localList);
+        }
+
+        // Handle Review Form Submission
+        const reviewForm = document.getElementById('reviewForm');
+        const statusMessage = document.getElementById('statusMessage');
+
+        reviewForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const review = document.getElementById('reviewContent').value.trim();
+            const name = document.getElementById('reviewerName').value.trim();
+
+            if (!review || !name) {
+                alert('Please fill in both the review and your name.');
+                return;
+            }
+
+            const newReview = {
+                name: name,
+                content: review,
+                timestamp: new Date().toISOString()
+            };
+
+            // 1. Save to local storage
+            const currentList = getStoredReviews();
+            currentList.unshift(newReview);
+            saveStoredReviews(currentList);
+
+            // 2. Prepend card immediately to hero section
+            const container = document.getElementById('reviewsContainer');
+            const card = renderReviewCard(newReview);
+            container.insertBefore(card, container.firstChild);
+
+            // 3. Post to MongoDB API if available
+            try {
+                await fetch('/api/reviews', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newReview)
+                });
+            } catch (e) {
+                // Local copy already saved
+            }
+
+            // Show confirmation & reset form
+            statusMessage.style.display = 'block';
+            reviewForm.reset();
+
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 4000);
+        });
+
+        // Initialize on load
+        fetchReviews();
+    </script>
+
+    <!-- Compact Radial Action Menu (agy.info action NOW) -->
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Radial navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick Navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <a href="connect.html" class="action action-n" aria-label="Action A: Connect">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Action A: Connect</span>
+            </a>
+            <a href="choicepage.html" class="action action-e" aria-label="Action B: Choice Page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Action B: Choice</span>
+            </a>
+            <a href="../fun/game/game.html" class="action action-s" aria-label="Action C: Play Game">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Action C: Game</span>
+            </a>
+            <a href="../index.html" class="action action-w" aria-label="Action D: Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="tooltip">Action D: Home</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

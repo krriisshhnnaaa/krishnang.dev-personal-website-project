@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choose Action — Krishnang</title>
+    <link rel="stylesheet" href="../CSS/radial-menu.css">
     <style>
         :root {
             --glow-color: rgba(255, 45, 85, 0.55); /* reddish-pink with 55% glow intensity */
@@ -168,5 +169,43 @@
             }
         }
     </script>
+    <!-- Compact Radial Action Menu (agy.info action NOW) -->
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Radial navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick Navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <a href="connect.html" class="action action-n" aria-label="Action A: Connect">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Action A: Connect</span>
+            </a>
+            <a href="choicepage.html" class="action action-e" aria-label="Action B: Choice Page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Action B: Choice</span>
+            </a>
+            <a href="../fun/game/game.html" class="action action-s" aria-label="Action C: Play Game">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Action C: Game</span>
+            </a>
+            <a href="../index.html" class="action action-w" aria-label="Action D: Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="tooltip">Action D: Home</span>
+            </a>
+        </nav>
+    </div>
 </body>
 </html>

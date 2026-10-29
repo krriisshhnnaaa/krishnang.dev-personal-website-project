@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Runner — L1: Pass The ATS | krishnang.dev</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../../logo.jpg">
+
+    <link rel="stylesheet" href="game mechanics/L1/L1.css">
+    <link rel="stylesheet" href="../../CSS/radial-menu.css">
+</head>
+<body>
+
+    <div class="game-page-wrapper">
+        <header class="arcade-header">
+            <h1 class="arcade-title">Resume Runner</h1>
+            <p class="arcade-subtitle">
+                <span>Level 1: Bypass the ATS Filters</span>
+                <span class="badge">Arcade Edition</span>
+            </p>
+        </header>
+
+        <!-- Canvas Container: Phaser 4 World (800 x 650) as specified in agy.info -->
+        <div class="canvas-container" id="canvas-container">
+            <div id="game-modal" class="game-modal" style="display: none;"></div>
+        </div>
+
+        <!-- Controls Guide directly beneath canvas -->
+        <div class="controls-hint">
+            <span><kbd class="kbd">SPACE / W / ↑</kbd> Jump</span>
+            <span><kbd class="kbd">D / →</kbd> Forward</span>
+            <span><kbd class="kbd">A / ←</kbd> Backward</span>
+            <span><kbd class="kbd">S</kbd> Lower Mobility</span>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         COMPACT RADIAL ACTION MENU (agy.info action NOW)
+         A dark circular + button anchors the centre;
+         four tiny actions orbit outward in cardinal directions on hover.
+         ===================================================== -->
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Radial navigation menu">
+            <!-- Central Dark circular + button -->
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick Navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+
+            <!-- Action A (North): Open connect.html -->
+            <a href="../../forms/connect.html" class="action action-n" aria-label="Connect Form">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Action A: Connect</span>
+            </a>
+
+            <!-- Action B (East): Open choicepage.html -->
+            <a href="../../forms/choicepage.html" class="action action-e" aria-label="Choice Page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Action B: Portal</span>
+            </a>
+
+            <!-- Action C (South): Open game.html -->
+            <a href="game.html" class="action action-s" aria-label="Restart / Game">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Action C: Game</span>
+            </a>
+
+            <!-- Action D (West): Open portfolio index.html -->
+            <a href="../../index.html" class="action action-w" aria-label="Portfolio Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="tooltip">Action D: Home</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Phaser 4 Game Engine -->
+    <script src="//cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js"></script>
+    <script>window.Phaser || document.write('<script src="../../node_modules/phaser/dist/phaser.min.js"><\/script>')</script>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { ClickerGame } from './game mechanics/L1/L1.js';
+        window.ClickerGame = ClickerGame;
+        window.dispatchEvent(new CustomEvent('clickergameready'));
+    </script>
+    <script src="game mechanics/main.js" defer></script>
+
+    <!-- Support click toggle on touch / mobile for radial menu -->
+    <script>
+        const radialMenu = document.querySelector('.menu');
+        const centerBtn = document.querySelector('.center-btn');
+        if (radialMenu && centerBtn) {
+            centerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                radialMenu.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+                if (!radialMenu.contains(e.target)) {
+                    radialMenu.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

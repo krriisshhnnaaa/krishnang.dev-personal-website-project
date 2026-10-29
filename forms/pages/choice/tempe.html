@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invalid Choice — Krishnang</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #111827;
+        }
+
+        .pop-notification {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 40px 36px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+        }
+
+        .pop-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 16px;
+        }
+
+        .pop-desc {
+            font-size: 0.95rem;
+            color: #6b7280;
+            margin-bottom: 28px;
+        }
+
+        .choice-btn {
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ff2d55;
+            color: #ffffff;
+            border: 1px solid #ff2d55;
+            box-shadow: 0 4px 12px rgba(255, 45, 85, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .choice-btn:hover {
+            background-color: #e02449;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="pop-notification">
+        <h2 class="pop-title">No option selected</h2>
+        <p class="pop-desc">Please go back and select whether you want to connect or leave a review.</p>
+        <a href="../../choicepage.html" class="choice-btn">Return to Choice</a>
+    </div>
+</body>
+</html>

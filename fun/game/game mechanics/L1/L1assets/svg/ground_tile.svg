@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="40" viewBox="0 0 64 40">
+  <defs>
+    <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#58b947"/>
+      <stop offset="1" stop-color="#2f7d36"/>
+    </linearGradient>
+  </defs>
+  <!-- green body -->
+  <rect width="64" height="40" fill="url(#soil)"/>
+  <!-- grass blades sticking up from the top edge (all inside the tile, so it tiles cleanly) -->
+  <g fill="#7ee05f">
+    <path d="M1 7 L3 0 L5 7 Z"/>
+    <path d="M6 7 L9 1 L12 7 Z"/>
+    <path d="M13 7 L14.5 -0 L17 7 Z"/>
+    <path d="M18 7 L21 2 L24 7 Z"/>
+    <path d="M25 7 L27 0 L29 7 Z"/>
+    <path d="M30 7 L33 1 L36 7 Z"/>
+    <path d="M37 7 L38.5 0 L41 7 Z"/>
+    <path d="M42 7 L45 2 L48 7 Z"/>
+    <path d="M49 7 L51 0 L53 7 Z"/>
+    <path d="M54 7 L57 1 L60 7 Z"/>
+    <path d="M60.5 7 L62 1 L63.5 7 Z"/>
+  </g>
+  <!-- brighter lip along the top of the soil -->
+  <rect x="0" y="6" width="64" height="4" fill="#6fd256"/>
+  <!-- darker grass tufts for depth -->
+  <g fill="#3f9a3b">
+    <path d="M8 13 L10 9 L12 13 Z"/>
+    <path d="M30 14 L32 10 L34 14 Z"/>
+    <path d="M52 13 L54 9 L56 13 Z"/>
+  </g>
+  <!-- soil specks -->
+  <g fill="#2a6c30">
+    <rect x="12" y="22" width="5" height="2" rx="1"/>
+    <rect x="38" y="19" width="6" height="2" rx="1"/>
+    <rect x="24" y="31" width="5" height="2" rx="1"/>
+    <rect x="54" y="30" width="5" height="2" rx="1"/>
+    <rect x="3"  y="33" width="4" height="2" rx="1"/>
+  </g>
+  <g fill="#7ee05f" opacity="0.5">
+    <rect x="26" y="21" width="3" height="2" rx="1"/>
+    <rect x="48" y="25" width="3" height="2" rx="1"/>
+    <rect x="8"  y="28" width="3" height="2" rx="1"/>
+  </g>
+</svg>

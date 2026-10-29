@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="44" viewBox="0 0 32 44">
+  <!-- legs + shoes: left forward, right back -->
+  <rect x="5" y="34" width="4" height="7" rx="1.5" fill="#9aa3d6" transform="rotate(14 7 34)"/>
+  <rect x="21" y="34" width="4" height="6" rx="1.5" fill="#9aa3d6" transform="rotate(-14 23 34)"/>
+  <rect x="3" y="39.5" width="8" height="4" rx="2" fill="#4a58a8"/>
+  <rect x="21" y="38.5" width="8" height="4" rx="2" fill="#4a58a8"/>
+  <g transform="rotate(-3 16 36)">
+    <rect x="2" y="1" width="28" height="35" rx="3" fill="#f5f6ff" stroke="#9aa3d6" stroke-width="1.5"/>
+    <rect x="6" y="5" width="12" height="5" rx="1" fill="#4a58a8"/>
+    <rect x="21" y="5" width="6" height="6" rx="1" fill="#c9d1ff"/>
+    <circle cx="12" cy="17" r="2.6" fill="#fff" stroke="#9aa3d6" stroke-width="0.8"/>
+    <circle cx="21" cy="17" r="2.6" fill="#fff" stroke="#9aa3d6" stroke-width="0.8"/>
+    <circle cx="13.2" cy="17.2" r="1.2" fill="#1b2145"/>
+    <circle cx="22.2" cy="17.2" r="1.2" fill="#1b2145"/>
+    <rect x="6" y="23" width="20" height="2" rx="1" fill="#9aa3d6"/>
+    <rect x="6" y="27" width="16" height="2" rx="1" fill="#9aa3d6"/>
+    <rect x="6" y="31" width="19" height="2" rx="1" fill="#9aa3d6"/>
+  </g>
+</svg>

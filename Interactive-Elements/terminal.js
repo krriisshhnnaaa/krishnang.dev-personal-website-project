@@ -112,6 +112,12 @@
 
             this.bindEvents();
             this.container._heroTerminalInitialized = true;
+
+            // Make all available commands visible before user types anything
+            if (this.outputArea && !this.outputArea.querySelector('.terminal-output-block')) {
+                this.cmdHelp();
+            }
+
             return true;
         }
 

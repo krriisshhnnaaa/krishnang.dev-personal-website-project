@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { PlasmaProvider, Plasma, usePlasma } from "@cruxgarden/plasma-ui";
+import useScramble from "./useScramble";
 
 // Key for saving panel positions in localStorage
 const LAYOUT_STORAGE_KEY = "plasma-workspace-layout";
@@ -57,13 +58,6 @@ export const defaultHeroPanels = [
     badge: "Available",
     type: "freelance-contact",
     offset: { x: 0, y: 0 }
-  },
-  {
-    id: "connect",
-    title: "Connect Around The Internet",
-    badge: "Socials",
-    type: "connect",
-    offset: { x: 0, y: 0 }
   }
 ];
 
@@ -115,18 +109,6 @@ export function HeaderContent({ mood, setMood, viewMode, setViewMode, onResetLay
           className="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200"
         >
           Services
-        </a>
-        <a
-          href="#education"
-          className="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200"
-        >
-          Timeline
-        </a>
-        <a
-          href="#connect"
-          className="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200"
-        >
-          Connect
         </a>
 
         {/* View Mode Toggle (Portfolio Page vs Workspace Grid) */}
@@ -223,6 +205,11 @@ export function PanelContent({ panel }) {
  */
 export function HeroIntroContent() {
   const { bump } = usePlasma();
+  const [scrambleName, playScramble] = useScramble("KRISHNANG PANDEY");
+
+  useEffect(() => {
+    playScramble();
+  }, [playScramble]);
 
   return (
     <div className="hero-intro-panel flex flex-col items-start w-full">
@@ -242,14 +229,18 @@ export function HeroIntroContent() {
         </div>
       </div>
 
-      {/* Greeting & Name */}
-      <p className="hero-greeting text-base sm:text-lg text-slate-400 font-mono tracking-wide">
-        Hi, myself
-      </p>
-
-      <h1 className="hero-name text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mt-1 mb-4 bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text text-transparent hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500">
-        Krishnang Pandey.
-      </h1>
+      {/* Decoded Scramble Hero Name: text align - 8px from right */}
+      <div className="w-full mt-2 mb-6" style={{ textAlign: "right", paddingRight: "8px" }}>
+        <h1
+          className="scramble hero-name text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500"
+          style={{ textAlign: "right" }}
+          onClick={playScramble}
+          onMouseEnter={playScramble}
+          title="Click or hover to re-decode"
+        >
+          {scrambleName}
+        </h1>
+      </div>
 
       {/* Education Details Cyber Card */}
       <div className="hero-details w-full p-4 rounded-xl bg-slate-950/40 border border-slate-800/80 relative overflow-hidden group hover:border-cyan-500/40 transition-all duration-300 mb-6">
@@ -586,7 +577,7 @@ export function Workspace({ panels = defaultHeroPanels, viewMode, setViewMode })
       <PlasmaProvider
         mood={mood}
         ground="clear"
-        background="jpg(1).jpg"
+        background="bg.jpg"
         zIndex={1}
         theme="dark"
         radius={22}
@@ -605,7 +596,7 @@ export function Workspace({ panels = defaultHeroPanels, viewMode, setViewMode })
               offset={positions[p.id] || p.offset}
               onDragEnd={(o) => savePosition(p.id, o)}
               className={`plasma-hero-panel plasma-panel-${p.id} rounded-2xl border border-slate-800/60 backdrop-blur-md transition-shadow duration-300 ${
-                p.id === "hero-intro" || p.id === "connect" ? "md:col-span-2" : ""
+                p.id === "hero-intro" ? "md:col-span-2" : ""
               }`}
             >
               <PanelContent panel={p} />

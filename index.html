@@ -6,18 +6,15 @@
     <meta name="description" content="Krishnang Pandey — 1st Year CSE AI/ML student at Chitkara University. Developer, researcher, systems & freelance engineer.">
     <title>Krishnang Pandey — krishnang.dev</title>
 
-    <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="logo.jpg">
-    <!-- Vercel Web Analytics -->
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 
-    <!-- Tailwind CSS Configuration (Declared before CDN script engine loads) -->
     <script>
         tailwind = {
             config: {
@@ -138,10 +135,14 @@
         };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js"></script>
 
-    <!-- Compiled Local Tailwind Build & Component Overrides (Cache-Busted for Live Server) -->
     <link rel="stylesheet" href="dist/output.css?v=skyart-3">
-    <link rel="stylesheet" href="CSS/logo-animation.css?v=skyart-3">
+    <link rel="stylesheet" href="dist/bundle.css">
+    <link rel="stylesheet" href="CSS/DriftWall.css">
+    <link rel="stylesheet" href="CSS/HoldToConfirm.css">
+    <link rel="stylesheet" href="CSS/radial-menu.css">
     <link rel="stylesheet" href="CSS/style.css?v=skyart-3">
 
     <style>
@@ -149,7 +150,7 @@
             background-color: #0a1424 !important;
             background-image: 
                 linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)), 
-                url('jpg(1)') !important;
+                url('bg.jpg') !important;
             background-size: cover !important;
             background-position: center top !important;
             background-attachment: fixed !important;
@@ -158,201 +159,53 @@
     </style>
 </head>
 <body class="text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden"
-      style="background-color: #0a1424; background-image: linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)), url('jpg(1)'); background-size: cover; background-position: center top; background-attachment: fixed; background-repeat: no-repeat;">
+      style="background-color: #0a1424; background-image: linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)), url('bg.jpg'); background-size: cover; background-position: center top; background-attachment: fixed; background-repeat: no-repeat;">
 
-    <!-- =====================================================
-         BACKGROUND CANVAS & AMBIENT AURORA ORBS
-         ===================================================== -->
     <canvas id="background-canvas" class="background-canvas fixed inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
 
-    <!-- Ambient Atmospheric Cloud Glows (Inspired by the painting's celestial azure & sunlit peach illumination) -->
     <div class="fixed top-0 left-1/4 w-[34rem] h-[34rem] bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none z-0 animate-pulse-slow"></div>
     <div class="fixed top-1/3 right-8 w-[36rem] h-[36rem] bg-purple-400/20 rounded-full blur-[110px] pointer-events-none z-0"></div>
     <div class="fixed bottom-10 left-10 w-[38rem] h-[38rem] bg-blue-600/25 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
-
-    <!-- =====================================================
-         HEADER / QUANTUM KINETIC LOGO & NAVIGATION
-         ===================================================== -->
     <div id="root">
-    <header class="fixed top-0 inset-x-0 z-50 h-20 backdrop-blur-xl bg-slate-950/75 border-b border-slate-800/60 transition-all duration-300 site-header">
-        <div class="max-w-7xl mx-auto h-full px-6 sm:px-8 flex items-center justify-between header-inner">
-
-            <!-- Logo Section with Kinetic Shockwave Anchor -->
-            <div class="relative flex items-center gap-3">
-                <button
-                    id="personal-logo"
-                    class="personal-logo group relative"
-                    type="button"
-                    aria-label="Personal Logo: </>, strike for metallic chime"
-                >
-                    <span class="logo-glyph-open">&lt;</span>
-                    <span class="logo-glyph-slash">/</span>
-                    <span class="logo-glyph-close">&gt;</span>
-                </button>
-
-                <!-- Subtle terminal prompt badge -->
-                <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900/80 border border-slate-800 text-xs font-mono text-slate-400">
-                    <span class="text-cyan-400 font-bold">&gt;</span> krishnang.dev
-                </span>
-            </div>
-
-            <!-- Navigation Links -->
-            <nav class="site-nav flex items-center gap-1 sm:gap-4" aria-label="Primary navigation">
-                <a href="#activity" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Activity</a>
-                <a href="#blogs" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Writing</a>
-                <a href="#freelance" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Services</a>
-                <a href="#education" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Timeline</a>
-                <a href="#connect" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200">Connect</a>
-
-                <!-- Quick Action CTA -->
-                <a href="#freelance" class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 ml-2 rounded-xl text-xs font-semibold uppercase tracking-wider text-cyan-300 bg-cyan-950/40 border border-cyan-500/30 hover:bg-cyan-500 hover:text-slate-950 hover:border-cyan-400 shadow-sm hover:shadow-glow-cyan transition-all duration-300">
-                    Hire Me <span>↗</span>
-                </a>
-            </nav>
-
+    <section id="drift-wall-showcase" class="relative z-30 w-full overflow-hidden border-b border-slate-800/60 shadow-2xl bg-slate-950/40">
+        <div style="height: 600px;">
+            <div id="drift-wall-container" class="w-full h-full"></div>
         </div>
-    </header>
+    </section>
 
+    <main id="main-content" class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
 
-    <!-- =====================================================
-         MAIN CONTENT
-         ===================================================== -->
-    <main id="main-content" class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col gap-24 sm:gap-32 pt-28 pb-20">
-
-        <!-- =================================================
-             HERO SECTION
-             ================================================= -->
-        <section id="hero" class="hero min-h-[calc(100vh-7rem)] flex items-center">
-            <div class="hero-inner w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
-                <!-- Left Column: Introduction -->
-                <div class="hero-intro lg:col-span-7 flex flex-col items-start">
-
-                    <!-- Availability Status Pill -->
-                    <div class="availability inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-xs font-mono text-emerald-300 shadow-sm shadow-emerald-950/50 mb-6 backdrop-blur-sm">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                        </span>
-                        <span>Available for thoughtful projects</span>
-                    </div>
-
-                    <!-- Greeting -->
-                    <p class="hero-greeting text-lg sm:text-xl text-slate-400 font-mono tracking-wide">
-                        Hi, myself
-                    </p>
-
-                    <!-- Primary Heading / Name -->
-                    <h1 class="hero-name text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mt-2 mb-6 bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text text-transparent hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500">
-                        Krishnang Pandey.
-                    </h1>
-
-                    <!-- Education Details Cyber Card -->
-                    <div class="hero-details w-full max-w-xl p-5 rounded-2xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 mb-8">
-                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-500"></div>
-
-                        <div class="pl-2 space-y-1.5">
-                            <div class="flex items-center justify-between">
-                                <p class="hero-role text-base sm:text-lg font-semibold text-slate-100 flex items-center gap-2">
-                                    <span>Student &amp; Systems Engineer</span>
-                                </p>
-                                <span class="text-[10px] uppercase font-mono tracking-widest px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/20">Year 1</span>
-                            </div>
-
-                            <p class="hero-university text-sm sm:text-base font-medium text-slate-300">
-                                Chitkara University
-                            </p>
-
-                            <p class="hero-degree text-xs sm:text-sm text-slate-400">
-                                Computer Science Engineering
-                            </p>
-
-                            <p class="hero-specialization text-xs sm:text-sm font-semibold text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text">
-                                Artificial Intelligence &amp; Machine Learning
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Call To Action Buttons -->
-                    <div class="hero-actions flex flex-wrap items-center gap-4">
-                        <a
-                            class="button button-primary relative group overflow-hidden px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-                            href="#freelance"
-                        >
-                            <span class="relative z-10 flex items-center gap-2">
-                                Work with me <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-                            </span>
-                            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                        </a>
-
-                        <a
-                            class="button button-secondary px-6 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-slate-700/60 hover:border-slate-500 text-slate-200 text-sm font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-                            href="#blogs"
-                        >
-                            Read my writing
-                        </a>
-                    </div>
-
-                </div>
-
-
-                <!-- Right Column: Interactive Terminal -->
-                <div class="hero-terminal lg:col-span-5 w-full max-w-lg mx-auto lg:max-w-none">
-                    <div
-                        id="terminal"
-                        class="terminal terminal-card"
-                        aria-label="Interactive terminal"
-                    >
-                        <div class="terminal-header">
-                            <span class="terminal-title">krishnang.dev ~ zsh</span>
-                        </div>
-
-                        <div class="terminal-body">
-                            <div
-                                id="terminal-output"
-                                class="terminal-output"
-                                aria-live="polite"
-                                aria-atomic="false"
-                            ></div>
-
-                            <form
-                                id="terminal-form"
-                                class="terminal-input-line"
-                            >
-                                <span
-                                    class="terminal-prompt terminal-prompt-text"
-                                    aria-hidden="true"
-                                >
-                                    &gt;
-                                </span>
-
-                                <input
-                                    id="terminal-input"
-                                    class="terminal-input"
-                                    type="text"
-                                    autocomplete="off"
-                                    autocapitalize="off"
-                                    spellcheck="false"
-                                    aria-label="Terminal command"
-                                    placeholder="Type 'help'..."
-                                >
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
+        
+        <div class="w-full flex flex-col gap-10">
+            <div class="w-full" style="text-align: right;">
+                <h1 id="scramble-hero-name" class="scramble text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500" style="text-align: right; padding-right: 8px;">
+                    KRISHNANG PANDEY
+                </h1>
             </div>
-        </section>
 
+        
+            <div class="flex flex-col items-center justify-center text-center select-none w-full">
+                <button
+                    id="resume-hold-btn"
+                    class="hold-btn"
+                    type="button"
+                    aria-label="Hire Me ? Hold to download my resume"
+                    title="Hold to download resume.pdf"
+                >
+                    <svg class="ring" viewBox="0 0 72 3892" aria-hidden="true">
+                        <circle class="track" cx="36" cy="36" r="33"></circle>
+                        <circle class="prog" cx="36" cy="36" r="33"></circle>
+                    </svg>
+                    <span>Hire Me ? </span>
+                </button>
+                <span class="hold-caption">Download My Resume</span>
+            </div>
+        </div>
 
-        <!-- =================================================
-             ACTIVITY SECTION (GitHub & Writing Feeds)
-             ================================================= -->
         <section id="activity" class="activity scroll-mt-24 pt-8">
             <div class="section-inner space-y-10">
 
-                <!-- Header -->
                 <header class="section-header">
                     <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
                         Activity
@@ -362,10 +215,8 @@
                     </h2>
                 </header>
 
-                <!-- Activity Grids -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-                    <!-- GitHub Feed Card -->
                     <div class="activity-block activity-github p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl flex flex-col">
                         <header class="activity-block-header flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
                             <div class="flex items-center gap-3">
@@ -387,7 +238,6 @@
                         ></div>
                     </div>
 
-                    <!-- Writing Feed Card -->
                     <div class="activity-block activity-blog p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl flex flex-col">
                         <header class="activity-block-header flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
                             <div class="flex items-center gap-3">
@@ -413,10 +263,6 @@
             </div>
         </section>
 
-
-        <!-- =================================================
-             BLOGS SECTION (Horizontal Carousel)
-             ================================================= -->
         <section id="blogs" class="blogs scroll-mt-24 pt-8">
             <div class="section-inner space-y-8">
 
@@ -435,11 +281,8 @@
                     </p>
                 </header>
 
-
-                <!-- Carousel Browser -->
                 <div id="blog-browser" class="blog-browser" data-blog-scroll>
 
-                    <!-- Previous Button -->
                     <button
                         type="button"
                         id="blog-prev"
@@ -450,7 +293,6 @@
                         ←
                     </button>
 
-                    <!-- Scroll Track Container -->
                     <div
                         class="blog-scroll-container"
                         aria-label="Blog articles"
@@ -462,7 +304,6 @@
                         ></div>
                     </div>
 
-                    <!-- Next Button -->
                     <button
                         type="button"
                         id="blog-next"
@@ -478,13 +319,8 @@
             </div>
         </section>
 
-
-        <!-- =================================================
-             FREELANCING / SERVICES SECTION
-             ================================================= -->
         <section id="freelance" class="freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
 
-            <!-- Anchor alias for #freelancing -->
             <span id="freelancing" class="section-anchor sr-only" aria-hidden="true"></span>
 
             <div class="section-inner space-y-10">
@@ -498,10 +334,8 @@
                     </h2>
                 </header>
 
-
                 <div class="freelancing-content grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
-                    <!-- Left: Services Matrix -->
                     <div class="freelancing-services lg:col-span-7">
                         <div class="freelance-card p-6 sm:p-8 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl h-full flex flex-col justify-between">
                             <div>
@@ -539,7 +373,6 @@
                         </div>
                     </div>
 
-                    <!-- Right: Direct CTA Card -->
                     <div class="freelancing-contact lg:col-span-5 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-950 to-cyan-950/30 border border-cyan-500/30 backdrop-blur-md shadow-2xl flex flex-col justify-center items-start gap-6 relative overflow-hidden">
                         <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
@@ -571,209 +404,15 @@
             </div>
         </section>
 
-
-        <!-- =================================================
-             EDUCATION SECTION (Interactive 3D Book)
-             ================================================= -->
-        <section
-            id="education"
-            class="education education-section scroll-mt-24 pt-8"
-            data-education-section
-        >
-            <div class="section-inner space-y-10">
-
-                <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                        Education
-                    </p>
-                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                        The road so far.
-                    </h2>
-                </header>
-
-
-                <div
-                    class="education-book"
-                    data-education-book
-                    aria-label="Education timeline"
-                >
-                    <div class="book" role="group" aria-label="Interactive education book">
-
-                        <button class="book-cover" data-book-cover type="button" aria-expanded="false" aria-label="Open education book"></button>
-
-                        <div class="book-pages" data-book-pages>
-
-                            <!-- Page 1: Class 10 -->
-                            <article
-                                class="book-page education-page"
-                                data-page="1"
-                                data-education-page="1"
-                            >
-                                <div class="book-page-content text-left space-y-2">
-                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Foundation</span>
-                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Class 10</h3>
-                                    <p class="text-sm text-slate-300">Secondary School Education</p>
-                                    <p class="text-xs text-slate-400 mt-2">Built foundations in mathematics, physical sciences, and introductory computational logic.</p>
-                                </div>
-                            </article>
-
-                            <!-- Page 2: Class 12 -->
-                            <article
-                                class="book-page education-page"
-                                data-page="2"
-                                data-education-page="2"
-                            >
-                                <div class="book-page-content text-left space-y-2">
-                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Senior School</span>
-                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Class 12</h3>
-                                    <p class="text-sm text-slate-300">Senior Secondary Education</p>
-                                    <p class="text-xs text-slate-400 mt-2">Non-Medical Sciences (PCM) with Computer Science. Deep focus on algorithms, problem-solving, and calculus.</p>
-                                </div>
-                            </article>
-
-                            <!-- Page 3: Chitkara University -->
-                            <article
-                                class="book-page education-page"
-                                data-page="3"
-                                data-education-page="3"
-                            >
-                                <div class="book-page-content text-left space-y-2">
-                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Undergraduate</span>
-                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Chitkara University</h3>
-                                    <p class="text-sm text-slate-300">B.Tech. CSE — AI &amp; ML Program</p>
-                                    <p class="text-xs text-slate-400 mt-2">Core study in data structures, algorithms, neural architectures, distributed computing, and machine learning models.</p>
-                                </div>
-                            </article>
-
-                            <!-- Page 4: Technical Specializations -->
-                            <article
-                                class="book-page education-page"
-                                data-page="4"
-                                data-education-page="4"
-                            >
-                                <div class="book-page-content text-left space-y-2">
-                                    <span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Focus Areas</span>
-                                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Specializations</h3>
-                                    <p class="text-sm text-slate-300">Systems &amp; Agentic AI</p>
-                                    <p class="text-xs text-slate-400 mt-2">High-performance tooling in Rust and Go, local LLM orchestration, Linux system tuning, and modern web architectures.</p>
-                                </div>
-                            </article>
-
-                        </div>
-
-                    </div>
-
-                    <div class="book-controls" data-book-controls>
-                        <button class="book-control" type="button" data-book-previous aria-label="Previous page">← Previous</button>
-                        <span class="book-status" data-book-status aria-live="polite">Closed</span>
-                        <button class="book-control" type="button" data-book-next aria-label="Next page">Next →</button>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- =================================================
-             CONNECT / SOCIAL SECTION
-             ================================================= -->
-        <section id="connect" class="connect scroll-mt-24 pt-8">
-            <div class="section-inner space-y-8">
-
-                <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                        Connect
-                    </p>
-                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                        Find me around the internet.
-                    </h2>
-                </header>
-
-
-                <nav
-                    class="social-links grid grid-cols-1 sm:grid-cols-3 gap-4"
-                    aria-label="Social links"
-                >
-                    <!-- GitHub Card -->
-                    <a
-                        href="https://github.com/krriisshhnnaaa"
-                        class="social-link group p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/80 transition-all duration-300 flex items-center justify-between"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-mono font-semibold text-sm text-white group-hover:text-purple-300 transition-colors">GitHub</h4>
-                                <span class="text-xs text-slate-400">@krriisshhnnaaa</span>
-                            </div>
-                        </div>
-                        <span class="text-slate-500 group-hover:text-purple-400 group-hover:translate-x-1 transition-all">↗</span>
-                    </a>
-
-                    <!-- LinkedIn Card -->
-                    <a
-                        href="https://www.linkedin.com/in/krishnang-pandey/"
-                        class="social-link group p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all duration-300 flex items-center justify-between"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-mono font-semibold text-sm text-white group-hover:text-blue-300 transition-colors">LinkedIn</h4>
-                                <span class="text-xs text-slate-400">krishnang</span>
-                            </div>
-                        </div>
-                        <span class="text-slate-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all">↗</span>
-                    </a>
-
-                    <!-- Instagram Card -->
-                    <a
-                        href="https://www.instagram.com/krishnangpandey/"
-                        class="social-link group p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-pink-500/50 hover:bg-slate-900/80 transition-all duration-300 flex items-center justify-between"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-pink-950/60 border border-pink-500/30 flex items-center justify-center text-pink-400 group-hover:scale-110 transition-transform">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-mono font-semibold text-sm text-white group-hover:text-pink-300 transition-colors">Instagram</h4>
-                                <span class="text-xs text-slate-400">@krishnang</span>
-                            </div>
-                        </div>
-                        <span class="text-slate-500 group-hover:text-pink-400 group-hover:translate-x-1 transition-all">↗</span>
-                    </a>
-                </nav>
-
-            </div>
-        </section>
-
     </main>
 
-
-    <!-- =====================================================
-         FOOTER
-         ===================================================== -->
     <footer class="site-footer border-t border-slate-800/80 bg-slate-950/90 py-8 relative z-10">
         <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
             <p>Designed and built by Krishnang Pandey.</p>
 
             <div class="flex items-center gap-6">
                 <span class="text-slate-500">Tailwind CSS &amp; Web Components</span>
-                <a href="#hero" class="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors">
+                <a href="#main-content" class="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors">
                     Back to top ↑
                 </a>
             </div>
@@ -781,45 +420,66 @@
     </footer>
     </div>
 
+    <!-- Compact Radial Action Menu (agy.info action NOW) -->
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Radial navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick Navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <a href="forms/connect.html" class="action action-n" aria-label="Connect Form">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Action A: Connect</span>
+            </a>
+            <a href="forms/choicepage.html" class="action action-e" aria-label="Choice Page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Action B: Choice</span>
+            </a>
+            <a href="fun/game/game.html" class="action action-s" aria-label="Play Arcade Game">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Action C: Game</span>
+            </a>
+            <a href="forms/review.html" class="action action-w" aria-label="Review Page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                <span class="tooltip">Action D: Review</span>
+            </a>
+        </nav>
+    </div>
 
-    <!-- =====================================================
-         SCRIPTS & CONTROLLER ORCHESTRATION
-         ===================================================== -->
     <script src="Interactive-Elements/bg-animations.js"></script>
-    <script src="Interactive-Elements/logo.js"></script>
     <script src="Interactive-Elements/terminal.js"></script>
     <script src="Interactive-Elements/activity-github.js"></script>
     <script src="Interactive-Elements/activity-blog.js"></script>
     <script src="Interactive-Elements/blog-horizontal-scroll.js"></script>
-    <script src="Interactive-Elements/book-education.js"></script>
 
-    <!-- Plasma UI (React & WebGL Liquid Glass Panels) -->
     <script src="dist/bundle.js" defer></script>
 
-    <!-- Orchestration Bootstrap -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Cosmic gravitational particle field
             if (typeof initBackgroundAnimations === 'function') {
                 initBackgroundAnimations();
             }
 
-            // 2. Interactive Quantum Kinetic Logo
-            if (typeof initLogoAnimation === 'function') {
-                initLogoAnimation();
-            }
-
-            // 3. Hero Developer Terminal
             if (typeof initTerminal === 'function') {
                 initTerminal();
             }
 
-            // 4. Live GitHub Activity Feed
             if (typeof initGitHubActivity === 'function') {
                 initGitHubActivity();
             }
 
-            // 5. Blog Activity Feed & Horizontal Carousel
             const blogActivity = typeof initBlogActivity === 'function'
                 ? initBlogActivity()
                 : null;
@@ -828,9 +488,89 @@
                 initBlogHorizontalScroll({ activityController: blogActivity });
             }
 
-            // 6. Scroll-Driven 3D Education Book
-            if (typeof initBookEducation === 'function') {
-                initBookEducation();
+            const scrambleEl = document.getElementById('scramble-hero-name');
+            if (scrambleEl) {
+                const targetText = 'KRISHNANG PANDEY';
+                const CHARS = '!<>-_/[]{}=+*^?#';
+                let scrambleInterval = null;
+
+                function playScramble() {
+                    if (scrambleInterval) clearInterval(scrambleInterval);
+                    let frame = 0;
+                    const total = 24;
+                    scrambleInterval = setInterval(() => {
+                        frame++;
+                        scrambleEl.textContent = targetText.split('').map((c, i) => {
+                            if (c === ' ') return ' ';
+                            const progress = frame - i * 1.2;
+                            return progress > total * 0.6
+                                ? c
+                                : CHARS[Math.floor(Math.random() * CHARS.length)];
+                        }).join('');
+                        if (frame > total + targetText.length) {
+                            clearInterval(scrambleInterval);
+                            scrambleInterval = null;
+                            scrambleEl.textContent = targetText;
+                        }
+                    }, 35);
+                }
+
+                playScramble();
+                scrambleEl.addEventListener('mouseenter', playScramble);
+                scrambleEl.addEventListener('click', playScramble);
+            }
+
+            const holdBtn = document.getElementById('resume-hold-btn');
+            if (holdBtn) {
+                let holdTimer = null;
+                const triggerDownload = () => {
+                    const link = document.createElement('a');
+                    link.href = 'resume.pdf';
+                    link.download = 'resume.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                };
+
+                const startHold = (e) => {
+                    if (e.button && e.button !== 0) return;
+                    holdBtn.classList.add('holding');
+                    holdTimer = setTimeout(() => {
+                        holdBtn.classList.remove('holding');
+                        holdBtn.classList.add('done');
+                        const span = holdBtn.querySelector('span');
+                        if (span) span.textContent = '✓';
+                        triggerDownload();
+                        setTimeout(() => {
+                            holdBtn.classList.remove('done');
+                            if (span) span.textContent = 'Hire Me ? ';
+                        }, 2000);
+                    }, 800);
+                };
+
+                const cancelHold = () => {
+                    if (holdTimer) {
+                        clearTimeout(holdTimer);
+                        holdTimer = null;
+                    }
+                    holdBtn.classList.remove('holding');
+                };
+
+                holdBtn.addEventListener('pointerdown', startHold);
+                holdBtn.addEventListener('pointerup', cancelHold);
+                holdBtn.addEventListener('pointerleave', cancelHold);
+                holdBtn.addEventListener('click', () => {
+                    if (!holdBtn.classList.contains('done')) {
+                        triggerDownload();
+                        holdBtn.classList.add('done');
+                        const span = holdBtn.querySelector('span');
+                        if (span) span.textContent = '✓';
+                        setTimeout(() => {
+                            holdBtn.classList.remove('done');
+                            if (span) span.textContent = 'Hire Me ? ';
+                        }, 2000);
+                    }
+                });
             }
         });
     </script>

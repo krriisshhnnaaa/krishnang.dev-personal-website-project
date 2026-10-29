@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Connect — Krishnang</title>
+    <link rel="stylesheet" href="pages/connect/base.css">
+    <link rel="stylesheet" href="pages/connect/animations.css">
+    <link rel="stylesheet" href="pages/connect/logo.css">
+    <link rel="stylesheet" href="../CSS/radial-menu.css">
+    <style>
+        :root {
+            --text-yellow: #ffff00;
+            --glow-lime: #00ff00;
+            --bg-dark: #090d16;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --card-border: #1e293b;
+            --accent-btn: #10b981;
+            --accent-btn-hover: #059669;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 32px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-back-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .nav-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .nav-back-link:hover {
+            color: var(--text-yellow);
+        }
+
+        /* div { h1 = [LET'S CONNECT], txtcolor = yellow, glow = yes, color = lime, font = isometra, italic = no, bold = yes } */
+        .title-container {
+            text-align: center;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        h1.connect-title {
+            color: var(--text-yellow);
+            font-family: 'Isometra', 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            letter-spacing: 2px;
+            text-align: center;
+            text-shadow: 
+                0 0 10px var(--glow-lime),
+                0 0 20px var(--glow-lime),
+                0 0 35px var(--glow-lime),
+                0 0 50px rgba(0, 255, 0, 0.5);
+            animation: glowPulse 2.5s infinite ease-in-out;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px var(--glow-lime),
+                    0 0 20px var(--glow-lime),
+                    0 0 35px var(--glow-lime);
+            }
+            50% {
+                text-shadow: 
+                    0 0 15px var(--glow-lime),
+                    0 0 30px var(--glow-lime),
+                    0 0 45px var(--glow-lime),
+                    0 0 60px rgba(0, 255, 0, 0.6);
+            }
+        }
+
+        /* div { marquee { scroll speed = 10 txt = "Full Stack | AI | ML Scripts | Intern | Freelancer | Student"} } */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(0, 255, 0, 0.35);
+            border-radius: 9999px;
+            padding: 12px 24px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.18);
+        }
+
+        .marquee-container marquee {
+            display: block;
+            width: 100%;
+            color: #f1f5f9;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Grid */
+        .hero-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 10px;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 22px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.2);
+        }
+
+        .hero-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #1e293b;
+            flex-shrink: 0;
+        }
+
+        .hero-icon-fallback {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--text-yellow);
+            flex-shrink: 0;
+        }
+
+        .hero-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f8fafc;
+            text-transform: capitalize;
+            word-break: break-word;
+        }
+
+        .hero-action {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 6px 0;
+        }
+
+        .connect-btn {
+            display: inline-block;
+            width: 100%;
+            max-width: 180px;
+            text-align: center;
+            padding: 10px 20px;
+            background: var(--accent-btn);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid var(--accent-btn);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .connect-btn:hover {
+            background: var(--accent-btn-hover);
+            border-color: var(--accent-btn-hover);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 640px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Navigation Back -->
+        <div class="nav-back-container">
+            <a href="choicepage.html" class="nav-back-link">
+                &larr; Back to Choice
+            </a>
+        </div>
+
+        <!-- div { h1 = [LET'S CONNECT], txtcolor = yellow, glow = yes, color = lime, font = isometra, italic = no, bold = yes } -->
+        <div class="title-container">
+            <h1 class="connect-title">LET'S CONNECT</h1>
+        </div>
+
+        <!-- div { marquee { scroll speed = 10 txt = "Full Stack | AI | ML Scripts | Intern | Freelancer | Student"} } -->
+        <div class="marquee-container">
+            <marquee behavior="scroll" direction="left" scrollamount="10" onmouseover="this.stop();" onmouseout="this.start();">
+                Full Stack | AI | ML Scripts | Intern | Freelancer | Student
+            </marquee>
+        </div>
+
+        <!-- All Social Media Hero Sections (1 to 20) -->
+        <div class="hero-grid">
+            <!-- hero1 -->
+            <div class="hero-card" id="hero1">
+                <div class="hero-header">
+                    <img src="pages/connect/wp.jpg" alt="whatsapp" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">💬</div>
+                    <span class="hero-name">whatsapp</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero2 -->
+            <div class="hero-card" id="hero2">
+                <div class="hero-header">
+                    <img src="pages/connect/inst.jpg" alt="Instagram" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">📸</div>
+                    <span class="hero-name">Instagram</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero3 -->
+            <div class="hero-card" id="hero3">
+                <div class="hero-header">
+                    <img src="pages/connect/intern.jpg" alt="internshala" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🎓</div>
+                    <span class="hero-name">internshala</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://internshala.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero4 -->
+            <div class="hero-card" id="hero4">
+                <div class="hero-header">
+                    <img src="pages/connect/nkri.jpg" alt="naukri.com" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">💼</div>
+                    <span class="hero-name">naukri.com</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://naukri.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero5 -->
+            <div class="hero-card" id="hero5">
+                <div class="hero-header">
+                    <img src="pages/connect/freelancer.jpg" alt="freelancer" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🌐</div>
+                    <span class="hero-name">freelancer</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://freelancer.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero6 -->
+            <div class="hero-card" id="hero6">
+                <div class="hero-header">
+                    <img src="pages/connect/fiverr.jpg" alt="fiverr" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🎯</div>
+                    <span class="hero-name">fiverr</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://fiverr.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero7 -->
+            <div class="hero-card" id="hero7">
+                <div class="hero-header">
+                    <img src="pages/connect/crsera.jpg" alt="coursera" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">📚</div>
+                    <span class="hero-name">coursera</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://coursera.org/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero8 -->
+            <div class="hero-card" id="hero8">
+                <div class="hero-header">
+                    <img src="pages/connect/fb.jpg" alt="facebook" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">👥</div>
+                    <span class="hero-name">facebook</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero9 -->
+            <div class="hero-card" id="hero9">
+                <div class="hero-header">
+                    <img src="pages/connect/hrst.jpg" alt="hirist.tech" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">💻</div>
+                    <span class="hero-name">hirist.tech</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://hirist.tech/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero10 -->
+            <div class="hero-card" id="hero10">
+                <div class="hero-header">
+                    <img src="pages/connect/gsdr.jpg" alt="glassdoor" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🚪</div>
+                    <span class="hero-name">glassdoor</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://glassdoor.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero11 -->
+            <div class="hero-card" id="hero11">
+                <div class="hero-header">
+                    <img src="pages/connect/indd.jpg" alt="indeed" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🔎</div>
+                    <span class="hero-name">indeed</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://indeed.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero12 -->
+            <div class="hero-card" id="hero12">
+                <div class="hero-header">
+                    <img src="pages/connect/lnkdn.jpg" alt="LinkedIn" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🔗</div>
+                    <span class="hero-name">LinkedIn</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero13 -->
+            <div class="hero-card" id="hero13">
+                <div class="hero-header">
+                    <img src="pages/connect/ltcd.jpg" alt="leetcode" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">⚡</div>
+                    <span class="hero-name">leetcode</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero14 -->
+            <div class="hero-card" id="hero14">
+                <div class="hero-header">
+                    <img src="pages/connect/x.jpg" alt="X" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">✖️</div>
+                    <span class="hero-name">X</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero15 -->
+            <div class="hero-card" id="hero15">
+                <div class="hero-header">
+                    <img src="pages/connect/ustp.jpg" alt="unstop" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🏆</div>
+                    <span class="hero-name">unstop</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://unstop.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero16 -->
+            <div class="hero-card" id="hero16">
+                <div class="hero-header">
+                    <img src="pages/connect/upwork.jpg" alt="Upwork" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">💼</div>
+                    <span class="hero-name">Upwork</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://upwork.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero17 -->
+            <div class="hero-card" id="hero17">
+                <div class="hero-header">
+                    <img src="pages/connect/wkindi.jpg" alt="work india" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">🏢</div>
+                    <span class="hero-name">work india</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://workindia.in/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero18 -->
+            <div class="hero-card" id="hero18">
+                <div class="hero-header">
+                    <img src="pages/connect/mdm.jpg" alt="medium" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">✍️</div>
+                    <span class="hero-name">medium</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://medium.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero19 -->
+            <div class="hero-card" id="hero19">
+                <div class="hero-header">
+                    <img src="pages/connect/yt.jpg" alt="Youtube" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">▶️</div>
+                    <span class="hero-name">Youtube</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+
+            <!-- hero20 -->
+            <div class="hero-card" id="hero20">
+                <div class="hero-header">
+                    <img src="pages/connect/ddev.jpg" alt="daily.dev" class="hero-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-icon-fallback" style="display:none;">📰</div>
+                    <span class="hero-name">daily.dev</span>
+                </div>
+                <div class="hero-action">
+                    <a href="https://daily.dev/" target="_blank" rel="noopener noreferrer" class="connect-btn">Connect</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compact Radial Action Menu (agy.info action NOW) -->
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Radial navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick Navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <a href="connect.html" class="action action-n" aria-label="Action A: Connect">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Action A: Connect</span>
+            </a>
+            <a href="choicepage.html" class="action action-e" aria-label="Action B: Choice Page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Action B: Choice</span>
+            </a>
+            <a href="../fun/game/game.html" class="action action-s" aria-label="Action C: Play Game">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Action C: Game</span>
+            </a>
+            <a href="../index.html" class="action action-w" aria-label="Action D: Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="tooltip">Action D: Home</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

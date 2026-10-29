@@ -38,7 +38,7 @@ body {
   background-color: #0a1424 !important;
   background-image: 
     linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)),
-    url('../jpg(1)') !important;
+    url('../bg.jpg') !important;
   background-size: cover !important;
   background-position: center top !important;
   background-attachment: fixed !important;

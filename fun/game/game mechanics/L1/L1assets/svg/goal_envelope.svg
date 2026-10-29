@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd166" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffd166" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- soft glow -->
+  <circle cx="48" cy="52" r="46" fill="url(#glow)"/>
+  <!-- envelope body -->
+  <rect x="10" y="26" width="76" height="52" rx="5" fill="#f5f6ff" stroke="#9aa3d6" stroke-width="2"/>
+  <!-- flap -->
+  <path d="M10 30 L48 58 L86 30" fill="none" stroke="#9aa3d6" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M10 76 L36 52 M86 76 L60 52" fill="none" stroke="#c9d1ff" stroke-width="2"/>
+  <!-- green seal -->
+  <circle cx="48" cy="58" r="9" fill="#33c27a" stroke="#1f8a54" stroke-width="2"/>
+  <path d="M43.5 58 L47 61.5 L53 54.5" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

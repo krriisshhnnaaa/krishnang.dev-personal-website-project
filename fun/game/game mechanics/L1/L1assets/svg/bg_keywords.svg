@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="360" viewBox="0 0 800 360">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a9bf0"/>
+      <stop offset="0.7" stop-color="#8ccdff"/>
+      <stop offset="1" stop-color="#cdeeff"/>
+    </linearGradient>
+    <!-- one cloud, about 140 x 60, origin at its top-left -->
+    <g id="cloud" fill="#ffffff">
+      <ellipse cx="70" cy="46" rx="68" ry="14"/>
+      <circle cx="38" cy="36" r="20"/>
+      <circle cx="72" cy="26" r="26"/>
+      <circle cx="104" cy="37" r="19"/>
+    </g>
+    <!-- the whole cloud layer, so it can be repeated for edge wrapping -->
+    <g id="clouds">
+      <use xlink:href="#cloud" x="60"  y="50"  opacity="0.95"/>
+      <use xlink:href="#cloud" x="300" y="120" opacity="0.8" transform="translate(300 120) scale(0.7) translate(-300 -120)"/>
+      <use xlink:href="#cloud" x="480" y="40"  opacity="0.95" transform="translate(480 40) scale(1.15) translate(-480 -40)"/>
+      <use xlink:href="#cloud" x="700" y="150" opacity="0.85" transform="translate(700 150) scale(0.8) translate(-700 -150)"/>
+      <use xlink:href="#cloud" x="170" y="190" opacity="0.7"  transform="translate(170 190) scale(0.55) translate(-170 -190)"/>
+      <use xlink:href="#cloud" x="590" y="230" opacity="0.65" transform="translate(590 230) scale(0.5) translate(-590 -230)"/>
+    </g>
+  </defs>
+  <rect width="800" height="360" fill="url(#sky)"/>
+  <use xlink:href="#clouds"/>
+  <!-- repeat copies just past each edge so a cloud cut by the right edge continues on the left -->
+  <use xlink:href="#clouds" x="-800"/>
+  <use xlink:href="#clouds" x="800"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="44" viewBox="0 0 32 44">
+  <!-- tucked legs -->
+  <rect x="8" y="34" width="4" height="5" rx="1.5" fill="#9aa3d6"/>
+  <rect x="20" y="34" width="4" height="5" rx="1.5" fill="#9aa3d6"/>
+  <rect x="5" y="37" width="8" height="4" rx="2" fill="#4a58a8"/>
+  <rect x="19" y="37" width="8" height="4" rx="2" fill="#4a58a8"/>
+  <!-- paper, slightly stretched -->
+  <rect x="3" y="0" width="26" height="37" rx="3" fill="#f5f6ff" stroke="#9aa3d6" stroke-width="1.5"/>
+  <rect x="6" y="4" width="12" height="5" rx="1" fill="#4a58a8"/>
+  <rect x="21" y="4" width="6" height="6" rx="1" fill="#c9d1ff"/>
+  <!-- wide eyes looking up -->
+  <circle cx="12" cy="17" r="3" fill="#fff" stroke="#9aa3d6" stroke-width="0.8"/>
+  <circle cx="21" cy="17" r="3" fill="#fff" stroke="#9aa3d6" stroke-width="0.8"/>
+  <circle cx="12" cy="16" r="1.3" fill="#1b2145"/>
+  <circle cx="21" cy="16" r="1.3" fill="#1b2145"/>
+  <rect x="6" y="24" width="20" height="2" rx="1" fill="#9aa3d6"/>
+  <rect x="6" y="28" width="16" height="2" rx="1" fill="#9aa3d6"/>
+  <rect x="6" y="32" width="19" height="2" rx="1" fill="#9aa3d6"/>
+</svg>

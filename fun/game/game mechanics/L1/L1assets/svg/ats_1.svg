@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="28" viewBox="0 0 54 28">
+  <!-- "ATS" drawn as stroked paths: no font dependency. Layers: soft glow, dark outline, red fill. -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#ff2a2a" stroke-opacity="0.25" stroke-width="8">
+      <path d="M4 23 L11 5.5 L18 23 M7 17 H15"/>
+      <path d="M21.5 5.5 H34.5 M28 5.5 V23"/>
+      <path d="M50 9.5 C48.5 3.5 38 4 38 10.5 C38 16 50 13 50 19 C50 25 39 25 37.5 19.5"/>
+    </g>
+    <g stroke="#7a1010" stroke-width="7">
+      <path d="M4 23 L11 5.5 L18 23 M7 17 H15"/>
+      <path d="M21.5 5.5 H34.5 M28 5.5 V23"/>
+      <path d="M50 9.5 C48.5 3.5 38 4 38 10.5 C38 16 50 13 50 19 C50 25 39 25 37.5 19.5"/>
+    </g>
+    <g stroke="#ff5a5a" stroke-width="4.2">
+      <path d="M4 23 L11 5.5 L18 23 M7 17 H15"/>
+      <path d="M21.5 5.5 H34.5 M28 5.5 V23"/>
+      <path d="M50 9.5 C48.5 3.5 38 4 38 10.5 C38 16 50 13 50 19 C50 25 39 25 37.5 19.5"/>
+    </g>
+  </g>
+</svg>

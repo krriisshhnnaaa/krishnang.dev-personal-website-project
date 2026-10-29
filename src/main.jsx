@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { PlasmaProvider, Plasma, usePlasma } from "@cruxgarden/plasma-ui";
 import { Workspace, defaultHeroPanels } from "./Workspace";
+import { DriftWall } from "./DriftWall";
 import { App } from "./App";
 
 // Expose exports globally on window for programmatic access or testing
@@ -11,6 +12,7 @@ if (typeof window !== "undefined") {
   window.usePlasma = usePlasma;
   window.Workspace = Workspace;
   window.defaultHeroPanels = defaultHeroPanels;
+  window.DriftWall = DriftWall;
 }
 
 // Mount React application into #root container

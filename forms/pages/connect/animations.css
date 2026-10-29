@@ -1,0 +1,20 @@
+/* Animations for connect.html */
+@keyframes glowPulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px #00ff00,
+            0 0 20px #00ff00,
+            0 0 35px #00ff00;
+    }
+    50% {
+        text-shadow: 
+            0 0 15px #00ff00,
+            0 0 30px #00ff00,
+            0 0 45px #00ff00,
+            0 0 60px rgba(0, 255, 0, 0.6);
+    }
+}
+
+h1.connect-title {
+    animation: glowPulse 2.5s infinite ease-in-out;
+}

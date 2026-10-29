@@ -1,0 +1,207 @@
+in this document : 
+
+ignore anything inside action done ()
+
+execute : action now ()
+
+rest : context to use : 
+
+
+===========FORMS PAGE===============
+
+modify forms.html file inside this repository inside the forms/ directory 
+
+
+
+#what to do  ? : 
+
+make a basic HTML file : 
+
+basic functionality : 
+
+choice : 
+
+contact -
+leave a review - 
+
+
+contact forms page : 
+
+
+input parameters (required) : name, phone no. , email ID.
+input parameters (optional) : reason to connect , attachments (if any) 
+
+accepted formats for attachments : pdf (1 to 100mb) , jpg (upto 25mb) , txt (upto 10mb) , pptx (upto 50mb).
+max size for "reason to connect" : 500 characters , use : tag (text area)
+
+
+directory structure : 
+krishnag.dev-personal-website-project /
+
+	forms /
+
+		choice page.html
+
+		connect.html
+
+		review.html
+	
+		styling / 
+		
+			bg_img_choice.jpg
+			bg_img_connect.jpg
+			bg_img_review.jpg
+			bg_img_choicepgae.jpg
+
+		
+			choice /	
+				base.css 
+				logo.css
+				animations.css
+
+			connect /
+				base.css	
+				logo.css
+				animations.css
+			
+			review /
+
+
+				base.css
+				logo.css
+				animations.css
+
+
+		tempc.html
+		tempr.html
+		tempe.html
+
+
+
+
+review.html structure : 
+
+form (
+
+input parameters (required) : name , review , rating 1 to 5 stars
+
+input parameters (optional) : contact info : phone no. , email ID , photo, attachments
+
+attachments accepted : jpg , pdf , mp4 , mp3 
+
+
+
+tech stack : tailwind , REACT.js , html5 , vanilla javascript , vanilla css3 , typescript (where needed) , mongoDB (for storing info)
+
+
+ 
+
+
+
+ 
+
+action DONE ( 
+
+make choice.html 
+do not make any new file or directory
+use given path : 
+forms/choicepage.html 
+
+
+choice page format : 
+
+h1 : HI ! what would you like to do ? connect with me or leave a review
+styling : glowintensity:55% ; colour : textcolor : black , glowcolor : reddish-pink , text-align:center
+
+forms (
+radio button { choices : leave a review ; connect with me} 
+)
+styling : txtcolor : black ; 
+
+button (
+submit ; buttonaction : open tempc.html if radio_choice : connect with me else if radio_choice = leave a review : open tempr.html ; else : open tempe.html)
+
+
+
+
+
+
+
+
+page styling : 
+
+bg-img = bg_img.jpg
+
+)
+action now ( 
+
+
+
+create : 
+
+
+tempc.html :
+
+tempc :
+temporary html page for choice descision.
+ 
+on submission with choice = connect with me 
+pop - tempc.html 
+
+page format : 
+
+pop window.notification  { do you wish to continue ?}
+
+page styling : white page 
+
+top-right : connecting you to krishnang
+
+
+
+on do you wish choices = {yes} . {no}
+
+if {yes} : open connect.html
+else : open index.html
+
+
+
+
+)
+
+
+
+	create tempr.html :
+temporary html page for leave a review descision.
+
+on submission with choice = leave a review
+pop - tempr.html
+
+page format : 
+pop window.notification {do you wish to continue ?}
+
+do you wish to continue choices = {yes) . {no}
+
+
+if {yes} : open review.html
+else : open index.html 
+page styling : white page 
+top right : let me take your review
+
+)
+
+
+
+action NOW {
+
+
+
+
+
+
+
+
+
+
+
+
+}

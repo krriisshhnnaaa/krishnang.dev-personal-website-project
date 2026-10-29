@@ -63,7 +63,7 @@
             color: var(--accent-pink);
         }
 
-        /* text align.center == display_text = {name.txt} : file location = same directory */
+        /* size = h1 ( {center} {marquee} [text from name.txt] } */
         .name-banner-container {
             width: 100%;
             text-align: center;
@@ -80,14 +80,24 @@
             width: 100%;
         }
 
+        .name-banner-h1 {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1;
+        }
+
         .name-banner {
             display: inline-block;
             text-align: center;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: clamp(8px, 1.1vw, 12px);
+            font-size: clamp(9px, 1.2vw, 13px);
             line-height: 1.15;
             color: #38bdf8;
-            text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
             white-space: pre;
             margin: 0 auto;
         }
@@ -105,18 +115,11 @@
             gap: 24px;
         }
 
-        .form-title {
-            font-size: 1.85rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            text-align: center;
-        }
-
         .review-form {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 22px;
+            gap: 24px;
             width: 100%;
         }
 
@@ -128,22 +131,14 @@
             align-items: center;
         }
 
-        .form-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #374151;
-            align-self: flex-start;
-            padding-left: 4px;
-        }
-
         /* Comment boxes */
         .comment-box {
             width: 100%;
             border: 2px solid #cbd5e1;
             border-radius: 10px;
-            padding: 14px 18px;
+            padding: 16px 20px;
             font-family: inherit;
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: #1e293b;
             background: #f8fafc;
             transition: all 0.2s ease-in-out;
@@ -157,82 +152,18 @@
             box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.15);
         }
 
-        /* comment-box : {text area} -> dimesions l=60,b=10 -- ratio - l:b = 6:1 placeholder = {"What should we call you ?"} */
-        .name-box {
-            max-width: 600px;
-            min-height: 100px;
-            aspect-ratio: 6 / 1;
-        }
-
-        /* comment-box : {text area} -> dimensions l=120,b=20 -- ratio - l:b = 6:1 placeholder = {"Leave a review !"} */
+        /* Top Box: comment-box : {text area} -> dimensions l=120,b=20 -- ratio - l:b = 6:1 placeholder = {"Leave a review !"} */
         .review-box {
             max-width: 860px;
             min-height: 160px;
             aspect-ratio: 6 / 1;
         }
 
-        /* Rating Stars (1 to 5 stars) */
-        .rating-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .rating-stars {
-            display: flex;
-            gap: 6px;
-        }
-
-        .star-btn {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: #d1d5db;
-            cursor: pointer;
-            transition: color 0.15s ease, transform 0.15s ease;
-            line-height: 1;
-        }
-
-        .star-btn:hover,
-        .star-btn.active {
-            color: #fbbf24;
-            transform: scale(1.1);
-        }
-
-        /* Optional fields */
-        .optional-fields {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            background: #f8fafc;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--accent-pink);
-            background: #ffffff;
-        }
-
-        .file-upload-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .file-upload-hint {
-            font-size: 0.8rem;
-            color: #64748b;
+        /* Bottom Box: comment-box : {text area} -> dimesions l=60,b=10 -- ratio - l:b = 6:1 placeholder = {"What's your goodname ?"} */
+        .name-box {
+            max-width: 600px;
+            min-height: 100px;
+            aspect-ratio: 6 / 1;
         }
 
         /* Submit Button */
@@ -240,14 +171,14 @@
             background-color: var(--accent-pink);
             color: var(--white);
             border: none;
-            padding: 14px 40px;
+            padding: 14px 44px;
             font-size: 1.05rem;
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
             box-shadow: 0 4px 14px rgba(255, 45, 85, 0.35);
             transition: all 0.2s ease-in-out;
-            margin-top: 10px;
+            margin-top: 4px;
         }
 
         .submit-btn:hover {
@@ -361,12 +292,6 @@
             white-space: pre-wrap;
         }
 
-        .review-rating-stars {
-            color: #fbbf24;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-        }
-
         .review-author {
             font-size: 1.15rem;
             font-weight: 600;
@@ -398,10 +323,11 @@
             </a>
         </div>
 
-        <!-- text align.center == display_text = {name.txt} : file location = same directory -->
+        <!-- size = h1 ( {center} {marquee} [text from name.txt] } -->
         <div class="name-banner-container" id="nameBannerContainer">
-            <marquee behavior="scroll" direction="left" scrollamount="13" onmouseover="this.stop();" onmouseout="this.start();">
-                <pre class="name-banner" id="nameBanner">
+            <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
+                <h1 class="name-banner-h1">
+                    <pre class="name-banner" id="nameBanner">
 ╒════╗  ╒═══╗ ╒══════════╗ ╒══════╗ ╒═════════╗ ╒════╗╒════╗  ╒════╗   ╒════╗  ╒════════╗   ╒════╗   ╒════╗ ╒════════╗      ╒═════════╗  ╒═════════╗ ╒════╗    ╒════╗     
 └┐  ╓╜ ╒╛ ╓─╜ └┐  ╓───┐  ║ └─┐  ╓─╜ │  ╓────┐ ║ └┐  ╓╜└┐  ╓╜  │    ╚╗  └┐  ╓╜  │  ╓──┐  ║   │    ╚╗  └┐  ╓╜ │  ╓───┐ ║      └┐  ╓───┐ ╚╗ └┐  ╓───┐ ║ └┐  ╓╜    └┐  ╓╜     
  │  ║ ╒╛ ╓╜    │  ║   │  ║   │  ║   │  ║    └─╜  │  ║  │  ║   │  ╟┐ ╚╗  │  ║   │  ║  │  ║   │  ╟┐ ╚╗  │  ║  │  ║   └─╜       │  ║   │  ║  │  ║   └─╜  └┐ ╚╗    ╒╛ ╓╜      
@@ -410,30 +336,16 @@
  │  ║   │  ║   │  ║└┐ ╚╗     │  ║   ╒═╗    │  ║  │  ║  │  ║   │  ║  └┐ ╚╡  ║   │  ║  │  ║   │  ║  └┐ ╚╡  ║  │  ║ └┐  ╓╜      │  ║   │  ║  │  ║   ╒═╗     └┐ ╚╛ ╓╜         
 ╒╛  ╚╗ ╒╛  ╚╗ ╒╛  ╚╗└┐ ╚═╗ ╒═╛  ╚═╗ │ ╚════╛  ║ ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  │  ╚══╛  ║  ╒═╗ ╒╛  ╚═══╛ ╓╜ ╒╛  ╚═══╛ ║      └┐  ╓╜          
 └────╜ └────╜ └────╜ └───╜ └──────╜ └─────────╜ └────╜└────╜ └────╜   └────╜  └────╜└────╜ └────╜   └────╜  └────────╜  └─╜ └─────────╜  └─────────╜       └──╜           
-                </pre>
+                    </pre>
+                </h1>
             </marquee>
         </div>
 
-        <!-- Form Section -->
+        <!-- Form Section: Only Leave a review and What's your goodname ? -->
         <div class="form-card">
-            <h1 class="form-title">Leave a Review</h1>
             <form id="reviewForm" class="review-form">
-                <!-- Name textarea: dimensions l=60, b=10, ratio 6:1 -->
+                <!-- Top box: Leave a review (dimensions l=120,b=20, ratio 6:1) -->
                 <div class="form-group">
-                    <label for="reviewerName" class="form-label">Your Name *</label>
-                    <textarea 
-                        id="reviewerName" 
-                        name="name" 
-                        cols="60" 
-                        rows="10" 
-                        class="comment-box name-box" 
-                        placeholder="What should we call you ?" 
-                        required></textarea>
-                </div>
-
-                <!-- Review textarea: dimensions l=120, b=20, ratio 6:1 -->
-                <div class="form-group">
-                    <label for="reviewContent" class="form-label">Your Review *</label>
                     <textarea 
                         id="reviewContent" 
                         name="review" 
@@ -444,37 +356,16 @@
                         required></textarea>
                 </div>
 
-                <!-- Rating: 1 to 5 stars -->
+                <!-- Bottom box: What's your goodname ? (dimensions l=60,b=10, ratio 6:1) -->
                 <div class="form-group">
-                    <label class="form-label">Rating (1 to 5 Stars) *</label>
-                    <div class="rating-container">
-                        <div class="rating-stars" id="starRating">
-                            <button type="button" class="star-btn active" data-rating="1">&#9733;</button>
-                            <button type="button" class="star-btn active" data-rating="2">&#9733;</button>
-                            <button type="button" class="star-btn active" data-rating="3">&#9733;</button>
-                            <button type="button" class="star-btn active" data-rating="4">&#9733;</button>
-                            <button type="button" class="star-btn active" data-rating="5">&#9733;</button>
-                        </div>
-                        <input type="hidden" id="ratingInput" name="rating" value="5">
-                    </div>
-                </div>
-
-                <!-- Optional parameters: contact info & attachments -->
-                <div class="optional-fields">
-                    <div class="form-group">
-                        <label for="phoneInput" class="form-label">Phone Number (optional)</label>
-                        <input type="tel" id="phoneInput" name="phone" class="input-field" placeholder="+1 (555) 000-0000">
-                    </div>
-                    <div class="form-group">
-                        <label for="emailInput" class="form-label">Email ID (optional)</label>
-                        <input type="email" id="emailInput" name="email" class="input-field" placeholder="you@example.com">
-                    </div>
-                </div>
-
-                <div class="file-upload-container">
-                    <label for="attachmentInput" class="form-label">Attachments / Photo (optional)</label>
-                    <input type="file" id="attachmentInput" name="attachments" class="input-field" accept=".jpg,.jpeg,.pdf,.mp4,.mp3">
-                    <span class="file-upload-hint">Accepted formats: jpg, pdf, mp4, mp3</span>
+                    <textarea 
+                        id="reviewerName" 
+                        name="name" 
+                        cols="60" 
+                        rows="10" 
+                        class="comment-box name-box" 
+                        placeholder="What's your goodname ?" 
+                        required></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn" id="submitBtn">Submit Review</button>
@@ -491,7 +382,7 @@
                 <span class="hero-tag">review</span>
             </div>
 
-            <!-- Review items dynamically fetched/rendered -->
+            <!-- Review items dynamically fetched/rendered: review hero 1 to n -->
             <div id="reviewsContainer" class="reviews-container">
                 <!-- Rendered dynamically -->
             </div>
@@ -511,41 +402,15 @@
                 // Static embedded content is already present as fallback
             });
 
-        // Rating Stars Interaction
-        const starButtons = document.querySelectorAll('#starRating .star-btn');
-        const ratingInput = document.getElementById('ratingInput');
-        let currentRating = 5;
-
-        starButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentRating = parseInt(btn.getAttribute('data-rating'), 10);
-                ratingInput.value = currentRating;
-                updateStarDisplay(currentRating);
-            });
-        });
-
-        function updateStarDisplay(rating) {
-            starButtons.forEach(btn => {
-                const btnVal = parseInt(btn.getAttribute('data-rating'), 10);
-                if (btnVal <= rating) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-        }
-
         // Local & MongoDB Reviews Storage Handling
         const defaultReviews = [
             {
                 name: "Alex Vance",
-                content: "Krishnang is an exceptionally detail-oriented developer. The architecture and user interface built for the platform exceeded all our expectations!",
-                rating: 5
+                content: "Krishnang is an exceptionally detail-oriented developer. The architecture and user interface built for the platform exceeded all our expectations!"
             },
             {
                 name: "Sarah Chen",
-                content: "Fast communication, innovative ideas, and clean modern code. An absolute pleasure to collaborate with.",
-                rating: 5
+                content: "Fast communication, innovative ideas, and clean modern code. An absolute pleasure to collaborate with."
             }
         ];
 
@@ -555,6 +420,9 @@
                 if (data) {
                     const parsed = JSON.parse(data);
                     if (Array.isArray(parsed) && parsed.length > 0) {
+                        if (parsed.length < 2) {
+                            return [...parsed, ...defaultReviews.slice(parsed.length)];
+                        }
                         return parsed;
                     }
                 }
@@ -572,31 +440,9 @@
             }
         }
 
-        /*
-           hero section name : "review"
-           bgcolor = prussian blue
-           txt = white
-           border style = 3D 
-           border width = 50
-           border length = 60
-           display == 
-           {
-           -----txt---from----
-           ---file----
-           	- "name"
-           }
-        */
         function renderReviewCard(review) {
             const card = document.createElement('div');
             card.className = 'review-card-3d';
-
-            // Star icons
-            const starCount = review.rating ? parseInt(review.rating, 10) : 5;
-            const starsText = '★'.repeat(starCount) + '☆'.repeat(Math.max(0, 5 - starCount));
-
-            const ratingElem = document.createElement('div');
-            ratingElem.className = 'review-rating-stars';
-            ratingElem.textContent = starsText;
 
             const contentElem = document.createElement('div');
             contentElem.className = 'review-content';
@@ -606,7 +452,6 @@
             authorElem.className = 'review-author';
             authorElem.textContent = `- "${review.name || 'Anonymous'}"`;
 
-            card.appendChild(ratingElem);
             card.appendChild(contentElem);
             card.appendChild(authorElem);
 
@@ -622,7 +467,7 @@
             });
         }
 
-        // Fetch from MongoDB backend endpoint (if available) with local fallback
+
         async function fetchReviews() {
             try {
                 const res = await fetch('/api/reviews', { method: 'GET' });
@@ -648,23 +493,17 @@
         reviewForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById('reviewerName').value.trim();
             const review = document.getElementById('reviewContent').value.trim();
-            const rating = parseInt(document.getElementById('ratingInput').value, 10) || 5;
-            const phone = document.getElementById('phoneInput').value.trim();
-            const email = document.getElementById('emailInput').value.trim();
+            const name = document.getElementById('reviewerName').value.trim();
 
-            if (!name || !review) {
-                alert('Please fill in both name and review.');
+            if (!review || !name) {
+                alert('Please fill in both the review and your name.');
                 return;
             }
 
             const newReview = {
                 name: name,
                 content: review,
-                rating: rating,
-                phone: phone,
-                email: email,
                 timestamp: new Date().toISOString()
             };
 
@@ -692,8 +531,6 @@
             // Show confirmation & reset form
             statusMessage.style.display = 'block';
             reviewForm.reset();
-            updateStarDisplay(5);
-            document.getElementById('ratingInput').value = 5;
 
             setTimeout(() => {
                 statusMessage.style.display = 'none';
