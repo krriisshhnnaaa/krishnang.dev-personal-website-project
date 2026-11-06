@@ -2,7 +2,7 @@ in this document :
 
 ignore anything inside action done ()
 
-execute : action now ()
+ecute : action now ()
 
 rest : context to use : 
 
@@ -1272,7 +1272,7 @@ action D =
 
 
 
-action NOW {
+action DONE {
 
 task {using phaser.js game engine in the game
 
@@ -2363,3 +2363,69 @@ mario style game with a long path at end of which there is a message icon player
 
 
 }
+
+
+
+
+
+
+
+action NOW {
+
+section ID = "drift-wall-showcase"
+
+
+edits {
+
+change following: 
+
+img1 = URL{}
+img2 = URL{}
+img3 = URL{}
+img4 = URL{}
+img5 = URL{}
+img6 = URL{}
+img7 = URL{}
+img8 = URL{}
+img9 = URL{}
+img10 = URL{}
+img11 = URL{}
+img12 = URL{}
+
+
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
