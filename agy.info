@@ -2370,30 +2370,17 @@ mario style game with a long path at end of which there is a message icon player
 
 
 
-action NOW {
+action DONE {
 
-section ID = "drift-wall-showcase"
+section ID = "blogs" {
 
+remove the section entirely
 
-edits {
-
-change following: 
-
-img1 = URL{}
-img2 = URL{}
-img3 = URL{}
-img4 = URL{}
-img5 = URL{}
-img6 = URL{}
-img7 = URL{}
-img8 = URL{}
-img9 = URL{}
-img10 = URL{}
-img11 = URL{}
-img12 = URL{}
+resolve any dependency issues 
 
 
 }
+
 
 
 

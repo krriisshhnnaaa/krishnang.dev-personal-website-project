@@ -79,13 +79,9 @@ export function App() {
         window.initGitHubActivity();
       }
 
-      // 4. Blog Activity & Horizontal Carousel (EXCEPTED from plasma, standalone)
-      const blogActivity = typeof window.initBlogActivity === "function"
-        ? window.initBlogActivity()
-        : null;
-
-      if (typeof window.initBlogHorizontalScroll === "function") {
-        window.initBlogHorizontalScroll({ activityController: blogActivity });
+      // 4. Blog Activity Feed
+      if (typeof window.initBlogActivity === "function") {
+        window.initBlogActivity();
       }
     }, 100);
 
@@ -106,7 +102,7 @@ export function App() {
     );
   }
 
-  // Portfolio Page View with Plasma UI on all hero sections EXCEPT terminal and blogs
+  // Portfolio Page View with Plasma UI on all hero sections EXCEPT terminal
   const githubPanel = defaultHeroPanels.find((p) => p.id === "github-activity");
   const freelanceServicesPanel = defaultHeroPanels.find((p) => p.id === "freelance-services");
   const freelanceContactPanel = defaultHeroPanels.find((p) => p.id === "freelance-contact");
@@ -156,18 +152,17 @@ export function App() {
       {/* =====================================================
            MAIN CONTENT
            ===================================================== */}
-      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
+      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col items-center gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
 
         {/* =================================================
              STANDALONE DECODED SCRAMBLE & RESUME BUTTON
              No section ID hero, No Plasma UI elements
-             Text align - 8px from right as per agy.info
+             Center-aligned as per user request
              ================================================= */}
-        <div className="w-full flex flex-col gap-10">
-          <div className="w-full" style={{ textAlign: "right", paddingRight: "8px" }}>
+        <div className="w-full flex flex-col items-center gap-10">
+          <div className="w-full text-center">
             <h1
-              className="scramble text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500"
-              style={{ textAlign: "right", paddingRight: "8px" }}
+              className="scramble text-center text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500"
               onClick={playScramble}
               onMouseEnter={playScramble}
               title="Click or hover to decode"
@@ -187,7 +182,7 @@ export function App() {
              - Left: GitHub Activity (PLASMA UI, DRAGGABLE)
              - Right: Blog Activity (EXCEPTED: READ MY WRITING)
              ================================================= */}
-        <section id="activity" className="activity scroll-mt-24 pt-8">
+        <section id="activity" className="w-full activity scroll-mt-24 pt-8">
           <div className="section-inner space-y-10">
 
             <header className="section-header">
@@ -240,72 +235,11 @@ export function App() {
         </section>
 
         {/* =================================================
-             BLOGS SECTION: (EXCEPTED FROM PLASMA UI)
-             Horizontal Carousel: "Read My Writing (Blog Posts)"
-             ================================================= */}
-        <section id="blogs" className="blogs scroll-mt-24 pt-8">
-          <div className="section-inner space-y-8">
-
-            <header className="section-header flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div>
-                <p className="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                  Writing
-                </p>
-                <h2 className="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                  Things I&apos;ve written.
-                </h2>
-              </div>
-
-              <p className="text-sm text-slate-400 max-w-sm">
-                Technical explorations on systems programming, artificial intelligence workflows, and internet architecture.
-              </p>
-            </header>
-
-            {/* Carousel Browser */}
-            <div id="blog-browser" className="blog-browser" data-blog-scroll>
-
-              <button
-                type="button"
-                id="blog-prev"
-                className="blog-nav blog-nav-prev blog-scroll-prev"
-                aria-label="Previous article"
-                data-blog-prev
-              >
-                ←
-              </button>
-
-              <div
-                className="blog-scroll-container"
-                aria-label="Blog articles"
-              >
-                <div
-                  id="blog-track"
-                  className="blog-track blog-cards-track"
-                  data-blog-track
-                ></div>
-              </div>
-
-              <button
-                type="button"
-                id="blog-next"
-                className="blog-nav blog-nav-next blog-scroll-next"
-                aria-label="Next article"
-                data-blog-next
-              >
-                →
-              </button>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* =================================================
              FREELANCING / SERVICES SECTION: (PLASMA UI)
              - Services Matrix: Liquid Plasma Panel
              - Contact CTA Card: Liquid Plasma Panel
              ================================================= */}
-        <section id="freelance" className="freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
+        <section id="freelance" className="w-full freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
           <span id="freelancing" className="section-anchor sr-only" aria-hidden="true"></span>
 
           <div className="section-inner space-y-10">

@@ -1,4 +1,6 @@
 [
+  "blog/java/post.md",
+  "blog/python/post.md",
   "blog/zombie-internet/post.md",
   "blog/ai-agents/post.md",
   "blog/rust-cli/post.md"

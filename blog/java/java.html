@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>java</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('wood.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block; /* Keeps the container the exact same size as the image */
+        }
+
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;                 /* Moves the top edge of the text to the vertical center */
+            left: 50%;                /* Moves the left edge of the text to the horizontal center */
+            transform: translate(-50%, -50%); /* Shifts the text back by half its own width and height */
+
+            color: white;             
+            font-size: 24px;
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        pre {
+            color: #2C2C2C; /* Charcoal (#2C2C2C) */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            font-family: inherit;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="image-container">
+  <img src="java.jpg" alt="java">
+  <div class="overlay-text"> java </div>
+</div>
+
+<pre>
+hello
+bye bye publis static void
+
+
+</pre>
+
+</body>
+</html>

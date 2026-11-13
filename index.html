@@ -174,12 +174,12 @@
         </div>
     </section>
 
-    <main id="main-content" class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
+    <main id="main-content" class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col items-center gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
 
         
-        <div class="w-full flex flex-col gap-10">
-            <div class="w-full" style="text-align: right;">
-                <h1 id="scramble-hero-name" class="scramble text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500" style="text-align: right; padding-right: 8px;">
+        <div class="w-full flex flex-col items-center gap-10">
+            <div class="w-full text-center">
+                <h1 id="scramble-hero-name" class="scramble text-center text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500">
                     KRISHNANG PANDEY
                 </h1>
             </div>
@@ -203,7 +203,7 @@
             </div>
         </div>
 
-        <section id="activity" class="activity scroll-mt-24 pt-8">
+        <section id="activity" class="w-full activity scroll-mt-24 pt-8">
             <div class="section-inner space-y-10">
 
                 <header class="section-header">
@@ -263,63 +263,7 @@
             </div>
         </section>
 
-        <section id="blogs" class="blogs scroll-mt-24 pt-8">
-            <div class="section-inner space-y-8">
-
-                <header class="section-header flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                    <div>
-                        <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                            Writing
-                        </p>
-                        <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                            Things I've written.
-                        </h2>
-                    </div>
-
-                    <p class="text-sm text-slate-400 max-w-sm">
-                        Technical explorations on systems programming, artificial intelligence workflows, and internet architecture.
-                    </p>
-                </header>
-
-                <div id="blog-browser" class="blog-browser" data-blog-scroll>
-
-                    <button
-                        type="button"
-                        id="blog-prev"
-                        class="blog-nav blog-nav-prev blog-scroll-prev"
-                        aria-label="Previous article"
-                        data-blog-prev
-                    >
-                        ←
-                    </button>
-
-                    <div
-                        class="blog-scroll-container"
-                        aria-label="Blog articles"
-                    >
-                        <div
-                            id="blog-track"
-                            class="blog-track blog-cards-track"
-                            data-blog-track
-                        ></div>
-                    </div>
-
-                    <button
-                        type="button"
-                        id="blog-next"
-                        class="blog-nav blog-nav-next blog-scroll-next"
-                        aria-label="Next article"
-                        data-blog-next
-                    >
-                        →
-                    </button>
-
-                </div>
-
-            </div>
-        </section>
-
-        <section id="freelance" class="freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
+        <section id="freelance" class="w-full freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
 
             <span id="freelancing" class="section-anchor sr-only" aria-hidden="true"></span>
 
@@ -462,7 +406,6 @@
     <script src="Interactive-Elements/terminal.js"></script>
     <script src="Interactive-Elements/activity-github.js"></script>
     <script src="Interactive-Elements/activity-blog.js"></script>
-    <script src="Interactive-Elements/blog-horizontal-scroll.js"></script>
 
     <script src="dist/bundle.js" defer></script>
 
@@ -480,12 +423,8 @@
                 initGitHubActivity();
             }
 
-            const blogActivity = typeof initBlogActivity === 'function'
-                ? initBlogActivity()
-                : null;
-
-            if (typeof initBlogHorizontalScroll === 'function') {
-                initBlogHorizontalScroll({ activityController: blogActivity });
+            if (typeof initBlogActivity === 'function') {
+                initBlogActivity();
             }
 
             const scrambleEl = document.getElementById('scramble-hero-name');

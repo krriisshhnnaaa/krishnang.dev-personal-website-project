@@ -99,7 +99,7 @@ export function HeaderContent({ mood, setMood, viewMode, setViewMode, onResetLay
           Activity
         </a>
         <a
-          href="#blogs"
+          href="#blog-activity"
           className="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-900/60 border border-transparent hover:border-slate-800 transition-all duration-200"
         >
           Writing
@@ -285,7 +285,7 @@ export function HeroIntroContent() {
 
         <a
           className="button button-secondary px-5 py-3 rounded-xl bg-slate-950/50 hover:bg-slate-800/80 border border-slate-700/60 hover:border-slate-500 text-slate-200 text-xs sm:text-sm font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-          href="#blogs"
+          href="#blog-activity"
           onClick={() => bump(0.5)}
         >
           Read my writing
