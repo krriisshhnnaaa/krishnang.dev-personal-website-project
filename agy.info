@@ -2382,8 +2382,45 @@ resolve any dependency issues
 }
 
 
+}
 
 
+
+
+action NOW {
+
+
+inside fun inside games inside game mechanics inside L2 {
+
+
+make a game titled "rocket rejection"
+
+modify files : 
+
+game.html
+
+dir 'L2'
+
+and others as needed.
+
+
+
+use assets at path /fun/game/' game mechanics' / L2 /assets
+
+
+use phaser.js game engine as used in previous game at L1 
+
+game {
+
+rocket : bottom of game window
+
+asteroids = rejection mail (asset ::  asteroid_x_small@4x ; asteroid_x_small )
+
+tiles = constant motion downward 
+
+simulate tiles downward motion {
+
+this.bg = this.add.tileSprite(0, 0, w, h, 'carpet').setOrigin(0) and then this.bg.tilePositionY -= speed in update().
 
 
 
@@ -2391,16 +2428,22 @@ resolve any dependency issues
 }
 
 
+actions : S : rocket move left ; D : rocket move right ; SPACE/W : shoot
+
+
+} 
+
+goal : survive time : 5*60 seconds 
+
+after goal : popup : survive more ? (continue game with clock reset) | move to level 3 ? (continue to game3.html)
 
 
 
 
+}
 
 
-
-
-
-
+}
 
 
 

@@ -1,11 +1,11 @@
 main page - 
-blogwriter CLI -
-web maker CLI - 
+blogwriter CLI - done
+web maker CLI - done
 pricing page -
 reviews page -
 live projects page -
-forms page for review -
-sep n number of pages for n number of blogs -
+forms page for review - 
+sep n number of pages for n number of blogs - done
 
 UPDATES :
 [HERO SECTION] : let's collaborate - resume_download + highlight projects

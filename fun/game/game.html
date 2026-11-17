@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Runner — L1: Pass The ATS | krishnang.dev</title>
+    <title id="page-title">Resume Runner — L1: Pass The ATS | krishnang.dev</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,14 +11,28 @@
     <link rel="icon" type="image/x-icon" href="../../logo.jpg">
 
     <link rel="stylesheet" href="game mechanics/L1/L1.css">
+    <link rel="stylesheet" href="game mechanics/L2/L2.css">
     <link rel="stylesheet" href="../../CSS/radial-menu.css">
 </head>
 <body>
 
     <div class="game-page-wrapper">
+        <!-- Arcade Level Selector Navigation -->
+        <nav class="level-nav" aria-label="Arcade level navigation">
+            <a href="game.html" class="level-pill active" id="pill-l1">
+                <span>★ L1: Pass ATS</span>
+            </a>
+            <a href="game2.html" class="level-pill" id="pill-l2">
+                <span>🚀 L2: Rocket Rejection</span>
+            </a>
+            <a href="game3.html" class="level-pill" id="pill-l3">
+                <span>L3: Interview ▶</span>
+            </a>
+        </nav>
+
         <header class="arcade-header">
-            <h1 class="arcade-title">Resume Runner</h1>
-            <p class="arcade-subtitle">
+            <h1 class="arcade-title" id="arcade-main-title">Resume Runner</h1>
+            <p class="arcade-subtitle" id="arcade-sub-title">
                 <span>Level 1: Bypass the ATS Filters</span>
                 <span class="badge">Arcade Edition</span>
             </p>
@@ -26,11 +40,37 @@
 
         <!-- Canvas Container: Phaser 4 World (800 x 650) as specified in agy.info -->
         <div class="canvas-container" id="canvas-container">
+            <!-- Dynamic HUD for Level 2 (Hidden in Level 1) -->
+            <div class="game-hud" id="game-hud" style="display: none;">
+                <div class="hud-item hud-timer">
+                    <span class="hud-label">Survive Timer</span>
+                    <span class="hud-val" id="hud-time-val">00:00 / 05:00</span>
+                    <div class="hud-progress-bar">
+                        <div class="hud-progress-fill" id="hud-progress-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="hud-item hud-score">
+                    <span class="hud-label">Rejections Shredded</span>
+                    <span class="hud-val" id="hud-score-val">0</span>
+                </div>
+
+                <div class="hud-item hud-shields">
+                    <span class="hud-label">Rocket Shields</span>
+                    <div class="hud-hearts" id="hud-shields-container">
+                        <span class="shield active">🛡️</span>
+                        <span class="shield active">🛡️</span>
+                        <span class="shield active">🛡️</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In-game Modal Overlay -->
             <div id="game-modal" class="game-modal" style="display: none;"></div>
         </div>
 
         <!-- Controls Guide directly beneath canvas -->
-        <div class="controls-hint">
+        <div class="controls-hint" id="controls-hint-container">
             <span><kbd class="kbd">SPACE / W / ↑</kbd> Jump</span>
             <span><kbd class="kbd">D / →</kbd> Forward</span>
             <span><kbd class="kbd">A / ←</kbd> Backward</span>
@@ -97,7 +137,32 @@
     <!-- Scripts -->
     <script type="module">
         import { ClickerGame } from './game mechanics/L1/L1.js';
-        window.ClickerGame = ClickerGame;
+        import { RocketRejectionGame } from './game mechanics/L2/L2.js';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const isLevel2 = urlParams.get('level') === '2';
+
+        if (isLevel2) {
+            document.getElementById('page-title').textContent = 'Rocket Rejection — L2: Selection Round | krishnang.dev';
+            document.getElementById('arcade-main-title').textContent = 'Rocket Rejection';
+            document.getElementById('arcade-sub-title').innerHTML = '<span>Level 2: Selection Round — Dodge Rejection Mails</span><span class="badge">Arcade Edition</span>';
+            document.getElementById('pill-l1').classList.remove('active');
+            document.getElementById('pill-l2').classList.add('active');
+            document.getElementById('game-hud').style.display = 'flex';
+            document.getElementById('controls-hint-container').innerHTML = `
+                <span><kbd class="kbd">S</kbd> Move Left</span>
+                <span><kbd class="kbd">D</kbd> Move Right</span>
+                <span><kbd class="kbd">SPACE / W</kbd> Shoot Laser</span>
+                <span><kbd class="kbd">Goal</kbd> Survive 5:00 Minutes</span>
+            `;
+
+            window.ActiveGameScene = RocketRejectionGame;
+            window.ClickerGame = RocketRejectionGame;
+        } else {
+            window.ActiveGameScene = ClickerGame;
+            window.ClickerGame = ClickerGame;
+        }
+
         window.dispatchEvent(new CustomEvent('clickergameready'));
     </script>
     <script src="game mechanics/main.js" defer></script>

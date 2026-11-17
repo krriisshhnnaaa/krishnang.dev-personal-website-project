@@ -618,8 +618,8 @@ export class ClickerGame extends PhaserScene {
           <h2 class="modal-title success">SUCCESS ! YOUR RESUME MADE IT TO THE HR !</h2>
           <p class="modal-question">go to SELECTION ROUND ?</p>
           <div class="modal-actions">
-            <a href="../../forms/choicepage.html" class="btn-arcade btn-arcade-primary">
-              ✓ YES, GO TO SELECTION ROUND
+            <a href="game2.html" class="btn-arcade btn-arcade-primary">
+              ✓ YES, GO TO SELECTION ROUND (LEVEL 2: ROCKET REJECTION)
             </a>
             <button type="button" class="btn-arcade btn-arcade-secondary" onclick="window.location.reload()">
               ↺ PLAY AGAIN
@@ -648,16 +648,16 @@ export class ClickerGame extends PhaserScene {
         color: '#38bdf8'
       }).setOrigin(0.5).setScrollFactor(0).setDepth(201);
 
-      const btn = this.add.text(400, 340, '✓ YES, GO TO SELECTION ROUND', {
+      const btn = this.add.text(400, 340, '✓ YES, GO TO SELECTION ROUND (LEVEL 2)', {
         fontFamily: 'monospace',
-        fontSize: '16px',
+        fontSize: '15px',
         color: '#ffffff',
         backgroundColor: '#0284c7',
         padding: { x: 18, y: 10 }
       }).setOrigin(0.5).setScrollFactor(0).setDepth(201).setInteractive({ useHandCursor: true });
 
       btn.on('pointerdown', () => {
-        window.location.href = '../../forms/choicepage.html';
+        window.location.href = 'game2.html';
       });
     }
   }

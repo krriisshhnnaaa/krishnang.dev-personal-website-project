@@ -64,3 +64,17 @@ Available scripts:
 ## Vercel deployment
 
 Vercel uses the settings in `vercel.json`: run `npm run build` and serve the project root as the static output. No environment variables are currently needed; `.env.example` is informational. If the project is linked in Vercel, use the repository root as the project root and let Vercel install dependencies from `package-lock.json`.
+
+
+
+## License & Copyright
+
+Copyright © 2026 Krishnang Pandey. All Rights Reserved.
+
+This repository is publicly available for viewing, educational reference, and personal learning purposes only.
+
+You may inspect the source code and learn from its implementation. However, you may not copy, reproduce, redistribute, modify, republish, or create derivative works from this project, in whole or in part, without prior written permission from the copyright holder.
+
+No license is granted for commercial use, redistribution, or reuse of this source code.
+
+For licensing inquiries or permissions, please contact the copyright holder.
