@@ -8,6 +8,115 @@ rest : context to use :
 
 
 ===========FORMS PAGE===============
+/*
+in this program we will perform binary search on a user-provided list of n numbers
+pseudocode :
+
+take n from user
+run scanf loop till n
+user-prompt = enter number :
+loop end
+perform bubble sort
+
+perform binary search
+
+output : number found at index : i 
+
+end
+*/
+
+#include <stdio.h>
+
+
+
+
+
+
+int main() {
+    int n;
+    printf("enter size of list : ");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        printf("invalid list size\n");
+        return 1;
+    }
+
+
+
+
+
+
+    int arr[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("enter number : ");
+        scanf("%d", &arr[i]);
+    }
+
+    
+
+
+
+
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+    int target;
+    printf("enter number to search : ");
+    scanf("%d", &target);
+
+    int low = 0;
+    int high = n - 1;
+    int found = -1;
+
+
+
+
+
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == target) {
+            found = mid;
+            break;
+        } else if (arr[mid] < target) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+
+
+
+
+
+    if (found != -1) {
+        printf("number %d found at index %d\n", target, found);
+    } else {
+        printf("number %d not found in the list\n", target);
+    }
+
+
+    return 0;
+
+
+}
 
 modify forms.html file inside this repository inside the forms/ directory 
 
