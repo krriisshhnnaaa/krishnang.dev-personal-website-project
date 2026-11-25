@@ -3,88 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>python</title>
+    <title>Demystifying Python — krishnang.dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../../logo.jpg">
+    <link rel="stylesheet" href="../../CSS/unslop-base.css">
+    <link rel="stylesheet" href="../../CSS/radial-menu.css">
     <style>
-        body {
+        .article-main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 24px 96px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .article-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--ink-secondary);
+            text-decoration: none;
+            width: fit-content;
+            transition: color var(--dur-fast) var(--ease-unslop);
+        }
+
+        .article-back:hover {
+            color: var(--ink-text);
+        }
+
+        .article-header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--ink-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .article-title {
             margin: 0;
-            padding: 20px;
-            font-family: sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('wood.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            font-size: clamp(28px, 4vw, 36px);
+            line-height: 1.15;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: var(--ink-text);
         }
 
-        .image-container {
-            position: relative;
-            display: inline-block; /* Keeps the container the exact same size as the image */
-        }
-
-        .image-container img {
-            display: block;
+        .article-cover {
             width: 100%;
-            height: auto;
+            max-height: 360px;
+            object-fit: cover;
+            display: block;
+            border-radius: 16px;
+            border: 1px solid var(--ink-hairline);
+            background-color: var(--ink-card);
         }
 
-        .overlay-text {
-            position: absolute;
-            top: 50%;                 /* Moves the top edge of the text to the vertical center */
-            left: 50%;                /* Moves the left edge of the text to the horizontal center */
-            transform: translate(-50%, -50%); /* Shifts the text back by half its own width and height */
-
-            color: white;             
-            font-size: 24px;
-            font-family: sans-serif;
-            text-align: center;
+        .article-prose {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            color: var(--ink-secondary);
+            font-size: 15px;
+            line-height: 1.7;
         }
 
-        pre {
-            color: #2C2C2C; /* Charcoal (#2C2C2C) */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-            font-family: inherit;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 18px;
-            line-height: 1.6;
+        .article-prose h2 {
+            margin: 16px 0 0;
+            font-size: 20px;
+            line-height: 1.3;
+            font-weight: 500;
+            color: var(--ink-text);
+        }
+
+        .article-prose p {
+            margin: 0;
+        }
+
+        .article-prose ul {
+            margin: 0;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .article-prose li strong {
+            color: var(--ink-text);
+            font-weight: 500;
+        }
+
+        .article-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--ink-card);
+            border: 1px solid var(--ink-hairline);
+            border-radius: 12px;
+        }
+
+        .article-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .article-table th {
+            padding: 12px 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--ink-muted);
+            background-color: var(--ink-raised);
+            border-bottom: 1px solid var(--ink-hairline);
+        }
+
+        .article-table td {
+            padding: 12px 16px;
+            color: var(--ink-secondary);
+            border-bottom: 1px solid var(--ink-hairline);
+            vertical-align: top;
+        }
+
+        .article-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .article-table td:first-child {
+            color: var(--ink-text);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .article-note {
+            background-color: var(--ink-card);
+            border: 1px solid var(--ink-hairline);
+            border-left: 2px solid var(--ink-accent);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--ink-secondary);
+        }
+
+        .article-note strong {
+            color: var(--ink-text);
+            font-weight: 500;
+        }
+
+        @media (max-width: 640px) {
+            .article-main {
+                padding: 24px 16px 88px;
+                gap: 24px;
+            }
         }
     </style>
 </head>
 <body>
+    <header class="ink-topbar">
+        <div class="ink-topbar-inner">
+            <a href="../../index.html" class="ink-brand">
+                <span class="ink-brand-prompt">&gt;</span>
+                <span>krishnang.dev</span>
+            </a>
+            <nav class="ink-nav-links" aria-label="Article navigation">
+                <a href="../../index.html" class="ink-nav-link">Home</a>
+                <a href="../../index.html#writing" class="ink-nav-link" aria-current="page">Writing</a>
+                <a href="../../forms/connect.html" class="ink-nav-link">Connect</a>
+                <a href="../../fun/game/game.html" class="ink-nav-link">Arcade</a>
+            </nav>
+        </div>
+    </header>
 
-<div class="image-container">
-  <img src="python.jpg" alt="python">
-  <div class="overlay-text"> python </div>
-</div>
+    <main class="article-main">
+        <a href="../../index.html#writing" class="article-back">
+            <svg class="ink-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            <span>Back to writing</span>
+        </a>
 
-<pre>
+        <header class="article-header">
+            <div class="article-meta">
+                <span>&gt; blog/python</span>
+                <span>·</span>
+                <time datetime="2026-11-13">2026-11-13</time>
+            </div>
+            <h1 class="article-title">Demystifying Python: why it works for beginners and pros alike</h1>
+        </header>
 
-emystifying Python: Why It’s the Ultimate Language for Beginners and Pros Alike
+        <img src="python.jpg" alt="Python programming article cover" class="article-cover">
 
-Imagine sitting down at your computer, typing a line of code that reads exactly like a plain English sentence, and watching a complex digital task happen instantly. No cryptic symbols. No endless semicolons. Just pure, logical problem-solving.
-Welcome to Python, one of the world&#39;s most popular and versatile programming languages.
-Whether you want to automate boring spreadsheets, dive into artificial intelligence, build a dynamic web application, or simply learn how to code, Python is universally recognized as the best place to start. In this post, we’ll explore why Python dominates the tech world and how you can write your very first script today.
+        <article class="article-prose">
+            <p>Imagine sitting down at your computer, typing a line of code that reads like a plain English sentence, and watching a complex digital task happen without cryptic symbols or endless semicolons. That clarity is a core reason Python remains one of the most widely used programming languages.</p>
 
-What Makes Python So Special?
+            <p>Whether you want to automate spreadsheets, explore machine learning, build a web backend, or write your first script, Python gives you a straightforward starting point without capping what you can build later.</p>
 
-Python was created by programmer Guido van Rossum and released in 1991. His core philosophy was simple: code readability matters. Python is designed to look clean and feel intuitive.
-Here is what sets it apart from traditional programming languages:
-• Readable Syntax: Python replaces complex punctuation (like the curly braces {} used in Java or C++) with clean, visual indentation.
-• Batteries Included: Python comes pre-packaged with a massive standard library. You can handle file systems, manage databases, and process web data right out of the box.
-• An Unmatched Community: Because millions of developers use Python, there is an open-source library for almost everything. If you want to build a website, you can use frameworks like Django or Flask. If you are analyzing data, you have tools like Pandas and NumPy.
+            <h2>What makes Python distinct</h2>
+            <p>Created by Guido van Rossum and released in 1991, Python was built around a direct principle: code readability matters.</p>
 
-The Ultimate Tech Chameleon
+            <ul>
+                <li><strong>Readable syntax:</strong> Python replaces curly braces (<code>{}</code>) with clear visual indentation.</li>
+                <li><strong>Batteries included:</strong> The standard library handles files, networking, data formats, and system tasks out of the box.</li>
+                <li><strong>Ecosystem depth:</strong> Mature open-source packages cover web servers, data pipelines, and numerical computing.</li>
+            </ul>
 
-Python isn&#39;t just a learning tool—it powers some of the largest digital architectures on the planet. Its versatility makes it a staple across wildly different industries:
+            <h2>Where Python fits in production</h2>
+            <p>Python powers large production architectures across several technical domains:</p>
 
-Industry / Field	How Python is Used	Popular Libraries / Frameworks
-Data Science &amp; AI	Analyzing massive datasets, training machine learning models, and building neural networks.	TensorFlow, PyTorch, Pandas
-Web Development	Building the hidden logic, databases, and servers that power modern websites.	Django, Flask, FastAPI
-Automation &amp; Scripting	Writing small programs to automate repetitive tasks like renaming files or scraping data from the web.	Selenium, Beautiful Soup
-FinTech	Quantitative analysis, algorithmic trading, and risk management tracking.	NumPy, SciPy
+            <div class="article-table-wrap">
+                <table class="article-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>How Python is used</th>
+                            <th>Libraries &amp; frameworks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Data Science &amp; AI</td>
+                            <td>Analyzing datasets, training machine learning models, and building neural networks</td>
+                            <td>TensorFlow, PyTorch, Pandas</td>
+                        </tr>
+                        <tr>
+                            <td>Web Development</td>
+                            <td>Building server logic, APIs, and database-backed web services</td>
+                            <td>Django, Flask, FastAPI</td>
+                        </tr>
+                        <tr>
+                            <td>Automation &amp; Scripting</td>
+                            <td>Automating file workflows, data scraping, and operational tasks</td>
+                            <td>Selenium, Beautiful Soup</td>
+                        </tr>
+                        <tr>
+                            <td>FinTech</td>
+                            <td>Quantitative analysis, algorithmic modeling, and risk tracking</td>
+                            <td>NumPy, SciPy</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-Fun Fact: Platforms you use every day—including Instagram, Spotify, and Netflix—rely heavily on Python to handle their data traffic and recommendation algorithms.
+            <div class="article-note">
+                <strong>Note:</strong> Platforms including Instagram, Spotify, and Netflix rely on Python for data pipelines and recommendation services.
+            </div>
+        </article>
+    </main>
 
-</pre>
-
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Quick navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <a href="../../forms/connect.html" class="action action-n" aria-label="Connect">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Connect</span>
+            </a>
+            <a href="../../forms/choicepage.html" class="action action-e" aria-label="Portal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Portal</span>
+            </a>
+            <a href="../../fun/game/game.html" class="action action-s" aria-label="Arcade">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Arcade</span>
+            </a>
+            <a href="../../index.html" class="action action-w" aria-label="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="tooltip">Home</span>
+            </a>
+        </nav>
+    </div>
 </body>
 </html>

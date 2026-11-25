@@ -7,134 +7,112 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../../logo.jpg">
 
     <link rel="stylesheet" href="game mechanics/L2/L2.css">
     <link rel="stylesheet" href="../../CSS/radial-menu.css">
-    <style>
-        .coming-soon-card {
-            background: #0d1226;
-            border: 1px solid rgba(192, 132, 252, 0.35);
-            border-radius: 20px;
-            padding: 44px 32px;
-            text-align: center;
-            max-width: 600px;
-            margin: auto;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(192, 132, 252, 0.2);
-        }
-        .coming-soon-icon {
-            font-size: 3.5rem;
-            margin-bottom: 12px;
-        }
-        .coming-soon-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin: 0 0 10px 0;
-            color: #c084fc;
-            text-transform: uppercase;
-        }
-        .coming-soon-desc {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0 0 24px 0;
-        }
-    </style>
 </head>
 <body>
+    <header class="ink-topbar">
+        <div class="ink-topbar-inner">
+            <a href="../../index.html" class="ink-brand">
+                <span class="ink-brand-prompt">&gt;</span>
+                <span>krishnang.dev</span>
+            </a>
+            <nav class="ink-nav-links" aria-label="Site navigation">
+                <a href="../../index.html" class="ink-nav-link">Home</a>
+                <a href="game.html" class="ink-nav-link" aria-current="page">Arcade</a>
+                <a href="../../forms/connect.html" class="ink-nav-link">Connect</a>
+                <a href="../../forms/review.html" class="ink-nav-link">Reviews</a>
+            </nav>
+        </div>
+    </header>
 
-    <div class="game-page-wrapper">
-        <!-- Level Selector Navigation -->
+    <main class="game-page-wrapper">
         <nav class="level-nav" aria-label="Arcade level navigation">
-            <a href="game.html" class="level-pill">
-                <span>◀ L1: Pass ATS</span>
-            </a>
-            <a href="game2.html" class="level-pill">
-                <span>◀ L2: Rocket Rejection</span>
-            </a>
-            <span class="level-pill active">
-                <span>★ L3: Final Interview</span>
-            </span>
+            <a href="game.html" class="level-pill">L1: Pass ATS</a>
+            <a href="game2.html" class="level-pill">L2: Rocket Rejection</a>
+            <span class="level-pill active">L3: Interview</span>
+            <a href="game4.html" class="level-pill">L4</a>
+            <a href="game5.html" class="level-pill">L5</a>
         </nav>
 
         <header class="arcade-header">
             <h1 class="arcade-title">Technical Interview</h1>
             <p class="arcade-subtitle">
-                <span>Level 3: The System Design & Coding Boss Round</span>
-                <span class="badge">Coming Soon</span>
+                <span>Level 3: System design and coding round</span>
+                <span class="badge">Work in progress</span>
             </p>
         </header>
 
         <div class="canvas-container">
-            <div class="coming-soon-card">
-                <div class="coming-soon-icon">💻 🎯 ⚡</div>
-                <h2 class="coming-soon-title">Level 3: Technical Interview</h2>
-                <p class="coming-soon-desc">
-                    Congratulations on surviving the <strong>Rocket Rejection</strong> round!
-                    You successfully shredded all rejection emails and earned an invitation to the Technical Interview.
-                    This round is currently being compiled with live interactive puzzles.
-                </p>
-                <div class="modal-actions">
-                    <a href="game2.html" class="btn-arcade btn-arcade-primary">
-                        ↺ REPLAY LEVEL 2: ROCKET REJECTION
-                    </a>
-                    <a href="game.html" class="btn-arcade btn-arcade-secondary">
-                        ← LEVEL 1: PASS ATS
-                    </a>
-                    <a href="../../index.html" class="btn-arcade btn-arcade-secondary">
-                        🏠 PORTFOLIO HOME
-                    </a>
+            <div class="wip-stage">
+                <div class="wip-marquee-bar" role="region" aria-label="Status notice">
+                    <div class="wip-marquee-track">
+                        <span class="wip-marquee-item">Caution : Work in Progress | Man at work</span>
+                        <span class="wip-marquee-item" aria-hidden="true">Caution : Work in Progress | Man at work</span>
+                        <span class="wip-marquee-item" aria-hidden="true">Caution : Work in Progress | Man at work</span>
+                        <span class="wip-marquee-item" aria-hidden="true">Caution : Work in Progress | Man at work</span>
+                    </div>
+                </div>
+                <div class="wip-image-wrap">
+                    <img src="../../work1.jpg" alt="Caution: Work in progress" class="wip-image">
+                </div>
+                <div class="wip-footer">
+                    <a href="game2.html" class="btn-arcade btn-arcade-primary">Replay Level 2</a>
+                    <a href="game.html" class="btn-arcade btn-arcade-secondary">Level 1: Pass ATS</a>
+                    <a href="../../index.html" class="btn-arcade btn-arcade-secondary">Home</a>
                 </div>
             </div>
         </div>
 
         <div class="controls-hint">
-            <span>Level 2 Passed ✓</span>
-            <span>Resume Qualified ✓</span>
-            <span>Final Round Preparing...</span>
+            <span><kbd class="kbd">L1</kbd> Resume qualified</span>
+            <span><kbd class="kbd">L2</kbd> Rejections cleared</span>
+            <span><kbd class="kbd">L3</kbd> Work in progress</span>
         </div>
-    </div>
+    </main>
 
-    <!-- Radial Menu -->
     <div class="radial-menu-container">
-        <nav class="menu" aria-label="Radial navigation menu">
-            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick Navigation">
+        <nav class="menu" aria-label="Quick navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick navigation">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
             </button>
-            <a href="../../forms/connect.html" class="action action-n" aria-label="Connect Form">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <a href="../../forms/connect.html" class="action action-n" aria-label="Connect">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span class="tooltip">Action A: Connect</span>
+                <span class="tooltip">Connect</span>
             </a>
-            <a href="../../forms/choicepage.html" class="action action-e" aria-label="Choice Page">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <a href="../../forms/choicepage.html" class="action action-e" aria-label="Portal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
                 </svg>
-                <span class="tooltip">Action B: Portal</span>
+                <span class="tooltip">Portal</span>
             </a>
-            <a href="game2.html" class="action action-s" aria-label="Game Level 2">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <a href="game2.html" class="action action-s" aria-label="Level 2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
-                <span class="tooltip">Action C: Game</span>
+                <span class="tooltip">Arcade</span>
             </a>
-            <a href="../../index.html" class="action action-w" aria-label="Portfolio Home">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <a href="../../index.html" class="action action-w" aria-label="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
-                <span class="tooltip">Action D: Home</span>
+                <span class="tooltip">Home</span>
             </a>
         </nav>
     </div>
 
+    <script src="game mechanics/work-in-progress.js" defer></script>
     <script>
         const radialMenu = document.querySelector('.menu');
         const centerBtn = document.querySelector('.center-btn');

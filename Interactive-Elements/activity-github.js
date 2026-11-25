@@ -196,7 +196,7 @@
 
         const label = document.createElement('p');
         label.className = 'activity-loading-text';
-        label.textContent = 'Lemme Check for my commits real quick ';
+        label.textContent = 'Loading recent commits...';
 
         wrapper.appendChild(spinner);
         wrapper.appendChild(label);

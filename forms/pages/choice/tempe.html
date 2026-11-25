@@ -3,77 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invalid Choice — Krishnang</title>
+    <title>No Option Selected — krishnang.dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../../../logo.jpg">
+    <link rel="stylesheet" href="../../../CSS/unslop-base.css">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
+        .dialog-main {
+            min-height: calc(100vh - 56px);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px;
-            color: #111827;
         }
-
-        .pop-notification {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 40px 36px;
-            max-width: 440px;
+        .dialog-card {
             width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+            max-width: 440px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-
-        .pop-title {
-            font-size: 1.35rem;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 16px;
-        }
-
-        .pop-desc {
-            font-size: 0.95rem;
-            color: #6b7280;
-            margin-bottom: 28px;
-        }
-
-        .choice-btn {
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            text-decoration: none;
+        .dialog-meta {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            background-color: #ff2d55;
-            color: #ffffff;
-            border: 1px solid #ff2d55;
-            box-shadow: 0 4px 12px rgba(255, 45, 85, 0.3);
-            transition: all 0.2s ease;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--ink-muted);
         }
-
-        .choice-btn:hover {
-            background-color: #e02449;
-            transform: translateY(-1px);
+        .dialog-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--ink-negative);
+        }
+        .dialog-title {
+            margin: 0;
+            font-size: 22px;
+            line-height: 1.25;
+            font-weight: 500;
+            color: var(--ink-text);
+        }
+        .dialog-desc {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--ink-secondary);
+        }
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 8px;
+            border-top: 1px solid var(--ink-hairline);
         }
     </style>
 </head>
 <body>
-    <div class="pop-notification">
-        <h2 class="pop-title">No option selected</h2>
-        <p class="pop-desc">Please go back and select whether you want to connect or leave a review.</p>
-        <a href="../../choicepage.html" class="choice-btn">Return to Choice</a>
-    </div>
+    <header class="ink-topbar">
+        <div class="ink-topbar-inner">
+            <a href="../../../index.html" class="ink-brand">
+                <span class="ink-brand-prompt">&gt;</span>
+                <span>krishnang.dev</span>
+            </a>
+            <nav class="ink-nav-links" aria-label="Navigation">
+                <a href="../../choicepage.html" class="ink-nav-link">Portal</a>
+                <a href="../../../index.html" class="ink-nav-link">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dialog-main">
+        <div class="ink-card dialog-card" role="alert">
+            <div class="dialog-meta">
+                <span class="dialog-dot"></span>
+                <span>Selection required</span>
+            </div>
+            <h1 class="dialog-title">No option selected</h1>
+            <p class="dialog-desc">Return to the portal and select whether you want to connect or leave a review.</p>
+            <div class="dialog-actions">
+                <a href="../../choicepage.html" class="ink-btn ink-btn-primary">Return to portal</a>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

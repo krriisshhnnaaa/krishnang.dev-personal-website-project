@@ -1,56 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { PlasmaProvider, Plasma } from "@cruxgarden/plasma-ui";
-import DriftWall from "./DriftWall";
-import HoldToConfirm from "./HoldToConfirm";
-import useScramble from "./useScramble";
-import RadialMenu from "./RadialMenu";
 import {
   Workspace,
-  PanelContent,
   defaultHeroPanels,
-  loadSavedPositions,
-  persistPositions
+  loadSavedPositions
 } from "./Workspace";
 
-const driftWallItems = [
-  { image: 'https://picsum.photos/id/1015/600/400', title: 'Peaks', href: 'https://example.com/one' },
-  { image: 'https://picsum.photos/id/1025/600/400', title: 'Pup', href: 'https://example.com/two' },
-  { image: 'https://picsum.photos/id/1039/600/400', title: 'Falls', href: 'https://example.com/three' },
-  { image: 'https://picsum.photos/id/1043/600/400', title: 'Forest', href: 'https://example.com/four' },
-  { image: 'https://picsum.photos/id/1044/600/400', title: 'Coast', href: 'https://example.com/five' },
-  { image: 'https://picsum.photos/id/1050/600/400', title: 'Mountain', href: 'https://example.com/six' },
-  { image: 'https://picsum.photos/id/1062/600/400', title: 'Ocean', href: 'https://example.com/seven' },
-  { image: 'https://picsum.photos/id/1069/600/400', title: 'Valley', href: 'https://example.com/eight' },
-  { image: 'https://picsum.photos/id/1074/600/400', title: 'Canyon', href: 'https://example.com/nine' },
-  { image: 'https://picsum.photos/id/1080/600/400', title: 'Sky', href: 'https://example.com/ten' },
-  { image: 'https://picsum.photos/id/1084/600/400', title: 'Sunrise', href: 'https://example.com/eleven' },
-  { image: 'https://picsum.photos/id/106/600/400', title: 'Flower', href: 'https://example.com/twelve' }
-];
-
 export function App() {
-  const [positions, setPositions] = useState(() => loadSavedPositions());
-  const [mood, setMood] = useState("tidal");
   const [viewMode, setViewMode] = useState("page"); // "page" | "workspace"
-  const [scrambleName, playScramble] = useScramble("KRISHNANG PANDEY");
-
-  useEffect(() => {
-    playScramble();
-  }, [playScramble]);
-
-  const savePosition = (id, offset) => {
-    setPositions((prev) => {
-      const next = { ...prev, [id]: offset };
-      persistPositions(next);
-      return next;
-    });
-  };
-
-  const handleResetLayout = () => {
-    setPositions({});
-    try {
-      localStorage.removeItem("plasma-workspace-layout");
-    } catch (e) {}
-  };
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
@@ -64,26 +20,19 @@ export function App() {
   // Re-bind interactive controllers whenever the view is mounted/switched
   useEffect(() => {
     const timer = setTimeout(() => {
-      // 1. Cosmic gravitational particle field
       if (typeof window.initBackgroundAnimations === "function") {
         window.initBackgroundAnimations();
       }
-
-      // 2. Hero Developer Terminal (EXCEPTED from plasma, standalone)
       if (typeof window.initTerminal === "function") {
         window.initTerminal();
       }
-
-      // 3. GitHub activity feed
       if (typeof window.initGitHubActivity === "function") {
         window.initGitHubActivity();
       }
-
-      // 4. Blog Activity Feed
       if (typeof window.initBlogActivity === "function") {
         window.initBlogActivity();
       }
-    }, 100);
+    }, 80);
 
     return () => clearTimeout(timer);
   }, [viewMode]);
@@ -91,222 +40,281 @@ export function App() {
   // If in dedicated workspace dashboard mode, render Workspace component
   if (viewMode === "workspace") {
     return (
-      <div className="plasma-app-root">
+      <div className="plasma-app-root bg-ink-page min-h-screen text-ink-text">
         <Workspace
           panels={defaultHeroPanels}
           viewMode={viewMode}
           setViewMode={setViewMode}
         />
-        <RadialMenu />
       </div>
     );
   }
 
-  // Portfolio Page View with Plasma UI on all hero sections EXCEPT terminal
-  const githubPanel = defaultHeroPanels.find((p) => p.id === "github-activity");
-  const freelanceServicesPanel = defaultHeroPanels.find((p) => p.id === "freelance-services");
-  const freelanceContactPanel = defaultHeroPanels.find((p) => p.id === "freelance-contact");
-
   return (
     <>
-      <PlasmaProvider
-        mood={mood}
-        ground="clear"
-        background="bg.jpg"
-        zIndex={1}
-        theme="dark"
-        radius={22}
-        blend={24}
-        grid={24}
-        grain={0}
-        glow={0.6}
-      >
-
-      {/* =====================================================
-           DRIFT WALL (React Bits - Positioned above all other elements)
-           ===================================================== */}
-      <section id="drift-wall-showcase" className="relative z-30 w-full overflow-hidden border-b border-slate-800/60 shadow-2xl bg-slate-950/40">
-        <div style={{ height: 600 }}>
-          <DriftWall
-            items={driftWallItems}
-            columns={4}
-            tileWidth={200}
-            tileHeight={132}
-            gap={18}
-            tilt={16}
-            turn={-14}
-            perspective={1200}
-            depth={120}
-            speed={42}
-            direction="up"
-            variance={0.45}
-            parallax={0.6}
-            lift={64}
-            fade={0.6}
-            dim={0.55}
-            overlayColor="#060010"
-          />
-        </div>
-      </section>
-
-      {/* =====================================================
-           MAIN CONTENT
-           ===================================================== */}
-      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col items-center gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
-
-        {/* =================================================
-             STANDALONE DECODED SCRAMBLE & RESUME BUTTON
-             No section ID hero, No Plasma UI elements
-             Center-aligned as per user request
-             ================================================= */}
-        <div className="w-full flex flex-col items-center gap-10">
-          <div className="w-full text-center">
-            <h1
-              className="scramble text-center text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500"
-              onClick={playScramble}
-              onMouseEnter={playScramble}
-              title="Click or hover to decode"
+      {/* Sticky Header Navigation */}
+      <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-ink-page">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <a href="#" className="flex items-center gap-2 font-mono text-sm font-medium text-ink-text hover:text-white transition-colors duration-150 ease-unslop">
+            <span className="text-ink-accent font-semibold">&gt;</span>
+            <span>krishnang.dev</span>
+          </a>
+          <nav className="hidden md:flex items-center gap-6 text-sm text-ink-secondary" aria-label="Main navigation">
+            <a href="#activity" className="hover:text-ink-text transition-colors duration-150 ease-unslop">Activity</a>
+            <a href="#writing" className="hover:text-ink-text transition-colors duration-150 ease-unslop">Writing</a>
+            <a href="#services" className="hover:text-ink-text transition-colors duration-150 ease-unslop">Services</a>
+            <a href="fun/game/game.html" className="hover:text-ink-text transition-colors duration-150 ease-unslop">Arcade</a>
+            <a href="forms/review.html" className="hover:text-ink-text transition-colors duration-150 ease-unslop">Reviews</a>
+          </nav>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setViewMode("workspace")}
+              className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono text-ink-muted hover:text-ink-secondary bg-ink-raised border border-white/[0.08] transition-colors duration-150 ease-unslop"
+              title="Switch to floating workspace panels"
             >
-              {scrambleName}
-            </h1>
-          </div>
-
-          {/* Standalone circular hold-to-confirm button above activity hero */}
-          <div className="flex justify-center">
-            <HoldToConfirm onConfirm={handleDownloadResume} ms={800} />
+              <span>Workspace grid</span>
+            </button>
+            <a href="forms/connect.html" className="hidden sm:inline-flex text-sm text-ink-secondary hover:text-ink-text transition-colors duration-150 ease-unslop">
+              Connect
+            </a>
+            <button
+              type="button"
+              onClick={handleDownloadResume}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-ink-raised hover:bg-white/[0.08] text-ink-text border border-white/[0.08] transition-[background-color,border-color,color] duration-150 ease-unslop"
+            >
+              <span>Resume</span>
+              <svg className="w-4 h-4 text-ink-muted" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.25V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+            </button>
           </div>
         </div>
+      </header>
 
-        {/* =================================================
-             ACTIVITY SECTION:
-             - Left: GitHub Activity (PLASMA UI, DRAGGABLE)
-             - Right: Blog Activity (EXCEPTED: READ MY WRITING)
-             ================================================= */}
-        <section id="activity" className="w-full activity scroll-mt-24 pt-8">
-          <div className="section-inner space-y-10">
+      {/* Main Content */}
+      <main id="main-content" className="relative z-10 max-w-6xl mx-auto px-6">
 
-            <header className="section-header">
-              <p className="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                Activity
-              </p>
-              <h2 className="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                What I&apos;ve been building.
-              </h2>
-            </header>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-
-              {/* GitHub Feed Card: Liquid Plasma Panel */}
-              <Plasma
-                key="github-activity"
-                draggable
-                padding={20}
-                offset={positions["github-activity"] || { x: 0, y: 0 }}
-                onDragEnd={(o) => savePosition("github-activity", o)}
-                className="activity-block activity-github plasma-hero-panel rounded-2xl border border-slate-800/60 backdrop-blur-md shadow-xl flex flex-col"
-              >
-                <PanelContent panel={githubPanel} />
-              </Plasma>
-
-              {/* Writing Feed Card: EXCEPTED (READ MY WRITING) */}
-              <div className="activity-block activity-blog p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl flex flex-col">
-                <header className="activity-block-header flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
-                  <div className="flex items-center gap-3">
-                    <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                    </svg>
-                    <h3 className="text-sm font-mono font-semibold text-slate-200">Recent Writing</h3>
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-purple-400 bg-purple-950/40 px-2 py-0.5 rounded border border-purple-500/20">
-                    Essays &amp; Notes
-                  </span>
-                </header>
-
-                <div
-                  id="blog-activity"
-                  className="blog-activity flex-1"
-                  aria-live="polite"
-                ></div>
+        {/* Hero Section (Asymmetric Split: Bio Left, Terminal Right) */}
+        <section id="hero" className="w-full pt-12 sm:pt-16 pb-16 border-b border-white/[0.08]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left: Identity & CTAs */}
+            <div className="lg:col-span-6 flex flex-col items-start gap-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-ink-raised border border-white/[0.08] text-xs font-mono text-ink-secondary">
+                <span className="w-1.5 h-1.5 rounded-full bg-ink-accent"></span>
+                <span>Systems software &amp; applied AI</span>
               </div>
 
-            </div>
+              <div className="space-y-4">
+                <h1 id="scramble-hero-name" className="text-4xl sm:text-5xl font-medium tracking-tight text-ink-text select-none cursor-pointer">
+                  Krishnang Pandey
+                </h1>
+                <p className="text-base sm:text-lg text-ink-secondary leading-relaxed max-w-xl">
+                  First-year CSE AI/ML student at Chitkara University. Building local LLM tooling, high-performance backends, and terminal applications.
+                </p>
+              </div>
 
-          </div>
-        </section>
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={handleDownloadResume}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-ink-text text-ink-deep hover:bg-white active:scale-[0.98] transition-[background-color,transform] duration-150 ease-unslop"
+                >
+                  <span>Download resume</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.25V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                </button>
+                <a href="forms/connect.html" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-ink-raised hover:bg-white/[0.08] text-ink-text border border-white/[0.08] active:scale-[0.98] transition-[background-color,border-color,transform] duration-150 ease-unslop">
+                  <span>Contact me</span>
+                  <svg className="w-4 h-4 text-ink-muted" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" /></svg>
+                </a>
+              </div>
 
-        {/* =================================================
-             FREELANCING / SERVICES SECTION: (PLASMA UI)
-             - Services Matrix: Liquid Plasma Panel
-             - Contact CTA Card: Liquid Plasma Panel
-             ================================================= */}
-        <section id="freelance" className="w-full freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
-          <span id="freelancing" className="section-anchor sr-only" aria-hidden="true"></span>
-
-          <div className="section-inner space-y-10">
-
-            <header className="section-header">
-              <p className="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                Freelancing
+              <p className="text-xs font-mono text-ink-muted flex items-center gap-2">
+                <kbd className="px-2 py-0.5 rounded bg-ink-raised border border-white/[0.12] text-ink-secondary">help</kbd>
+                <span>Type commands in the shell to inspect projects</span>
               </p>
-              <h2 className="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                Let&apos;s build something.
-              </h2>
-            </header>
-
-            <div className="freelancing-content grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-
-              {/* Left: Services Matrix (PLASMA UI, DRAGGABLE) */}
-              <Plasma
-                key="freelance-services"
-                draggable
-                padding={20}
-                offset={positions["freelance-services"] || { x: 0, y: 0 }}
-                onDragEnd={(o) => savePosition("freelance-services", o)}
-                className="freelancing-services lg:col-span-7 plasma-hero-panel rounded-2xl border border-slate-800/60 backdrop-blur-md shadow-xl flex flex-col justify-between"
-              >
-                <PanelContent panel={freelanceServicesPanel} />
-              </Plasma>
-
-              {/* Right: Direct CTA Card (PLASMA UI, DRAGGABLE) */}
-              <Plasma
-                key="freelance-contact"
-                draggable
-                padding={20}
-                offset={positions["freelance-contact"] || { x: 0, y: 0 }}
-                onDragEnd={(o) => savePosition("freelance-contact", o)}
-                className="freelancing-contact lg:col-span-5 plasma-hero-panel rounded-2xl border border-cyan-500/30 backdrop-blur-md shadow-2xl flex flex-col justify-center items-start gap-4 relative overflow-hidden"
-              >
-                <PanelContent panel={freelanceContactPanel} />
-              </Plasma>
-
             </div>
 
+            {/* Right: Interactive Developer Terminal */}
+            <div className="lg:col-span-6 w-full">
+              <div id="terminal-widget" className="terminal-card shadow-elevated">
+                <div className="terminal-header">
+                  <span className="terminal-title">krishnang@dev: ~ (bash)</span>
+                </div>
+                <div className="terminal-body">
+                  <div className="terminal-output" aria-live="polite"></div>
+                  <div className="terminal-input-line">
+                    <span className="terminal-prompt-text">krishnang@dev:~$</span>
+                    <input
+                      type="text"
+                      className="terminal-input"
+                      aria-label="Terminal command input"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      placeholder="Type help or projects"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
+        {/* Activity Section (GitHub Commits & Technical Writing) */}
+        <section id="activity" className="w-full scroll-mt-20 py-12 border-b border-white/[0.08]">
+          <div className="space-y-6">
+            <div>
+              <p className="text-xs font-mono text-ink-muted mb-1">Activity</p>
+              <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-ink-text">
+                Engineering activity
+              </h2>
+              <p className="text-sm text-ink-secondary mt-1">
+                Recent code commits from GitHub and published technical notes
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+              {/* GitHub Feed */}
+              <div className="p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-2.5">
+                      <svg className="w-4 h-4 text-ink-muted" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                      <h3 className="text-sm font-medium text-ink-text font-mono">GitHub commits</h3>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono text-ink-secondary bg-ink-raised px-2 py-1 rounded border border-white/[0.08]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#4cc38a]"></span>
+                      Live sync
+                    </span>
+                  </div>
+
+                  <div id="github-activity" className="github-activity" aria-live="polite"></div>
+                </div>
+              </div>
+
+              {/* Writing Feed */}
+              <div id="writing" className="p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between scroll-mt-20">
+                <div>
+                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-2.5">
+                      <svg className="w-4 h-4 text-ink-muted" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                      <h3 className="text-sm font-medium text-ink-text font-mono">Recent writing</h3>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono text-ink-secondary bg-ink-raised px-2 py-1 rounded border border-white/[0.08]">
+                      Notes &amp; essays
+                    </span>
+                  </div>
+
+                  <div id="blog-activity" className="blog-activity" aria-live="polite"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Services & Collaboration Section */}
+        <section id="services" className="w-full scroll-mt-20 py-12">
+          <div className="space-y-6">
+            <div>
+              <p className="text-xs font-mono text-ink-muted mb-1">Services</p>
+              <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-ink-text">
+                Services &amp; capabilities
+              </h2>
+              <p className="text-sm text-ink-secondary mt-1">
+                Engineering offerings for client systems, production APIs, and AI tooling
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+              {/* Services Matrix (7 cols) */}
+              <div className="lg:col-span-7 p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between">
+                <div>
+                  <h3 className="text-base font-medium text-ink-text mb-4 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ink-accent"></span>
+                    Development packages
+                  </h3>
+
+                  <ul className="space-y-3">
+                    <li className="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                      <span className="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">01</span>
+                      <div>
+                        <span className="font-medium text-ink-text">Full-Stack Web Applications</span>
+                        <p className="text-xs text-ink-muted mt-1">Next.js, Node.js, Express, REST APIs, Tailwind CSS</p>
+                      </div>
+                    </li>
+                    <li className="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                      <span className="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">02</span>
+                      <div>
+                        <span className="font-medium text-ink-text">AI &amp; Local LLM Tooling</span>
+                        <p className="text-xs text-ink-muted mt-1">Multi-agent workflows, Ollama, CLI assistants, RAG pipelines</p>
+                      </div>
+                    </li>
+                    <li className="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                      <span className="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">03</span>
+                      <div>
+                        <span className="font-medium text-ink-text">Database Architecture &amp; Caching</span>
+                        <p className="text-xs text-ink-muted mt-1">PostgreSQL, MySQL, MongoDB, Redis caching and optimization</p>
+                      </div>
+                    </li>
+                    <li className="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                      <span className="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">04</span>
+                      <div>
+                        <span className="font-medium text-ink-text">High-Performance Automation</span>
+                        <p className="text-xs text-ink-muted mt-1">Python, Bash, Rust micro-utilities, worker scripts</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <p className="text-xs font-mono text-ink-muted mt-6 pt-4 border-t border-white/[0.08]">
+                  Available for contract work, freelance projects, and research partnerships
+                </p>
+              </div>
+
+              {/* Collaboration Card (5 cols) */}
+              <div className="lg:col-span-5 p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between">
+                <div className="space-y-4">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-ink-raised text-xs font-mono text-ink-secondary border border-white/[0.08]">
+                    Collaboration
+                  </span>
+
+                  <h3 className="text-xl font-medium text-ink-text leading-snug">
+                    Have an idea, tricky architecture, or an AI tool to ship?
+                  </h3>
+
+                  <p className="text-sm text-ink-secondary leading-relaxed">
+                    I help move systems from whiteboard architecture to production-grade deployment with clean code, testability, and high reliability.
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-white/[0.08] space-y-3">
+                  <a href="mailto:hello@krishnang.dev" className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-ink-accent hover:bg-ink-accent-hover text-white active:scale-[0.98] transition-[background-color,transform] duration-150 ease-unslop">
+                    <span>hello@krishnang.dev</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" /></svg>
+                  </a>
+                  <p className="text-xs font-mono text-ink-muted text-center">
+                    Replies within 24 hours
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
-      {/* =====================================================
-           FOOTER
-           ===================================================== */}
-      <footer className="site-footer border-t border-slate-800/80 bg-slate-950/90 py-8 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
-          <p>Designed and built by Krishnang Pandey.</p>
-
+      {/* Footer */}
+      <footer className="w-full border-t border-white/[0.08] py-8 text-xs font-mono text-ink-muted relative z-10">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>&copy; 2026 Krishnang Pandey</p>
           <div className="flex items-center gap-6">
-            <span className="text-cyan-400 font-semibold flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-              Plasma UI Enabled
-            </span>
-            <a href="#main-content" className="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors">
-              Back to top ↑
-            </a>
+            <a href="https://github.com/krriisshhnnaaa" target="_blank" rel="noopener noreferrer" className="hover:text-ink-secondary transition-colors duration-150 ease-unslop">GitHub</a>
+            <a href="fun/game/game.html" className="hover:text-ink-secondary transition-colors duration-150 ease-unslop">Arcade</a>
+            <a href="forms/review.html" className="hover:text-ink-secondary transition-colors duration-150 ease-unslop">Reviews</a>
+            <a href="#hero" className="hover:text-ink-secondary transition-colors duration-150 ease-unslop">Top &uarr;</a>
           </div>
         </div>
       </footer>
-    </PlasmaProvider>
-    <RadialMenu />
-  </>
+    </>
   );
 }
 

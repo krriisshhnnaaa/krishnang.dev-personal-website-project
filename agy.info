@@ -2387,7 +2387,7 @@ resolve any dependency issues
 
 
 
-action NOW {
+action DONE {
 
 
 inside fun inside games inside game mechanics inside L2 {
@@ -2459,3 +2459,25 @@ after goal : popup : survive more ? (continue game with clock reset) | move to l
 
 
 
+action NOW {
+
+for game 3 to 5 {
+
+display : work1.jpg 
+with marquee {txt : "Caution : Work in Progress | Man at work" , styles {colour(label) : yellow ; colour (text) : black } }
+onSwitch to game3;game4;game5 : exec-once {play-audio : work_audio.mp3}
+
+for index.html {
+
+viewport : mobile devices {
+
+only-display : work.jpg
+
+}
+
+}
+
+}
+
+
+}

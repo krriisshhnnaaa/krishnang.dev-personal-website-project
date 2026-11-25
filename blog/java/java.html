@@ -3,65 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>java</title>
+    <title>Java — krishnang.dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../../logo.jpg">
+    <link rel="stylesheet" href="../../CSS/unslop-base.css">
+    <link rel="stylesheet" href="../../CSS/radial-menu.css">
     <style>
-        body {
+        .article-main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 24px 96px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .article-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--ink-secondary);
+            text-decoration: none;
+            width: fit-content;
+            transition: color var(--dur-fast) var(--ease-unslop);
+        }
+
+        .article-back:hover {
+            color: var(--ink-text);
+        }
+
+        .article-header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--ink-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .article-title {
             margin: 0;
-            padding: 20px;
-            font-family: sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('wood.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            font-size: clamp(28px, 4vw, 36px);
+            line-height: 1.15;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: var(--ink-text);
         }
 
-        .image-container {
-            position: relative;
-            display: inline-block; /* Keeps the container the exact same size as the image */
-        }
-
-        .image-container img {
-            display: block;
+        .article-cover {
             width: 100%;
-            height: auto;
+            max-height: 360px;
+            object-fit: cover;
+            display: block;
+            border-radius: 16px;
+            border: 1px solid var(--ink-hairline);
+            background-color: var(--ink-card);
         }
 
-        .overlay-text {
-            position: absolute;
-            top: 50%;                 /* Moves the top edge of the text to the vertical center */
-            left: 50%;                /* Moves the left edge of the text to the horizontal center */
-            transform: translate(-50%, -50%); /* Shifts the text back by half its own width and height */
-
-            color: white;             
-            font-size: 24px;
-            font-family: sans-serif;
-            text-align: center;
-        }
-
-        pre {
-            color: #2C2C2C; /* Charcoal (#2C2C2C) */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-            font-family: inherit;
+        .article-body {
+            background-color: var(--ink-card);
+            border: 1px solid var(--ink-hairline);
+            border-radius: 16px;
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--ink-text);
             white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 18px;
-            line-height: 1.6;
+        }
+
+        @media (max-width: 640px) {
+            .article-main {
+                padding: 24px 16px 88px;
+                gap: 24px;
+            }
         }
     </style>
 </head>
 <body>
+    <header class="ink-topbar">
+        <div class="ink-topbar-inner">
+            <a href="../../index.html" class="ink-brand">
+                <span class="ink-brand-prompt">&gt;</span>
+                <span>krishnang.dev</span>
+            </a>
+            <nav class="ink-nav-links" aria-label="Article navigation">
+                <a href="../../index.html" class="ink-nav-link">Home</a>
+                <a href="../../index.html#writing" class="ink-nav-link" aria-current="page">Writing</a>
+                <a href="../../forms/connect.html" class="ink-nav-link">Connect</a>
+                <a href="../../fun/game/game.html" class="ink-nav-link">Arcade</a>
+            </nav>
+        </div>
+    </header>
 
-<div class="image-container">
-  <img src="java.jpg" alt="java">
-  <div class="overlay-text"> java </div>
-</div>
+    <main class="article-main">
+        <a href="../../index.html#writing" class="article-back">
+            <svg class="ink-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            <span>Back to writing</span>
+        </a>
 
-<pre>
-hello
-bye bye publis static void
+        <article class="article-header">
+            <div class="article-meta">
+                <span>&gt; blog/java</span>
+                <span>·</span>
+                <time datetime="2026-11-13">2026-11-13</time>
+            </div>
+            <h1 class="article-title">Java</h1>
+        </article>
 
+        <img src="java.jpg" alt="Java article cover" class="article-cover">
 
-</pre>
+        <div class="article-body">hello
+bye bye publis static void</div>
+    </main>
 
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Quick navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <a href="../../forms/connect.html" class="action action-n" aria-label="Connect">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Connect</span>
+            </a>
+            <a href="../../forms/choicepage.html" class="action action-e" aria-label="Portal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Portal</span>
+            </a>
+            <a href="../../fun/game/game.html" class="action action-s" aria-label="Arcade">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Arcade</span>
+            </a>
+            <a href="../../index.html" class="action action-w" aria-label="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="tooltip">Home</span>
+            </a>
+        </nav>
+    </div>
 </body>
 </html>

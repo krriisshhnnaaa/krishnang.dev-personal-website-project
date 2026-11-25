@@ -8,400 +8,269 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="logo.jpg">
+
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 
-    <script>
-        tailwind = {
-            config: {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        colors: {
-                            brand: {
-                                bg: '#0a1424',
-                                surface: '#0f1d33',
-                                card: 'rgba(16, 31, 56, 0.75)',
-                                border: 'rgba(166, 189, 223, 0.12)',
-                                glow: 'rgba(92, 157, 245, 0.35)',
-                                peach: '#eaccb6',
-                                'peach-glow': 'rgba(234, 204, 182, 0.35)',
-                            },
-                            slate: {
-                                50: '#f8fafc',
-                                100: '#f0f4fc',
-                                200: '#dbe6f8',
-                                300: '#b8cced',
-                                400: '#8ba8d4',
-                                500: '#5c82ba',
-                                600: '#3a639b',
-                                700: '#264a7c',
-                                800: '#19355b',
-                                900: '#10223a',
-                                950: '#0a1424',
-                            },
-                            cyan: {
-                                50: '#f0f7ff',
-                                100: '#e0effe',
-                                200: '#bae0fd',
-                                300: '#7ec4fc',
-                                400: '#5c9df5',
-                                500: '#3b82f6',
-                                600: '#2563eb',
-                                700: '#1d4ed8',
-                                800: '#1e40af',
-                                900: '#173660',
-                                950: '#0c1a2e',
-                            },
-                            purple: {
-                                50: '#fdf8f5',
-                                100: '#f9ede4',
-                                200: '#f3dac8',
-                                300: '#eaccb6',
-                                400: '#f0b892',
-                                500: '#e89a6c',
-                                600: '#d47c4b',
-                                700: '#b35f33',
-                                800: '#8f4a27',
-                                900: '#5c2e17',
-                                950: '#36190b',
-                            },
-                            pink: {
-                                50: '#fdf2f2',
-                                100: '#fde8e8',
-                                200: '#fbd5d5',
-                                300: '#f8b4b4',
-                                400: '#e5737d',
-                                500: '#e0535e',
-                                600: '#c53030',
-                                700: '#9b1c1c',
-                                800: '#771d1d',
-                                900: '#4f1717',
-                                950: '#2b0b0e',
-                            },
-                            cyber: {
-                                cyan: '#5c9df5',
-                                blue: '#3b82f6',
-                                neon: '#7ec4fc',
-                                purple: '#eaccb6',
-                                violet: '#f0b892',
-                                magenta: '#e89a6c',
-                                emerald: '#48bb78',
-                                amber: '#e89a6c',
-                                rose: '#e0535e',
-                            }
-                        },
-                        fontFamily: {
-                            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
-                            mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace']
-                        },
-                        boxShadow: {
-                            'glow-cyan': '0 0 30px rgba(92, 157, 245, 0.3)',
-                            'glow-purple': '0 0 30px rgba(234, 204, 182, 0.3)',
-                            'glow-emerald': '0 0 25px rgba(72, 187, 120, 0.3)',
-                            'card-cyber': '0 12px 36px rgba(5, 10, 20, 0.65), inset 0 1px 0 rgba(234, 204, 182, 0.12)',
-                        },
-                        animation: {
-                            'levitate': 'levitate 4s ease-in-out infinite',
-                            'pulse-slow': 'pulse 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                            'conic-spin': 'conicSpin 6s linear infinite',
-                            'shimmer': 'shimmer 2.5s linear infinite',
-                            'radar-ping': 'radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite',
-                        },
-                        keyframes: {
-                            levitate: {
-                                '0%, 100%': { transform: 'translateY(0px)' },
-                                '50%': { transform: 'translateY(-5px)' }
-                            },
-                            conicSpin: {
-                                'from': { transform: 'rotate(0deg)' },
-                                'to': { transform: 'rotate(360deg)' }
-                            },
-                            shimmer: {
-                                '0%': { transform: 'translateX(-100%)' },
-                                '100%': { transform: 'translateX(100%)' }
-                            },
-                            radarPing: {
-                                '75%, 100%': { transform: 'scale(2.2)', opacity: '0' }
-                            }
-                        }
-                    }
-                }
-            }
-        };
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="//cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js"></script>
-
-    <link rel="stylesheet" href="dist/output.css?v=skyart-3">
+    <link rel="stylesheet" href="dist/output.css">
     <link rel="stylesheet" href="dist/bundle.css">
-    <link rel="stylesheet" href="CSS/DriftWall.css">
-    <link rel="stylesheet" href="CSS/HoldToConfirm.css">
-    <link rel="stylesheet" href="CSS/radial-menu.css">
-    <link rel="stylesheet" href="CSS/style.css?v=skyart-3">
-
-    <style>
-        body {
-            background-color: #0a1424 !important;
-            background-image: 
-                linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)), 
-                url('bg.jpg') !important;
-            background-size: cover !important;
-            background-position: center top !important;
-            background-attachment: fixed !important;
-            background-repeat: no-repeat !important;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
-<body class="text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden"
-      style="background-color: #0a1424; background-image: linear-gradient(rgba(10, 20, 36, 0.42), rgba(10, 20, 36, 0.62)), url('bg.jpg'); background-size: cover; background-position: center top; background-attachment: fixed; background-repeat: no-repeat;">
+<body class="bg-ink-page text-ink-text font-sans antialiased min-h-screen selection:bg-ink-accent/30 selection:text-white relative overflow-x-hidden">
 
-    <canvas id="background-canvas" class="background-canvas fixed inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
+    <!-- Mobile-only work-in-progress screen (outside #root so React mount preserves it) -->
+    <div id="mobile-work-only" class="mobile-work-only" aria-label="Work in progress">
+        <img src="work.jpg" alt="Work in progress" class="mobile-work-image">
+    </div>
 
-    <div class="fixed top-0 left-1/4 w-[34rem] h-[34rem] bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none z-0 animate-pulse-slow"></div>
-    <div class="fixed top-1/3 right-8 w-[36rem] h-[36rem] bg-purple-400/20 rounded-full blur-[110px] pointer-events-none z-0"></div>
-    <div class="fixed bottom-10 left-10 w-[38rem] h-[38rem] bg-blue-600/25 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <!-- Ambient background canvas -->
+    <canvas id="background-canvas" class="background-canvas fixed inset-0 w-full h-full pointer-events-none z-0 opacity-40" aria-hidden="true"></canvas>
 
     <div id="root">
-    <section id="drift-wall-showcase" class="relative z-30 w-full overflow-hidden border-b border-slate-800/60 shadow-2xl bg-slate-950/40">
-        <div style="height: 600px;">
-            <div id="drift-wall-container" class="w-full h-full"></div>
-        </div>
-    </section>
-
-    <main id="main-content" class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 flex flex-col items-center gap-24 sm:gap-32 pt-12 sm:pt-16 pb-20">
-
-        
-        <div class="w-full flex flex-col items-center gap-10">
-            <div class="w-full text-center">
-                <h1 id="scramble-hero-name" class="scramble text-center text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight cursor-pointer select-none text-transparent bg-gradient-to-r from-white via-slate-100 to-purple-300 bg-clip-text hover:from-cyan-200 hover:via-white hover:to-purple-200 transition-all duration-500">
-                    KRISHNANG PANDEY
-                </h1>
-            </div>
-
-        
-            <div class="flex flex-col items-center justify-center text-center select-none w-full">
-                <button
-                    id="resume-hold-btn"
-                    class="hold-btn"
-                    type="button"
-                    aria-label="Hire Me ? Hold to download my resume"
-                    title="Hold to download resume.pdf"
-                >
-                    <svg class="ring" viewBox="0 0 72 3892" aria-hidden="true">
-                        <circle class="track" cx="36" cy="36" r="33"></circle>
-                        <circle class="prog" cx="36" cy="36" r="33"></circle>
-                    </svg>
-                    <span>Hire Me ? </span>
-                </button>
-                <span class="hold-caption">Download My Resume</span>
-            </div>
-        </div>
-
-        <section id="activity" class="w-full activity scroll-mt-24 pt-8">
-            <div class="section-inner space-y-10">
-
-                <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                        Activity
-                    </p>
-                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                        What I've been building.
-                    </h2>
-                </header>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-                    <div class="activity-block activity-github p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl flex flex-col">
-                        <header class="activity-block-header flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
-                            <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5 text-slate-300" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                <h3 class="text-sm font-mono font-semibold text-slate-200">GitHub Commits</h3>
-                            </div>
-                            <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                Live Sync
-                            </span>
-                        </header>
-
-                        <div
-                            id="github-activity"
-                            class="github-activity flex-1"
-                            aria-live="polite"
-                        ></div>
-                    </div>
-
-                    <div class="activity-block activity-blog p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl flex flex-col">
-                        <header class="activity-block-header flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
-                            <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                </svg>
-                                <h3 class="text-sm font-mono font-semibold text-slate-200">Recent Writing</h3>
-                            </div>
-                            <span class="inline-flex items-center gap-1.5 text-[11px] font-mono text-purple-400 bg-purple-950/40 px-2 py-0.5 rounded border border-purple-500/20">
-                                Essays &amp; Notes
-                            </span>
-                        </header>
-
-                        <div
-                            id="blog-activity"
-                            class="blog-activity flex-1"
-                            aria-live="polite"
-                        ></div>
-                    </div>
-
+        <!-- Sticky Header Navigation -->
+        <header class="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-ink-page">
+            <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+                <a href="#" class="flex items-center gap-2 font-mono text-sm font-medium text-ink-text hover:text-white transition-colors duration-150 ease-unslop">
+                    <span class="text-ink-accent font-semibold">&gt;</span>
+                    <span>krishnang.dev</span>
+                </a>
+                <nav class="hidden md:flex items-center gap-6 text-sm text-ink-secondary" aria-label="Main navigation">
+                    <a href="#activity" class="hover:text-ink-text transition-colors duration-150 ease-unslop">Activity</a>
+                    <a href="#writing" class="hover:text-ink-text transition-colors duration-150 ease-unslop">Writing</a>
+                    <a href="#services" class="hover:text-ink-text transition-colors duration-150 ease-unslop">Services</a>
+                    <a href="fun/game/game.html" class="hover:text-ink-text transition-colors duration-150 ease-unslop">Arcade</a>
+                    <a href="forms/review.html" class="hover:text-ink-text transition-colors duration-150 ease-unslop">Reviews</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <a href="forms/connect.html" class="hidden sm:inline-flex text-sm text-ink-secondary hover:text-ink-text transition-colors duration-150 ease-unslop">
+                        Connect
+                    </a>
+                    <a href="resume.pdf" download="resume.pdf" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-ink-raised hover:bg-white/[0.08] text-ink-text border border-white/[0.08] transition-[background-color,border-color,color] duration-150 ease-unslop">
+                        <span>Resume</span>
+                        <svg class="w-4 h-4 text-ink-muted" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.25V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                    </a>
                 </div>
-
             </div>
-        </section>
+        </header>
 
-        <section id="freelance" class="w-full freelancing freelance scroll-mt-24 pt-8" data-section="freelancing">
+        <!-- Main Content -->
+        <main id="main-content" class="relative z-10 max-w-6xl mx-auto px-6">
 
-            <span id="freelancing" class="section-anchor sr-only" aria-hidden="true"></span>
+            <!-- Hero Section (Asymmetric Split: Bio Left, Terminal Right) -->
+            <section id="hero" class="w-full pt-12 sm:pt-16 pb-16 border-b border-white/[0.08]">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                    <!-- Left: Identity & CTAs -->
+                    <div class="lg:col-span-6 flex flex-col items-start gap-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-ink-raised border border-white/[0.08] text-xs font-mono text-ink-secondary">
+                            <span class="w-1.5 h-1.5 rounded-full bg-ink-accent"></span>
+                            <span>Systems software &amp; applied AI</span>
+                        </div>
 
-            <div class="section-inner space-y-10">
+                        <div class="space-y-4">
+                            <h1 id="scramble-hero-name" class="text-4xl sm:text-5xl font-medium tracking-tight text-ink-text select-none cursor-pointer">
+                                Krishnang Pandey
+                            </h1>
+                            <p class="text-base sm:text-lg text-ink-secondary leading-relaxed max-w-xl">
+                                First-year CSE AI/ML student at Chitkara University. Building local LLM tooling, high-performance backends, and terminal applications.
+                            </p>
+                        </div>
 
-                <header class="section-header">
-                    <p class="section-label text-xs font-mono font-semibold uppercase tracking-widest text-purple-300 mb-2">
-                        Freelancing
-                    </p>
-                    <h2 class="section-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                        Let's build something.
-                    </h2>
-                </header>
+                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                            <a href="resume.pdf" download="resume.pdf" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-ink-text text-ink-deep hover:bg-white active:scale-[0.98] transition-[background-color,transform] duration-150 ease-unslop">
+                                <span>Download resume</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.25V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                            </a>
+                            <a href="forms/connect.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-ink-raised hover:bg-white/[0.08] text-ink-text border border-white/[0.08] active:scale-[0.98] transition-[background-color,border-color,transform] duration-150 ease-unslop">
+                                <span>Contact me</span>
+                                <svg class="w-4 h-4 text-ink-muted" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" /></svg>
+                            </a>
+                        </div>
 
-                <div class="freelancing-content grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        <p class="text-xs font-mono text-ink-muted flex items-center gap-2">
+                            <kbd class="px-2 py-0.5 rounded bg-ink-raised border border-white/[0.12] text-ink-secondary">help</kbd>
+                            <span>Type commands in the shell to inspect projects</span>
+                        </p>
+                    </div>
 
-                    <div class="freelancing-services lg:col-span-7">
-                        <div class="freelance-card p-6 sm:p-8 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-xl h-full flex flex-col justify-between">
+                    <!-- Right: Interactive Developer Terminal -->
+                    <div class="lg:col-span-6 w-full">
+                        <div id="terminal-widget" class="terminal-card shadow-elevated">
+                            <div class="terminal-header">
+                                <span class="terminal-title">krishnang@dev: ~ (bash)</span>
+                            </div>
+                            <div class="terminal-body">
+                                <div class="terminal-output" aria-live="polite"></div>
+                                <div class="terminal-input-line">
+                                    <span class="terminal-prompt-text">krishnang@dev:~$</span>
+                                    <input type="text" class="terminal-input" aria-label="Terminal command input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Type help or projects">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity Section (GitHub Commits & Technical Writing) -->
+            <section id="activity" class="w-full scroll-mt-20 py-12 border-b border-white/[0.08]">
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-xs font-mono text-ink-muted mb-1">Activity</p>
+                        <h2 class="text-2xl sm:text-3xl font-medium tracking-tight text-ink-text">
+                            Engineering activity
+                        </h2>
+                        <p class="text-sm text-ink-secondary mt-1">
+                            Recent code commits from GitHub and published technical notes
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                        <!-- GitHub Feed -->
+                        <div class="p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between">
                             <div>
-                                <h3 class="freelance-title text-xl font-bold text-white mb-6 flex items-center gap-2.5">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400"></span>
-                                    Services &amp; Packages
+                                <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
+                                    <div class="flex items-center gap-2.5">
+                                        <svg class="w-4 h-4 text-ink-muted" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                                        <h3 class="text-sm font-medium text-ink-text font-mono">GitHub commits</h3>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-mono text-ink-secondary bg-ink-raised px-2 py-1 rounded border border-white/[0.08]">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4cc38a]"></span>
+                                        Live sync
+                                    </span>
+                                </div>
+
+                                <div id="github-activity" class="github-activity" aria-live="polite"></div>
+                            </div>
+                        </div>
+
+                        <!-- Writing Feed -->
+                        <div id="writing" class="p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between scroll-mt-20">
+                            <div>
+                                <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
+                                    <div class="flex items-center gap-2.5">
+                                        <svg class="w-4 h-4 text-ink-muted" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                                        <h3 class="text-sm font-medium text-ink-text font-mono">Recent writing</h3>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-mono text-ink-secondary bg-ink-raised px-2 py-1 rounded border border-white/[0.08]">
+                                        Notes &amp; essays
+                                    </span>
+                                </div>
+
+                                <div id="blog-activity" class="blog-activity" aria-live="polite"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services & Collaboration Section -->
+            <section id="services" class="w-full scroll-mt-20 py-12">
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-xs font-mono text-ink-muted mb-1">Services</p>
+                        <h2 class="text-2xl sm:text-3xl font-medium tracking-tight text-ink-text">
+                            Services &amp; capabilities
+                        </h2>
+                        <p class="text-sm text-ink-secondary mt-1">
+                            Engineering offerings for client systems, production APIs, and AI tooling
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                        <!-- Services Matrix (7 cols) -->
+                        <div class="lg:col-span-7 p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-medium text-ink-text mb-4 flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-ink-accent"></span>
+                                    Development packages
                                 </h3>
 
-                                <ul class="freelance-list space-y-4">
-                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
-                                        <span class="text-cyan-400 font-bold">•</span>
-                                        <span class="text-sm text-slate-300"><strong class="text-white">Full-Stack Web Applications</strong> (Next.js, Node.js, Express, REST APIs, Tailwind)</span>
+                                <ul class="space-y-3">
+                                    <li class="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                                        <span class="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">01</span>
+                                        <div>
+                                            <span class="font-medium text-ink-text">Full-Stack Web Applications</span>
+                                            <p class="text-xs text-ink-muted mt-1">Next.js, Node.js, Express, REST APIs, Tailwind CSS</p>
+                                        </div>
                                     </li>
-
-                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
-                                        <span class="text-cyan-400 font-bold">•</span>
-                                        <span class="text-sm text-slate-300"><strong class="text-white">AI &amp; Local LLM Tooling</strong> (Multi-Agent workflows, Ollama, CLI Agents, RAG pipelines)</span>
+                                    <li class="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                                        <span class="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">02</span>
+                                        <div>
+                                            <span class="font-medium text-ink-text">AI &amp; Local LLM Tooling</span>
+                                            <p class="text-xs text-ink-muted mt-1">Multi-agent workflows, Ollama, CLI assistants, RAG pipelines</p>
+                                        </div>
                                     </li>
-
-                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
-                                        <span class="text-cyan-400 font-bold">•</span>
-                                        <span class="text-sm text-slate-300"><strong class="text-white">Database Architecture &amp; Caching</strong> (PostgreSQL, MySQL, MongoDB, Redis optimization)</span>
+                                    <li class="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                                        <span class="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">03</span>
+                                        <div>
+                                            <span class="font-medium text-ink-text">Database Architecture &amp; Caching</span>
+                                            <p class="text-xs text-ink-muted mt-1">PostgreSQL, MySQL, MongoDB, Redis caching and optimization</p>
+                                        </div>
                                     </li>
-
-                                    <li class="freelance-item flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60 hover:border-cyan-500/30 transition-colors">
-                                        <span class="text-cyan-400 font-bold">•</span>
-                                        <span class="text-sm text-slate-300"><strong class="text-white">High-Performance Scripting &amp; Automation</strong> (Python, Bash, Rust micro-utilities)</span>
+                                    <li class="p-4 rounded-xl bg-ink-raised border border-white/[0.08] text-sm text-ink-secondary flex items-start gap-3">
+                                        <span class="text-ink-accent font-mono text-xs pt-0.5 tabular-nums">04</span>
+                                        <div>
+                                            <span class="font-medium text-ink-text">High-Performance Automation</span>
+                                            <p class="text-xs text-ink-muted mt-1">Python, Bash, Rust micro-utilities, worker scripts</p>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
 
-                            <p class="text-xs text-slate-500 font-mono mt-6 pt-4 border-t border-slate-800/80">
-                                Open for contracts, freelance gigs, and collaborative open-source ventures.
+                            <p class="text-xs font-mono text-ink-muted mt-6 pt-4 border-t border-white/[0.08]">
+                                Available for contract work, freelance projects, and research partnerships
                             </p>
                         </div>
+
+                        <!-- Collaboration Card (5 cols) -->
+                        <div class="lg:col-span-5 p-6 rounded-2xl bg-ink-card border border-white/[0.08] flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-ink-raised text-xs font-mono text-ink-secondary border border-white/[0.08]">
+                                    Collaboration
+                                </span>
+
+                                <h3 class="text-xl font-medium text-ink-text leading-snug">
+                                    Have an idea, tricky architecture, or an AI tool to ship?
+                                </h3>
+
+                                <p class="text-sm text-ink-secondary leading-relaxed">
+                                    I help move systems from whiteboard architecture to production-grade deployment with clean code, testability, and high reliability.
+                                </p>
+                            </div>
+
+                            <div class="pt-6 border-t border-white/[0.08] space-y-3">
+                                <a href="mailto:hello@krishnang.dev" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-ink-accent hover:bg-ink-accent-hover text-white active:scale-[0.98] transition-[background-color,transform] duration-150 ease-unslop">
+                                    <span>hello@krishnang.dev</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" /></svg>
+                                </a>
+                                <p class="text-xs font-mono text-ink-muted text-center">
+                                    Replies within 24 hours
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="freelancing-contact lg:col-span-5 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-950 to-cyan-950/30 border border-cyan-500/30 backdrop-blur-md shadow-2xl flex flex-col justify-center items-start gap-6 relative overflow-hidden">
-                        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
-                        <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold uppercase tracking-wider bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                            Let's Collaborate
-                        </span>
-
-                        <h3 class="text-2xl font-bold text-white">
-                            Have an idea, a tricky system, or an AI workflow to ship?
-                        </h3>
-
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            I help bring concepts from whiteboard architecture to production-grade deployment with clean code and high reliability.
-                        </p>
-
-                        <a
-                            class="button button-primary relative group overflow-hidden px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-slate-950 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-                            href="mailto:hello@krishnang.dev"
-                        >
-                            <span class="relative z-10 flex items-center gap-2">
-                                Start a conversation <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-                            </span>
-                            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                        </a>
-                    </div>
-
                 </div>
+            </section>
+        </main>
 
+        <!-- Footer -->
+        <footer class="w-full border-t border-white/[0.08] py-8 text-xs font-mono text-ink-muted relative z-10">
+            <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p>&copy; 2026 Krishnang Pandey</p>
+                <div class="flex items-center gap-6">
+                    <a href="https://github.com/krriisshhnnaaa" target="_blank" rel="noopener noreferrer" class="hover:text-ink-secondary transition-colors duration-150 ease-unslop">GitHub</a>
+                    <a href="fun/game/game.html" class="hover:text-ink-secondary transition-colors duration-150 ease-unslop">Arcade</a>
+                    <a href="forms/review.html" class="hover:text-ink-secondary transition-colors duration-150 ease-unslop">Reviews</a>
+                    <a href="#hero" class="hover:text-ink-secondary transition-colors duration-150 ease-unslop">Top &uarr;</a>
+                </div>
             </div>
-        </section>
-
-    </main>
-
-    <footer class="site-footer border-t border-slate-800/80 bg-slate-950/90 py-8 relative z-10">
-        <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
-            <p>Designed and built by Krishnang Pandey.</p>
-
-            <div class="flex items-center gap-6">
-                <span class="text-slate-500">Tailwind CSS &amp; Web Components</span>
-                <a href="#main-content" class="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors">
-                    Back to top ↑
-                </a>
-            </div>
-        </div>
-    </footer>
+        </footer>
     </div>
 
-    <!-- Compact Radial Action Menu (agy.info action NOW) -->
-    <div class="radial-menu-container">
-        <nav class="menu" aria-label="Radial navigation menu">
-            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick Navigation">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-            </button>
-            <a href="forms/connect.html" class="action action-n" aria-label="Connect Form">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span class="tooltip">Action A: Connect</span>
-            </a>
-            <a href="forms/choicepage.html" class="action action-e" aria-label="Choice Page">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-                <span class="tooltip">Action B: Choice</span>
-            </a>
-            <a href="fun/game/game.html" class="action action-s" aria-label="Play Arcade Game">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-                <span class="tooltip">Action C: Game</span>
-            </a>
-            <a href="forms/review.html" class="action action-w" aria-label="Review Page">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-                <span class="tooltip">Action D: Review</span>
-            </a>
-        </nav>
-    </div>
-
+    <!-- Interactive Component Scripts -->
     <script src="Interactive-Elements/bg-animations.js"></script>
     <script src="Interactive-Elements/terminal.js"></script>
     <script src="Interactive-Elements/activity-github.js"></script>
@@ -414,105 +283,16 @@
             if (typeof initBackgroundAnimations === 'function') {
                 initBackgroundAnimations();
             }
-
             if (typeof initTerminal === 'function') {
                 initTerminal();
             }
-
             if (typeof initGitHubActivity === 'function') {
                 initGitHubActivity();
             }
-
             if (typeof initBlogActivity === 'function') {
                 initBlogActivity();
             }
-
-            const scrambleEl = document.getElementById('scramble-hero-name');
-            if (scrambleEl) {
-                const targetText = 'KRISHNANG PANDEY';
-                const CHARS = '!<>-_/[]{}=+*^?#';
-                let scrambleInterval = null;
-
-                function playScramble() {
-                    if (scrambleInterval) clearInterval(scrambleInterval);
-                    let frame = 0;
-                    const total = 24;
-                    scrambleInterval = setInterval(() => {
-                        frame++;
-                        scrambleEl.textContent = targetText.split('').map((c, i) => {
-                            if (c === ' ') return ' ';
-                            const progress = frame - i * 1.2;
-                            return progress > total * 0.6
-                                ? c
-                                : CHARS[Math.floor(Math.random() * CHARS.length)];
-                        }).join('');
-                        if (frame > total + targetText.length) {
-                            clearInterval(scrambleInterval);
-                            scrambleInterval = null;
-                            scrambleEl.textContent = targetText;
-                        }
-                    }, 35);
-                }
-
-                playScramble();
-                scrambleEl.addEventListener('mouseenter', playScramble);
-                scrambleEl.addEventListener('click', playScramble);
-            }
-
-            const holdBtn = document.getElementById('resume-hold-btn');
-            if (holdBtn) {
-                let holdTimer = null;
-                const triggerDownload = () => {
-                    const link = document.createElement('a');
-                    link.href = 'resume.pdf';
-                    link.download = 'resume.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                };
-
-                const startHold = (e) => {
-                    if (e.button && e.button !== 0) return;
-                    holdBtn.classList.add('holding');
-                    holdTimer = setTimeout(() => {
-                        holdBtn.classList.remove('holding');
-                        holdBtn.classList.add('done');
-                        const span = holdBtn.querySelector('span');
-                        if (span) span.textContent = '✓';
-                        triggerDownload();
-                        setTimeout(() => {
-                            holdBtn.classList.remove('done');
-                            if (span) span.textContent = 'Hire Me ? ';
-                        }, 2000);
-                    }, 800);
-                };
-
-                const cancelHold = () => {
-                    if (holdTimer) {
-                        clearTimeout(holdTimer);
-                        holdTimer = null;
-                    }
-                    holdBtn.classList.remove('holding');
-                };
-
-                holdBtn.addEventListener('pointerdown', startHold);
-                holdBtn.addEventListener('pointerup', cancelHold);
-                holdBtn.addEventListener('pointerleave', cancelHold);
-                holdBtn.addEventListener('click', () => {
-                    if (!holdBtn.classList.contains('done')) {
-                        triggerDownload();
-                        holdBtn.classList.add('done');
-                        const span = holdBtn.querySelector('span');
-                        if (span) span.textContent = '✓';
-                        setTimeout(() => {
-                            holdBtn.classList.remove('done');
-                            if (span) span.textContent = 'Hire Me ? ';
-                        }, 2000);
-                    }
-                });
-            }
         });
     </script>
-
 </body>
 </html>

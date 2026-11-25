@@ -3,414 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leave a Review — Krishnang</title>
-    <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="animations.css">
-    <link rel="stylesheet" href="logo.css">
+    <title>Reviews — krishnang.dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../../../logo.jpg">
+    <link rel="stylesheet" href="../../../CSS/unslop-base.css">
+    <link rel="stylesheet" href="../../../CSS/radial-menu.css">
     <style>
-        :root {
-            --prussian-blue: #003153;
-            --white: #ffffff;
-            --text-dark: #111827;
-            --bg-page: #f8fafc;
-            --accent-pink: #ff2d55;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-page);
-            color: var(--text-dark);
-            min-height: 100vh;
-            padding: 32px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .page-wrapper {
-            width: 100%;
-            max-width: 1100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 36px;
-        }
-
-        .nav-back-container {
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .nav-back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #4b5563;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.15s ease;
-        }
-
-        .nav-back-link:hover {
-            color: var(--accent-pink);
-        }
-
-        /* size = h1 ( {center} {marquee} [text from name.txt] } */
-        .name-banner-container {
-            width: 100%;
-            text-align: center;
-            overflow: hidden;
-            padding: 20px 12px;
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .name-banner-container marquee {
-            display: block;
-            width: 100%;
-        }
-
-        .name-banner-h1 {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            font-size: 2rem;
-            font-weight: 700;
-            text-align: center;
-            line-height: 1;
-        }
-
-        .name-banner {
-            display: inline-block;
-            text-align: center;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: clamp(9px, 1.2vw, 13px);
-            line-height: 1.15;
-            color: #38bdf8;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-            white-space: pre;
+        .reviews-main {
+            max-width: 1152px;
             margin: 0 auto;
-        }
-
-        /* Form Card */
-        .form-card {
-            width: 100%;
-            max-width: 900px;
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 36px 32px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px 24px 96px;
             display: flex;
             flex-direction: column;
+            gap: 40px;
+        }
+
+        .reviews-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--ink-hairline);
+        }
+
+        .reviews-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--ink-muted);
+            margin: 0;
+        }
+
+        .reviews-title {
+            margin: 0;
+            font-size: clamp(28px, 4vw, 36px);
+            line-height: 1.15;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: var(--ink-text);
+        }
+
+        .reviews-subtitle {
+            margin: 0;
+            font-size: 15px;
+            color: var(--ink-secondary);
+            max-width: 560px;
+        }
+
+        .reviews-layout {
+            display: grid;
+            grid-template-columns: 380px 1fr;
             gap: 24px;
+            align-items: start;
+        }
+
+        .form-card {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-heading {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ink-text);
         }
 
         .review-form {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 24px;
-            width: 100%;
+            gap: 16px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            width: 100%;
-            align-items: center;
         }
 
-        /* Comment boxes */
-        .comment-box {
+        .form-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ink-secondary);
+        }
+
+        .form-control {
             width: 100%;
-            border: 2px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 16px 20px;
-            font-family: inherit;
-            font-size: 1.05rem;
-            color: #1e293b;
-            background: #f8fafc;
-            transition: all 0.2s ease-in-out;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background-color: var(--ink-raised);
+            border: 1px solid var(--ink-hairline);
+            color: var(--ink-text);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+            transition:
+                border-color var(--dur-fast) var(--ease-unslop),
+                background-color var(--dur-fast) var(--ease-unslop);
+        }
+
+        .form-control::placeholder {
+            color: var(--ink-muted);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--ink-accent);
+            background-color: var(--ink-page);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
             resize: vertical;
         }
 
-        .comment-box:focus {
-            outline: none;
-            border-color: var(--accent-pink);
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.15);
-        }
-
-        /* Top Box: comment-box : {text area} -> dimensions l=120,b=20 -- ratio - l:b = 6:1 placeholder = {"Leave a review !"} */
-        .review-box {
-            max-width: 860px;
-            min-height: 160px;
-            aspect-ratio: 6 / 1;
-        }
-
-        /* Bottom Box: comment-box : {text area} -> dimesions l=60,b=10 -- ratio - l:b = 6:1 placeholder = {"What's your goodname ?"} */
-        .name-box {
-            max-width: 600px;
-            min-height: 100px;
-            aspect-ratio: 6 / 1;
-        }
-
-        /* Submit Button */
-        .submit-btn {
-            background-color: var(--accent-pink);
-            color: var(--white);
-            border: none;
-            padding: 14px 44px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(255, 45, 85, 0.35);
-            transition: all 0.2s ease-in-out;
-            margin-top: 4px;
-        }
-
-        .submit-btn:hover {
-            background-color: #e02449;
-            box-shadow: 0 6px 20px rgba(255, 45, 85, 0.45);
-            transform: translateY(-2px);
-        }
-
         .status-msg {
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 10px 16px;
-            border-radius: 8px;
             display: none;
-            text-align: center;
-            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            background-color: rgba(76, 195, 138, 0.12);
+            color: var(--ink-positive);
+            border: 1px solid rgba(76, 195, 138, 0.25);
         }
 
-        .status-success {
-            background: #ecfdf5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-        }
-
-        /* H2 = { "This is what others think" } */
-        h2.others-think-title {
-            font-size: 2.1rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            text-align: center;
-            margin-top: 24px;
-        }
-
-        /* hero section : Reviews */
-        .hero-reviews-section {
-            width: 100%;
+        .reviews-feed-section {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 28px;
+            gap: 16px;
         }
 
-        .hero-header {
+        .reviews-feed-header {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
+            gap: 12px;
         }
 
-        .hero-tag {
-            display: inline-block;
-            padding: 6px 18px;
-            background: #e2e8f0;
-            color: #334155;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 9999px;
+        .others-think-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--ink-text);
         }
 
-        /* Review Cards Container */
+        .reviews-count {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--ink-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
         .reviews-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 36px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
         }
 
-        /*
-           hero section name : "review"
-           bgcolor = prussian blue
-           txt = white
-           border style = 3D 
-           border width = 50
-           border length = 60
-           display == 
-           {
-           -----txt---from----
-           ---file----
-           	- "name"
-           }
-        */
-        .review-card-3d {
-            width: 100%;
-            max-width: 840px;
-            background-color: var(--prussian-blue);
-            color: var(--white);
-            border-style: ridge;
-            border-width: 50px 60px;
-            border-color: #004b80 #00223b #00192b #005a99;
-            box-shadow: 
-                0 14px 32px rgba(0, 0, 0, 0.4),
-                inset 0 0 20px rgba(0, 0, 0, 0.5);
-            padding: 30px 36px;
-            border-radius: 12px;
-            box-sizing: border-box;
+        .review-card {
+            background-color: var(--ink-card);
+            border: 1px solid var(--ink-hairline);
+            border-radius: 14px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            justify-content: space-between;
+            gap: 16px;
             word-break: break-word;
-            animation: fadeIn 0.4s ease-out forwards;
         }
 
         .review-content {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            color: var(--white);
-            font-style: italic;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--ink-text);
             white-space: pre-wrap;
         }
 
-        .review-author {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #93c5fd;
-            text-align: right;
-            margin-top: 4px;
+        .review-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid var(--ink-hairline);
+            font-family: var(--font-mono);
+            font-size: 12px;
         }
 
-        @media (max-width: 768px) {
-            .review-card-3d {
-                border-width: 25px 30px;
-                padding: 20px 22px;
+        .review-author {
+            color: var(--ink-secondary);
+        }
+
+        .review-date {
+            color: var(--ink-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 960px) {
+            .reviews-layout {
+                grid-template-columns: 1fr;
             }
-            .name-box, .review-box {
-                aspect-ratio: auto;
+        }
+
+        @media (max-width: 640px) {
+            .reviews-main {
+                padding: 24px 16px 88px;
             }
-            h2.others-think-title {
-                font-size: 1.6rem;
+            .reviews-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <!-- Navigation Back -->
-        <div class="nav-back-container">
-            <a href="../../choicepage.html" class="nav-back-link">
-                &larr; Back to Choice
+    <header class="ink-topbar">
+        <div class="ink-topbar-inner">
+            <a href="../../../index.html" class="ink-brand">
+                <span class="ink-brand-prompt">&gt;</span>
+                <span>krishnang.dev</span>
             </a>
+            <nav class="ink-nav-links" aria-label="Reviews navigation">
+                <a href="../../../index.html" class="ink-nav-link">Home</a>
+                <a href="../../choicepage.html" class="ink-nav-link">Portal</a>
+                <a href="../../connect.html" class="ink-nav-link">Connect</a>
+                <a href="review.html" class="ink-nav-link" aria-current="page">Reviews</a>
+                <a href="../../../fun/game/game.html" class="ink-nav-link">Arcade</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="reviews-main">
+        <div class="reviews-header">
+            <p class="reviews-eyebrow">&gt; forms/review</p>
+            <h1 class="reviews-title">Reviews &amp; feedback</h1>
+            <p class="reviews-subtitle">Notes from clients, collaborators, and engineering peers.</p>
         </div>
 
-        <!-- size = h1 ( {center} {marquee} [text from name.txt] } -->
-        <div class="name-banner-container" id="nameBannerContainer">
-            <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
-                <h1 class="name-banner-h1">
-                    <pre class="name-banner" id="nameBanner">
-╒════╗  ╒═══╗ ╒══════════╗ ╒══════╗ ╒═════════╗ ╒════╗╒════╗  ╒════╗   ╒════╗  ╒════════╗   ╒════╗   ╒════╗ ╒════════╗      ╒═════════╗  ╒═════════╗ ╒════╗    ╒════╗     
-└┐  ╓╜ ╒╛ ╓─╜ └┐  ╓───┐  ║ └─┐  ╓─╜ │  ╓────┐ ║ └┐  ╓╜└┐  ╓╜  │    ╚╗  └┐  ╓╜  │  ╓──┐  ║   │    ╚╗  └┐  ╓╜ │  ╓───┐ ║      └┐  ╓───┐ ╚╗ └┐  ╓───┐ ║ └┐  ╓╜    └┐  ╓╜     
- │  ║ ╒╛ ╓╜    │  ║   │  ║   │  ║   │  ║    └─╜  │  ║  │  ║   │  ╟┐ ╚╗  │  ║   │  ║  │  ║   │  ╟┐ ╚╗  │  ║  │  ║   └─╜       │  ║   │  ║  │  ║   └─╜  └┐ ╚╗    ╒╛ ╓╜      
- │  ╚═╛  ╚═╗   │  ╚═══╛  ║   │  ║   │  ╚══════╗  │  ╚══╛  ║   │  ║└┐ ╚╗ │  ║   │  ╚══╛  ║   │  ║└┐ ╚╗ │  ║  │  ║             │  ║   │  ║  │  ╚══╗      └┐ ╚╗  ╒╛ ╓╜       
- │  ╓───┐  ║   │  ╓┐  ╓──╜   │  ║   └──────┐  ║  │  ╓──┐  ║   │  ║ └┐ ╚╗│  ║   │  ╓──┐  ║   │  ║ └┐ ╚╗│  ║  │  ║ ╒════╗      │  ║   │  ║  │  ╓──╜       └┐ ╚╗╒╛ ╓╜        
- │  ║   │  ║   │  ║└┐ ╚╗     │  ║   ╒═╗    │  ║  │  ║  │  ║   │  ║  └┐ ╚╡  ║   │  ║  │  ║   │  ║  └┐ ╚╡  ║  │  ║ └┐  ╓╜      │  ║   │  ║  │  ║   ╒═╗     └┐ ╚╛ ╓╜         
-╒╛  ╚╗ ╒╛  ╚╗ ╒╛  ╚╗└┐ ╚═╗ ╒═╛  ╚═╗ │ ╚════╛  ║ ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  ╒╛  ╚╗╒╛  ╚╗ ╒╛  ╚╗  └┐    ║  │  ╚══╛  ║  ╒═╗ ╒╛  ╚═══╛ ╓╜ ╒╛  ╚═══╛ ║      └┐  ╓╜          
-└────╜ └────╜ └────╜ └───╜ └──────╜ └─────────╜ └────╜└────╜ └────╜   └────╜  └────╜└────╜ └────╜   └────╜  └────────╜  └─╜ └─────────╜  └─────────╜       └──╜           
-                    </pre>
-                </h1>
-            </marquee>
-        </div>
+        <div class="reviews-layout">
+            <aside class="ink-card form-card" aria-labelledby="reviewFormHeading">
+                <h2 id="reviewFormHeading" class="form-heading">Leave a review</h2>
+                <form id="reviewForm" class="review-form">
+                    <div class="form-group">
+                        <label for="reviewContent" class="form-label">Review</label>
+                        <textarea
+                            id="reviewContent"
+                            name="review"
+                            rows="4"
+                            class="form-control"
+                            placeholder="Share feedback on collaboration, architecture, or delivery"
+                            required></textarea>
+                    </div>
 
-        <!-- Form Section: Only Leave a review and What's your goodname ? -->
-        <div class="form-card">
-            <form id="reviewForm" class="review-form">
-                <!-- Top box: Leave a review (dimensions l=120,b=20, ratio 6:1) -->
-                <div class="form-group">
-                    <textarea 
-                        id="reviewContent" 
-                        name="review" 
-                        cols="120" 
-                        rows="20" 
-                        class="comment-box review-box" 
-                        placeholder="Leave a review !" 
-                        required></textarea>
+                    <div class="form-group">
+                        <label for="reviewerName" class="form-label">Your name</label>
+                        <input
+                            type="text"
+                            id="reviewerName"
+                            name="name"
+                            class="form-control"
+                            placeholder="Name or role"
+                            required>
+                    </div>
+
+                    <button type="submit" class="ink-btn ink-btn-primary" id="submitBtn">Submit review</button>
+                    <div class="status-msg" id="statusMessage" role="status">Review saved.</div>
+                </form>
+            </aside>
+
+            <section class="reviews-feed-section" id="heroReviewsSection" aria-labelledby="othersThinkTitle">
+                <div class="reviews-feed-header">
+                    <h2 id="othersThinkTitle" class="others-think-title">What others think</h2>
+                    <span class="reviews-count" id="reviewsCount">0 entries</span>
                 </div>
 
-                <!-- Bottom box: What's your goodname ? (dimensions l=60,b=10, ratio 6:1) -->
-                <div class="form-group">
-                    <textarea 
-                        id="reviewerName" 
-                        name="name" 
-                        cols="60" 
-                        rows="10" 
-                        class="comment-box name-box" 
-                        placeholder="What's your goodname ?" 
-                        required></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitBtn">Submit Review</button>
-                <div class="status-msg status-success" id="statusMessage">Thank you! Your review has been saved successfully.</div>
-            </form>
+                <div id="reviewsContainer" class="reviews-container"></div>
+            </section>
         </div>
+    </main>
 
-        <!-- H2 = { "This is what others think" } -->
-        <h2 class="others-think-title">This is what others think</h2>
-
-        <!-- hero section : Reviews -->
-        <section class="hero-reviews-section" id="heroReviewsSection">
-            <div class="hero-header">
-                <span class="hero-tag">review</span>
-            </div>
-
-            <!-- Review items dynamically fetched/rendered: review hero 1 to n -->
-            <div id="reviewsContainer" class="reviews-container">
-                <!-- Rendered dynamically -->
-            </div>
-        </section>
+    <div class="radial-menu-container">
+        <nav class="menu" aria-label="Quick navigation menu">
+            <button type="button" class="center-btn" aria-label="Toggle navigation actions" title="Quick navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <a href="../../connect.html" class="action action-n" aria-label="Connect">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="tooltip">Connect</span>
+            </a>
+            <a href="../../choicepage.html" class="action action-e" aria-label="Portal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span class="tooltip">Portal</span>
+            </a>
+            <a href="../../../fun/game/game.html" class="action action-s" aria-label="Arcade">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="tooltip">Arcade</span>
+            </a>
+            <a href="../../../index.html" class="action action-w" aria-label="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="tooltip">Home</span>
+            </a>
+        </nav>
     </div>
 
     <script>
-        // Fetch and display name.txt if loaded over HTTP/local server
-        fetch('../../name.txt')
-            .then(res => res.ok ? res.text() : null)
-            .then(text => {
-                if (text && text.trim()) {
-                    document.getElementById('nameBanner').textContent = text;
-                }
-            })
-            .catch(() => {
-                // Static embedded content is already present as fallback
-            });
-
-        // Local & MongoDB Reviews Storage Handling
         const defaultReviews = [
             {
-                name: "Alex Vance",
+                name: "",
                 content: "Krishnang is an exceptionally detail-oriented developer. The architecture and user interface built for the platform exceeded all our expectations!"
             },
             {
-                name: "Sarah Chen",
+                name: "",
                 content: "Fast communication, innovative ideas, and clean modern code. An absolute pleasure to collaborate with."
+            },
+            {
+                name: "",
+                content: "Incredible attention to styling details, rock-solid responsiveness, and rapid turnaround time."
+            },
+            {
+                name: "",
+                content: "Intuitive workflows, creative layout solutions, and smooth end-to-end integration."
             }
         ];
 
@@ -440,33 +368,57 @@
             }
         }
 
-        function renderReviewCard(review) {
-            const card = document.createElement('div');
-            card.className = 'review-card-3d';
+        function formatTimestamp(ts) {
+            if (!ts) return 'Archived';
+            const d = new Date(ts);
+            if (Number.isNaN(d.getTime())) return 'Archived';
+            return d.toISOString().slice(0, 10);
+        }
 
-            const contentElem = document.createElement('div');
+        function renderReviewCard(review) {
+            const card = document.createElement('article');
+            card.className = 'review-card';
+
+            const contentElem = document.createElement('p');
             contentElem.className = 'review-content';
+            contentElem.style.margin = '0';
             contentElem.textContent = review.content || '';
 
-            const authorElem = document.createElement('div');
+            const footerElem = document.createElement('div');
+            footerElem.className = 'review-footer';
+
+            const authorElem = document.createElement('span');
             authorElem.className = 'review-author';
-            authorElem.textContent = `- "${review.name || 'Anonymous'}"`;
+            authorElem.textContent = review.name ? review.name : 'Anonymous';
+
+            const dateElem = document.createElement('span');
+            dateElem.className = 'review-date';
+            dateElem.textContent = formatTimestamp(review.timestamp);
+
+            footerElem.appendChild(authorElem);
+            footerElem.appendChild(dateElem);
 
             card.appendChild(contentElem);
-            card.appendChild(authorElem);
+            card.appendChild(footerElem);
 
             return card;
+        }
+
+        function updateCount(n) {
+            const countEl = document.getElementById('reviewsCount');
+            if (countEl) {
+                countEl.textContent = `${n} ${n === 1 ? 'entry' : 'entries'}`;
+            }
         }
 
         function renderAllReviews(reviewsList) {
             const container = document.getElementById('reviewsContainer');
             container.innerHTML = '';
             reviewsList.forEach(review => {
-                const card = renderReviewCard(review);
-                container.appendChild(card);
+                container.appendChild(renderReviewCard(review));
             });
+            updateCount(reviewsList.length);
         }
-
 
         async function fetchReviews() {
             try {
@@ -482,11 +434,9 @@
                 // Backend not connected; fallback to local storage
             }
 
-            const localList = getStoredReviews();
-            renderAllReviews(localList);
+            renderAllReviews(getStoredReviews());
         }
 
-        // Handle Review Form Submission
         const reviewForm = document.getElementById('reviewForm');
         const statusMessage = document.getElementById('statusMessage');
 
@@ -495,11 +445,7 @@
 
             const review = document.getElementById('reviewContent').value.trim();
             const name = document.getElementById('reviewerName').value.trim();
-
-            if (!review || !name) {
-                alert('Please fill in both the review and your name.');
-                return;
-            }
+            if (!review || !name) return;
 
             const newReview = {
                 name: name,
@@ -507,28 +453,24 @@
                 timestamp: new Date().toISOString()
             };
 
-            // 1. Save to local storage
             const currentList = getStoredReviews();
             currentList.unshift(newReview);
             saveStoredReviews(currentList);
 
-            // 2. Prepend card immediately to hero section
             const container = document.getElementById('reviewsContainer');
-            const card = renderReviewCard(newReview);
-            container.insertBefore(card, container.firstChild);
+            container.insertBefore(renderReviewCard(newReview), container.firstChild);
+            updateCount(container.children.length);
 
-            // 3. Post to MongoDB API if available
             try {
                 await fetch('/api/reviews', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newReview)
                 });
-            } catch (e) {
+            } catch (err) {
                 // Local copy already saved
             }
 
-            // Show confirmation & reset form
             statusMessage.style.display = 'block';
             reviewForm.reset();
 
@@ -537,7 +479,6 @@
             }, 4000);
         });
 
-        // Initialize on load
         fetchReviews();
     </script>
 </body>
