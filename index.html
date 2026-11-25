@@ -25,7 +25,68 @@
     <!-- Mobile-only work-in-progress screen (outside #root so React mount preserves it) -->
     <div id="mobile-work-only" class="mobile-work-only" aria-label="Work in progress">
         <img src="work.jpg" alt="Work in progress" class="mobile-work-image">
+        <audio id="mobile-work-audio" preload="auto" autoplay playsinline>
+            <source src="work_audio.mp3" type="audio/mpeg">
+        </audio>
     </div>
+
+    <script>
+        (function () {
+            var mq = window.matchMedia('(max-width: 767px)');
+            var audio = document.getElementById('mobile-work-audio');
+            var played = false;
+            var gestureBound = false;
+
+            function cleanup() {
+                window.removeEventListener('touchend', onGesture, true);
+                window.removeEventListener('click', onGesture, true);
+                window.removeEventListener('keydown', onGesture, true);
+                gestureBound = false;
+            }
+
+            function onGesture() {
+                if (!played && mq.matches) {
+                    playMobileAudioOnce();
+                }
+            }
+
+            function bindUnlock() {
+                if (gestureBound || played) return;
+                gestureBound = true;
+                window.addEventListener('touchend', onGesture, true);
+                window.addEventListener('click', onGesture, true);
+                window.addEventListener('keydown', onGesture, true);
+            }
+
+            function playMobileAudioOnce() {
+                if (played || !mq.matches || !audio) return;
+                played = true;
+                try {
+                    var p = audio.play();
+                    if (p && typeof p.then === 'function') {
+                        p.then(cleanup).catch(function () {
+                            played = false;
+                            bindUnlock();
+                        });
+                    } else {
+                        cleanup();
+                    }
+                } catch (e) {
+                    played = false;
+                    bindUnlock();
+                }
+            }
+
+            if (mq.matches) {
+                playMobileAudioOnce();
+            }
+            if (typeof mq.addEventListener === 'function') {
+                mq.addEventListener('change', function (e) {
+                    if (e.matches) playMobileAudioOnce();
+                });
+            }
+        })();
+    </script>
 
     <!-- Ambient background canvas -->
     <canvas id="background-canvas" class="background-canvas fixed inset-0 w-full h-full pointer-events-none z-0 opacity-40" aria-hidden="true"></canvas>
